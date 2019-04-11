@@ -1,0 +1,48 @@
+@startuml
+
+enum GiocoDeiCammelli {
+    +INSTANCE: GiocoDeiCammelli
+    --
+    -inputManager: InputManager
+    --
+    -GiocoDeiCammelli()
+    
+    +startGame(): void
+}
+
+GiocoDeiCammelli"1" -- "1"InputManager: >
+
+class InputManager {
+    -subscriptions: Map<Object, InputSubscription>
+    
+    +subscribe(subscriber: Object): InputSubscription
+    +unsubscribe(subscriber: Object): InputSubscription
+    
+    +post(letto: InputData): void
+}
+
+InputManager"1" -- "0...*"InputSubscription: >
+
+class InputSubscription {
+    -queue: LinkedBlockingQueue
+    
+    +poll(): InputData
+    +poll(Class<T> type): <T> T
+    
+    ~post(letto: InputData);
+}
+
+InputSubscription - InputData: >
+
+interface InputData {
+}
+
+class InputGiroscopio {
+    -xAxis: float
+    -yAxis: float
+}
+
+InputData <|-  InputGiroscopio
+
+
+@enduml
