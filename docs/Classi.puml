@@ -1,0 +1,285 @@
+@startuml GiocoPalla
+
+PApplet <|-- GiocoPalla
+
+class GiocoPalla {
+    -{static} INSTANCE: GiocoDeiCammelli
+    --
+    '-inputManager: InputManager
+    -valueManager: ValueManager
+    -entityManager: EntityManager
+    -currentGui: Gui
+    --
+    'Ereditato da PApplet
+    +width: int
+    'Ereditato da PApplet
+    +height: int
+    --
+    -GiocoDeiCammelli()
+    +{static} getInstance(): GiocoDeiCammelli
+    --
+    'Effettua il setup della finestra di processing ed
+    'inizializza gli attributi della classe
+    +setup(): void
+    'Setta la dimensione della finestra
+    +settings(): void
+    'Disegna la finestra di gioco (gui) corrente
+    +draw(): void
+    --
+    'Cambia la finestra di gioco (gui) visualizzata
+    +displayGui(newGui: Gui): void
+}
+
+/'GiocoDeiCammelli"1" -- "1"InputManager: >
+
+class InputManager {
+    -subscriptions: Map<Object, InputSubscription>
+
+    +subscribe(subscriber: Object): InputSubscription
+    +unsubscribe(subscriber: Object): InputSubscription
+
+    +post(letto: InputData): void
+}
+
+InputManager"1" -- "0...*"InputSubscription: >
+
+class InputSubscription {
+    -queue: LinkedBlockingQueue<InputData>
+
+    +poll(): InputData
+    +poll(Class<T> type): <T extends InputData> T
+
+    ~post(letto: InputData);
+}
+
+InputSubscription - InputData: >
+
+interface InputData {
+}
+
+class InputGyroscope {
+    -xAxis: float
+    -yAxis: float
+}
+
+InputData <|-  InputGyroscope'/
+
+GiocoPalla -- Gui
+
+'Interfaccia di base che rappresenta una schermata del gioco
+'(ex. schermata di gioco, menu principale, menu delle opzioni, etc.)
+interface Gui {
+    'Disegna la Gui
+    +onRender(): void
+    'Chiamato quando la finestra cambia dimensioni
+    +onResize(): void
+    'Clicka la gui alle coordinate date
+    +onClick(xPos: float, yPos: float): void
+    'Chiamato quando la gui viene chiusa (perchè cambiata con un'altra)
+    +onGuiClose(): void
+}
+
+Gui <|-- BaseGui
+
+'Implementazione di base della Gui con implementazioni dei metodi e
+'attributi che sono comuni a gran parte delle gui
+abstract class BaseGui {
+    'Componenti che compongono questa gui
+    ~components: List<GuiComponent>
+
+    'Disegna i componenti della gui
+    +onRender(): void
+    'Si occupa di determinare quale elemento della gui sia stato clickato
+    'e richiama il relativo metodo
+    +onClick(xPos: float, yPos: float): void
+    --
+    'Metodi vuoti implementati solo per evitare di doverlo
+    'poi fare per ogni classe che estende questa
+    +onResize(): void
+    +onGuiClose(): void
+}
+
+BaseGui"1" o-- "0...*"GuiComponent: contains >
+
+'Interfaccia di base per ogni classe che rappresenta un elemento della gui
+'(ex. bottone, label, textbox, etc)
+interface GuiComponent {
+    +onRender(): void
+    +intersects(xPos: float, yPos: float): boolean
+    +onClick(xPos: float, yPos: float): void
+    --
+    +getX(): float
+    +setX(float x): void
+    +setCenterX(float x): void
+    --
+    +getY(): float
+    +setY(y: float): void
+    +setCenterY(y: float): void
+    --
+    +float getWidth(): float
+    +setWidth(width: float): void
+    --
+    +getHeight(): float
+    +void setHeight(height: float): void
+}
+
+GuiComponent <|-- BaseGuiComponent
+
+'Implementazione di base della Gui con implementazioni dei metodi e
+'attributi che sono comuni a gran parte dei componenti
+abstract class BaseGuiComponent {
+    ~x: float
+    ~y: float
+    ~width: float
+    ~height: float
+
+    'Determina se il componente occupa la posizione data
+    +intersects(xPos: float, yPos: float): boolean
+    +isHovered(): boolean
+    +onResize(): void
+}
+
+BaseGui <|-- GameGui
+
+'Schermata di gioco, in cui si svolge il gioco vero e proprio
+class GameGui {
+    -backgroundColor: ColorValue
+    'Inizializza il bottone per mettere il gioco in pausa
+    +GameGui()
+    'Disegna il gioco e i componenti della gui
+    +onRender(): void
+}
+
+GiocoPalla -- EntityManager
+
+class EntityManager {
+    -entities: List<Entity>
+
+    +render(): void
+}
+
+EntityManager"1" o-- "0...*"Entity: contains >
+
+interface Entity {
+    'Gestisce la fisica dell'entità
+    +onTick(): void
+    'Disegna l'entità
+    +onRender(): void
+}
+
+Entity <|-- BallEntity
+
+class BallEntity {
+    -xPos: float
+    -yPos: float
+    -radius: float
+
+    -xSpeed: Value<Float>
+    -ySpeed: Value<Float>
+
+    'Muove la palla
+    +onTick(): void
+    'Disegna la palla
+    +onRender(): void
+}
+
+BaseGui <|-- PauseMenuGui
+
+'Gui che viene mostrata quando il gioco viene messo in pausa
+class PauseMenuGui {
+    'Inizializza i 3 bottoni per mettere riprendere il gioco,
+    'aprire le opzioni e chiudere il gioco
+    +PauseMenuGui()
+}
+
+PauseMenuGui -- PauseMenuButton
+BaseGuiComponent <|-- PauseMenuButton
+
+class PauseMenuButton {
+    -content: String
+    -color: int
+    -focusedColor: int
+
+    -actionListeners: List<Runnable>
+
+    'Disegna il bottone
+    +onRender(): void
+    'Richiama i listener
+    +onClick(xPos: float, yPos: float): void
+
+    +addActionListener(listener: Runnable): void
+    +removeActionListener(listener: Runnable): void
+}
+
+GameGui -- PauseButton
+BaseGuiComponent <|-- PauseButton
+
+class PauseButton {
+    -actionListeners: List<Runnable>
+
+    'Disegna il bottone
+    +onRender(): void
+    'Richiama i listener
+    +onClick(xPos: float, yPos: float): void
+
+    +addActionListener(listener: Runnable): void
+    +removeActionListener(listener: Runnable): void
+}
+
+GiocoPalla -- ValueManager
+
+class ValueManager {
+    -values: List<Value<?>>
+    -immutableValues: List<Value<?>>
+
+    +registerValue(Value<?> v): void
+    +getValues(): List<Value<?>>
+}
+
+ValueManager"1" *-- "0...*"Value: contains >
+
+class Value<T> {
+    -name: String
+    -value: T
+    -valueType: Class<T>
+    --
+    +Value()
+
+    +set(T obj): void
+    +get(): T
+}
+
+Value <|-- ColorValue: <Color>
+
+class ColorValue {
+    -isRainbow: boolean
+    --
+    +ColorValue(String name, Color defaultValue)
+    +ColorValue(String name, int r, int g, int b)
+    --
+    +getRGB(): int
+}
+
+BaseGuiComponent <|- ColorSlider
+ColorSlider -- ColorValue
+
+class ColorSlider {
+    -value: ColorValue
+
+    'Disegna il bottone
+    +onRender(): void
+    'Setta il valore corretto al value
+    +onClick(xPos: float, yPos: float): void
+}
+
+BaseGui <|-- OptionsGui
+
+OptionsGui -- ValueManager
+OptionsGui -- ColorSlider
+
+class OptionsGui {
+    'Inizializza i componenti per modificare le opzioni
+    +OptionsGui()
+}
+
+@enduml
