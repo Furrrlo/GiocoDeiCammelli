@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import me.palla.GiocoPalla;
 
 public class EntityThread extends Thread{
-    BallEntity ball;
+    private BallEntity ball;
     
     public EntityThread(BallEntity ball){
         this.ball=ball;

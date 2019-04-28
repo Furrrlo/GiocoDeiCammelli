@@ -4,7 +4,7 @@ import me.palla.value.Value;
 
 public class BallEntity implements Entity {
     
-    EntityThread th;
+    private EntityThread th;
     private float xPos;
     private float yPos;
     private float radius;
