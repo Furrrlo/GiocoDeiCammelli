@@ -16,6 +16,8 @@ public class GiocoPalla extends PApplet {
 
     private float oldWidth;
     private float oldHeight;
+    
+    private boolean isPaused;
 
     public GiocoPalla() {}
 
@@ -78,4 +80,11 @@ public class GiocoPalla extends PApplet {
     public Gui getCurrentGui() {
         return currentGui;
     }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    
+    
 }
