@@ -1,6 +1,8 @@
 package me.palla.entity;
 
+import me.palla.GiocoPalla;
 import me.palla.value.Value;
+
 
 public class BallEntity implements Entity {
     
@@ -13,9 +15,9 @@ public class BallEntity implements Entity {
     private Value<Float> ySpeed;
 
     public BallEntity() {
-        xPos=0;
-        yPos=0;
-        radius=0;
+        xPos=10;
+        yPos=10;
+        radius=50;
         th=new EntityThread(this);
         th.start();
     }
@@ -23,10 +25,15 @@ public class BallEntity implements Entity {
     @Override
     public void onTick() {
         
+        
     }
 
     @Override
     public void onRender() {
-
+        draw(xPos,yPos,radius);
+    }
+    
+    private void draw(float xPos,float yPos,float radius){
+        GiocoPalla.getInstance().ellipse(xPos,yPos,radius,50);
     }
 }

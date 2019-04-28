@@ -52,6 +52,7 @@ public class GiocoPalla extends PApplet {
         clear();
         background(33, 33, 33);
         currentGui.onRender();
+        entityManager.render();
     }
 
     @Override

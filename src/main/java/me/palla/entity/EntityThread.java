@@ -17,6 +17,7 @@ public class EntityThread extends Thread{
         if(!GiocoPalla.getInstance().isPaused()){
             ball.onTick();
         }
+
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
