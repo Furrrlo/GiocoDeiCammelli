@@ -13,13 +13,15 @@ public class EntityThread extends Thread{
     }
     
     public void run(){
-        while(!GiocoPalla.getInstance().isPaused()){
+        while(true){
+        if(!GiocoPalla.getInstance().isPaused()){
             ball.onTick();
         }
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(EntityThread.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(EntityThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
