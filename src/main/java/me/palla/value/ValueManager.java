@@ -15,7 +15,7 @@ public class ValueManager {
     }
 
     public void registerValue(Value<?> v) {
-
+        //dubbio esistenziale
     }
 
     public List<Value<?>> getValues() {
