@@ -7,16 +7,19 @@ public class GameGui extends BaseGui {
 
     private final EntityManager entityManager;
     private final ColorValue backgroundColor;
-    private PauseMenuButton pauseButton;
 
-    public GameGui(ColorValue backgroundColor, PauseMenuButton pauseButton) {
+    public GameGui(ColorValue backgroundColor) {
         entityManager = GiocoPalla.getInstance().getEntityManager();
         this.backgroundColor = backGroundColor;
-        this.pauseButton = pauseButton;
+        pauseMenuButton pauseButton = new pauseMenuButton();
+        pauseButton.setX(200);
+        pauseButton.setY(300);
+        components.add(pauseButton);
+        
     }
 
     @Override
     public void onRender() {
-        pauseButton.onRender();
+
     }
 }
