@@ -1,3 +1,7 @@
+# Tabella delle responsabilità
+
+
+### Deliverable
 
 | Attività | Ferlo| Bork |Ferra |Brozio |
 | --- |---| ---|------|-----|
@@ -6,19 +10,24 @@
 |Diagramma di sequenza| | |X||
 |Doxygen| |X|||
 
-| Classi        | Ferlo | Bork  |Ferra  |Brozio |
-| ---           |---    | ---   |------ |-----  |
-|GiocoPalla     |X      |       |       |       |
-|EntityManager  |       |X      |       |       |
-|BallEntity     |       |X      |       |       |
-|PoolEntity     |       |X      |       |       |
-|PhysicsThread  |       |X      |       |       |
-|OptionsGui     |       |       |       |X      |
-|PauseMenuGui   |       |       |X      |       |
-|GameGui        |       |       |X      |       |
-|ValueManager   |       |       |       |X      |
-|Value          |       |       |       |X      |
-|ColorValue     |X      |       |       |       |
-|ColorSlider    |X      |       |       |       |
-|PauseMenuButton|X      |       |       |       |
-|PauseButton    |X      |       |       |       |
+### Moduli Software
+
+| Classi          | Ferlo | Bork  |Ferra  |Brozio |
+| ---             |---    | ---   |------ |-----  |
+|GiocoPalla       |X      |       |       |       |
+|EntityManager    |       |X      |       |       |
+|BallEntity       |       |X      |       |       |
+|PoolEntity       |       |X      |       |       |
+|PhysicsThread    |       |X      |       |       |
+|OptionsGui       |       |       |       |X      |
+|PauseMenuGui     |       |       |X      |       |
+|GameGui          |       |       |X      |       |
+|ValueManager     |       |       |       |X      |
+|Value            |       |       |       |X      |
+|ColorValue       |X      |       |       |       |
+|ColorSlider      |X      |       |       |       |
+|PauseMenuButton  |X      |       |       |       |
+|PauseButton      |X      |       |       |       |
+|InputManager     |       |       |X      |       |
+|InputSubscription|       |       |X      |       |
+|InputGyroscope   |       |       |       |X      |
