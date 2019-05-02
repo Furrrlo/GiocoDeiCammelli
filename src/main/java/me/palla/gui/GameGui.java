@@ -13,7 +13,7 @@ public class GameGui extends BaseGui {
     public GameGui() {
         entityManager = GiocoPalla.getInstance().getEntityManager();
         this.backgroundColor = new ColorValue("Colore sfondo", 255,255,255);        
-        PauseButton pauseButton = new PauseButton();
+        PauseButton pauseButton = new PauseButton(new PauseButtonClickPerformed());
         pauseButton.setX(200);
         pauseButton.setY(300);
         pauseButton.setWidth(200);
@@ -22,10 +22,19 @@ public class GameGui extends BaseGui {
         //classe che estende Runnable e dentro l'override del run dire di cambiare la 
         //schermata con displayGui passando come parametro la nuova schermata (pausa)
     }
+    public class PauseButtonClickPerformed implements Runnable
+    {
+        @Override 
+        public void run()
+        {
+            GiocoPalla.getInstance().displayGui(new PauseMenuGui());
+        }
+    }
 
     @Override
     public void onRender() {
         entityManager.render();
         super.onRender();
     }
+    
 }
