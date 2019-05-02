@@ -18,8 +18,7 @@ public class GameGui extends BaseGui {
         pauseButton.setY(300);
         pauseButton.setWidth(200);
         pauseButton.setHeight(50);
-        components.add(pauseButton);
-        
+        components.add(pauseButton);        
     }
 
     @Override
