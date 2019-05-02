@@ -3,7 +3,7 @@
 
 ### Deliverable
 
-| Attività | Ferlo| Bork |Ferra |Brozio |
+| Attività | Frarlo| Bork |Ferra |Brozio |
 | --- |---| ---|------|-----|
 |Casi d'uso| | | |X|
 |Diagramma classi|X| | ||
@@ -12,7 +12,7 @@
 
 ### Moduli Software
 
-| Classi          | Ferlo | Bork  |Ferra  |Brozio |
+| Classi          | Frarlo | Bork  |Ferra  |Brozio |
 | ---             |---    | ---   |------ |-----  |
 |GiocoPalla       |X      |       |       |       |
 |EntityManager    |       |X      |       |       |
