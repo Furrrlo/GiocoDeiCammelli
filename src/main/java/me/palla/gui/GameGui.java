@@ -1,28 +1,31 @@
 package me.palla.gui;
 
-import java.awt.Color;
 import me.palla.GiocoPalla;
 import me.palla.entity.EntityManager;
-import me.palla.gui.components.PauseMenuButton;
+import me.palla.gui.components.PauseButton;
+import me.palla.value.ColorValue;
 
 public class GameGui extends BaseGui {
 
     private final EntityManager entityManager;
-    private final Color backgroundColor;
+    private final ColorValue backgroundColor;
 
-    public GameGui(Color backgroundColor) {
+    public GameGui() {
         entityManager = GiocoPalla.getInstance().getEntityManager();
-        this.backgroundColor = backgroundColor;
-        PauseMenuButton pauseButton = new PauseMenuButton("Pausa", 100, 255, 100.0);
+        this.backgroundColor = new ColorValue("Colore sfondo", 255,255,255);        
+        PauseButton pauseButton = new PauseButton();
         pauseButton.setX(200);
         pauseButton.setY(300);
         pauseButton.setWidth(200);
         pauseButton.setHeight(50);
         components.add(pauseButton);        
+        //classe che estende Runnable e dentro l'override del run dire di cambiare la 
+        //schermata con displayGui passando come parametro la nuova schermata (pausa)
     }
 
     @Override
     public void onRender() {
-
+        entityManager.render();
+        super.onRender();
     }
 }
