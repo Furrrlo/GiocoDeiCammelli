@@ -3,8 +3,6 @@ import java.awt.Color;
 import me.palla.*;
 import me.palla.value.*;
 import me.palla.gui.components.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
