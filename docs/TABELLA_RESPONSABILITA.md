@@ -36,3 +36,5 @@ sono modificate da tutti in base alle necessità
 |InputManager                   |        |      |X      |        |
 |InputSubscription              |        |      |X      |        |
 |InputGyroscope                 |        |      |       |X       |
+
+> [Torna al README](../README.md)

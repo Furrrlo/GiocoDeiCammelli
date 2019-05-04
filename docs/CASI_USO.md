@@ -13,3 +13,5 @@
 + 3.1 L'utente scuote in modo violento e improvviso il dispositivo
 + 3.2 Il sistema rileva un cambio improvviso e repentino dei valori e li elabora
 + 3.3 A seconda dei valori elaborati, il sistema fa saltare la pallina di una certa quantità
+
+> [Torna al README](../README.md)
