@@ -1,6 +1,7 @@
 package me.palla;
 
 import me.palla.entity.EntityManager;
+import me.palla.gui.GameGui;
 import me.palla.gui.Gui;
 import me.palla.value.ValueManager;
 import processing.core.PApplet;
@@ -37,8 +38,7 @@ public class GiocoPalla extends PApplet {
 
         valueManager = new ValueManager();
         entityManager = new EntityManager();
-//        displayGui(new GameGui());
-        displayGui(new TestGui());
+        displayGui(new GameGui());
     }
 
     @Override
@@ -52,7 +52,6 @@ public class GiocoPalla extends PApplet {
         clear();
         background(33, 33, 33);
         currentGui.onRender();
-        entityManager.render();
     }
 
     @Override
@@ -86,6 +85,4 @@ public class GiocoPalla extends PApplet {
         return isPaused;
     }
 
-    
-    
 }
