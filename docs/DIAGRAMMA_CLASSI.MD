@@ -1,0 +1,1 @@
+![alt text](../docs/DIAGRAMMA_CLASSI.png)
