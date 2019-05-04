@@ -5,7 +5,7 @@ PApplet <|-- GiocoPalla
 class GiocoPalla {
     -{static} INSTANCE: GiocoDeiCammelli
     --
-    '-inputManager: InputManager
+    -inputManager: InputManager
     -valueManager: ValueManager
     -entityManager: EntityManager
     -currentGui: Gui
@@ -30,7 +30,7 @@ class GiocoPalla {
     +displayGui(newGui: Gui): void
 }
 
-/'GiocoDeiCammelli"1" -- "1"InputManager: >
+GiocoPalla"1" -- "1"InputManager: >
 
 class InputManager {
     -subscriptions: Map<Object, InputSubscription>
@@ -52,7 +52,7 @@ class InputSubscription {
     ~post(letto: InputData);
 }
 
-InputSubscription - InputData: >
+InputSubscription -- InputData: >
 
 interface InputData {
 }
@@ -62,7 +62,7 @@ class InputGyroscope {
     -yAxis: float
 }
 
-InputData <|-  InputGyroscope'/
+InputData <|--  InputGyroscope
 
 GiocoPalla -- Gui
 
@@ -167,6 +167,16 @@ interface Entity {
     +onRender(): void
 }
 
+Thread <|-- PhysicsThread
+Entity -- PhysicsThread
+InputSubscription -- PhysicsThread
+
+class PhysicsThread {
+    -entity: Entity
+
+    +run(): void
+}
+
 Entity <|-- BallEntity
 
 class BallEntity {
@@ -174,12 +184,23 @@ class BallEntity {
     -yPos: float
     -radius: float
 
-    -xSpeed: Value<Float>
-    -ySpeed: Value<Float>
-
     'Muove la palla
     +onTick(): void
     'Disegna la palla
+    +onRender(): void
+}
+
+Entity <|-- PoolEntity
+
+'TODO: figure out how to do this
+class PoolEntity {
+    -xPos: float
+    -yPos: float
+    -xWidth: float
+    -yWidth: float
+    -height: float
+
+    +onTick(): void
     +onRender(): void
 }
 

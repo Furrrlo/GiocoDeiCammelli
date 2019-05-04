@@ -6,7 +6,7 @@ import me.palla.value.Value;
 
 public class BallEntity implements Entity {
     
-    private EntityThread th;
+    private PhysicsThread th;
     private float xPos;
     private float yPos;
     private float radius;
@@ -18,7 +18,7 @@ public class BallEntity implements Entity {
         xPos=10;
         yPos=10;
         radius=50;
-        th=new EntityThread(this);
+        th=new PhysicsThread(this);
         th.start();
     }
 
