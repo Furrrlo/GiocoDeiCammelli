@@ -1,12 +1,14 @@
 package me.palla.gui;
-import java.awt.Color;
-import me.palla.*;
-import me.palla.value.*;
-import me.palla.gui.components.*;
+import me.palla.GiocoPalla;
+import me.palla.gui.components.ColorSlider;
+import me.palla.value.ColorValue;
+import me.palla.value.Value;
+
+import java.awt.*;
 import java.util.List;
 
 /**
- * @author Borzì Davide
+ * @author BorzÃ¬ Davide
  * @brief gestisce le opzioni di gioco modificabili dall'utente
  * @version 1.0
  */
@@ -22,11 +24,12 @@ public class OptionsGui extends BaseGui {
         temp = GiocoPalla.getInstance().getValueManager().getValues();
         
         for (Integer i = 0; i < temp.size(); i++) {
-            //per ogni elemento controllo se getType è quello che mi serve (per ora solo Color)
-            if (temp.get(i).getValueType().toString().equals("Color")) {        //E' GIUSTO?
-                //se è di tipo Color, creo un nuovo ColorSlider e lo aggiungo ai componenti
-                String name = "Color" + i.toString();
-                components.add(new ColorSlider(new ColorValue(name, Color.cyan)));
+            final Value<?> value = temp.get(i);
+
+            //per ogni elemento controllo se getType Ã¨ quello che mi serve (per ora solo Color)
+            if (temp.get(i).getValueType().equals(Color.class)) {        //E' GIUSTO?
+                //se Ã¨ di tipo Color, creo un nuovo ColorSlider e lo aggiungo ai componenti
+                components.add(new ColorSlider((ColorValue) value));
             }
         }
     }
