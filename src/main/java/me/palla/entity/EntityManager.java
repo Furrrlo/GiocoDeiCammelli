@@ -8,11 +8,19 @@ public class EntityManager {
 
     public EntityManager() {
         this.entities = new ArrayList<>();
+        this.addEntity(new BallEntity());
+        //this.addEntity(new PoolEntity());
     }
 
     public void render() {
         for(int i=0;i<entities.size();i++){
             entities.get(i).onRender();
         }
+    }
+    
+    public void addEntity(Entity e){
+        
+        entities.add(e);
+        
     }
 }

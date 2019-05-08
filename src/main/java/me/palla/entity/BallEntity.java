@@ -11,21 +11,23 @@ public class BallEntity implements Entity {
     private float yPos;
     private float radius;
 
-    private Value<Float> xSpeed;
-    private Value<Float> ySpeed;
+    private float xSpeed;
+    private float ySpeed;
 
     public BallEntity() {
-        xPos=10;
-        yPos=10;
+        xPos=100;
+        yPos=100;
         radius=50;
         th=new PhysicsThread(this);
         th.start();
+        xSpeed=1f;
+        ySpeed=1f;
     }
 
     @Override
     public void onTick() {
-        
-        
+        xPos+=xSpeed;
+        yPos+=ySpeed;
     }
 
     @Override
@@ -34,6 +36,19 @@ public class BallEntity implements Entity {
     }
     
     private void draw(float xPos,float yPos,float radius){
-        GiocoPalla.getInstance().ellipse(xPos,yPos,radius,50);
+        GiocoPalla.getInstance().pushStyle();
+        GiocoPalla.getInstance().fill(255,0,0);
+        GiocoPalla.getInstance().ellipse(xPos,yPos,radius,radius);
+        GiocoPalla.getInstance().popStyle();
     }
+
+    public void setxSpeed(float xSpeed) {
+        this.xSpeed = xSpeed;
+    }
+
+    public void setySpeed(float ySpeed) {
+        this.ySpeed = ySpeed;
+    }
+    
+    
 }
