@@ -69,8 +69,8 @@ public class PoolEntity implements Entity {
     public void onRender() {
         GiocoPalla.getInstance().pushStyle();
 
-        GiocoPalla.getInstance().stroke(255, 255, 255);
-        GiocoPalla.getInstance().fill(255, 255, 255);
+        GiocoPalla.getInstance().stroke(33, 33, 33);
+        GiocoPalla.getInstance().fill(33, 33, 33);
         GiocoPalla.getInstance().rect(xPos, yPos, width, length);
 
         GiocoPalla.getInstance().fill(Color.BLUE.getRGB());

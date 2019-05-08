@@ -44,7 +44,7 @@ public class GiocoPalla extends PApplet {
         surface.setResizable(true);
 
         valueManager = new ValueManager();
-        entityManager = new EntityManager(7, 7);
+        entityManager = new EntityManager(7, 6);
         displayGui(new GameGui());
     }
 
