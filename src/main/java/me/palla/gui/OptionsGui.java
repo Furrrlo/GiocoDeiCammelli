@@ -34,9 +34,27 @@ public class OptionsGui extends BaseGui {
         }
     }
     
-    public void resize(){ //aiutino?
-        //sposto alla cdc (ma con controlli immagino)
-        //loop nei componenti e decido come metterli
+    public void onResize(){
+        //posizionamento al centro
         
+        int totHeight = 0, inizioY = 0;
+        //calcolo altezza totale dei componenti
+        for (int i = 0; i < components.size(); i++) {
+            totHeight += components.get(i).getHeight();
+        }
+        //altezzaSchermo/2 - altezzaComponenti/2 --> punto iniziale
+        inizioY = GiocoPalla.getInstance().height/2 - totHeight/2;
+        
+        //1 componente: quella y; 2 componente: quella y + altezza 1 e così via
+        for (int i = 0; i < components.size(); i++) {
+            int temp = 0;
+            for (int j = 0; j < i; j++) {
+                temp += components.get(j).getHeight();
+            }
+            components.get(i).setY(inizioY + temp);
+            //per la x:
+            //lunghezzaSchermo/2 e lo butto in setCenterX()
+            components.get(i).setCenterX(GiocoPalla.getInstance().width);
+        }
     }
 }
