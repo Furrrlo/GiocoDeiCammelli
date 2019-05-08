@@ -44,10 +44,15 @@ public class InputSubscription {
     }
 
     public <T extends InputData> T poll(Class<T> type) {
+        // Richiama l'altro poll fino a quando
+        // type.isAssignableFrom(value.getType()), dove value
+        // è quello ritornato dal metodo poll
+        //
+        // Se value è instanza di NoInput, ritornare null
         return null;
     }
 
     protected void post(InputData letto) {
-
+        // Aggiunge il valore alla queue
     }
 }
