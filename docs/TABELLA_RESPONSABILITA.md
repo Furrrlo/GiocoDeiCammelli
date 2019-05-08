@@ -22,7 +22,7 @@ sono modificate da tutti in base alle necessità
 |GiocoPalla                     |X       |      |       |        |
 |EntityManager                  |        |X     |       |        |
 |BallEntity                     |        |X     |       |        |
-|PoolEntity                     |        |X     |       |        |
+|PoolEntity                     |X       |      |       |        |
 |PhysicsThread                  |        |X     |       |        |
 |OptionsGui                     |        |      |       |X       |
 |PauseMenuGui                   |        |      |X      |        |
@@ -36,5 +36,6 @@ sono modificate da tutti in base alle necessità
 |InputManager                   |        |      |X      |        |
 |InputSubscription              |        |      |X      |        |
 |InputGyroscope                 |        |      |       |X       |
+|NoInput                        |X       |      |       |        |
 
 > [Torna al README](../README.md)

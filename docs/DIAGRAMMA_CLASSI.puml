@@ -37,14 +37,15 @@ class InputManager {
 
     +subscribe(subscriber: Object): InputSubscription
     +unsubscribe(subscriber: Object): InputSubscription
-
-    +post(letto: InputData): void
 }
 
 InputManager"1" -- "0...*"InputSubscription: >
 
 class InputSubscription {
-    -queue: LinkedBlockingQueue<InputData>
+    -queue: Queue<InputData>
+    -isBlocking: boolean
+
+    ~InputSubscription(isBlocking: boolean)
 
     +poll(): InputData
     +poll(Class<T> type): <T extends InputData> T
@@ -57,12 +58,19 @@ InputSubscription -- InputData: >
 interface InputData {
 }
 
+InputData <|--  NoInput
+
+class NoInput {
+    -NoInput()
+    +{static}instance(): NoInput
+}
+
+InputData <|--  InputGyroscope
+
 class InputGyroscope {
     -xAxis: float
     -yAxis: float
 }
-
-InputData <|--  InputGyroscope
 
 GiocoPalla -- Gui
 
