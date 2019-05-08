@@ -57,6 +57,8 @@ class InputManager {
 
     +subscribe(subscriber: Object): InputSubscription
     +unsubscribe(subscriber: Object): InputSubscription
+
+    +post(letto: InputData);
 }
 
 InputManager"1" -- "0...*"InputSubscription: >

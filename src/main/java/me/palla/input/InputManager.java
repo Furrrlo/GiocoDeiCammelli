@@ -13,4 +13,8 @@ public class InputManager {
     public void unsubscribe(Object obj) {
 
     }
+
+    public void post(InputData letto) {
+        // per ogni subscription, richiamare il metodo post
+    }
 }
