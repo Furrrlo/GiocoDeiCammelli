@@ -3,6 +3,7 @@ package me.palla.gui;
 import me.palla.GiocoPalla;
 import me.palla.entity.EntityManager;
 import me.palla.gui.components.PauseButton;
+import me.palla.util.ScaledResolution;
 import me.palla.value.ColorValue;
 
 public class GameGui extends BaseGui {
@@ -35,6 +36,9 @@ public class GameGui extends BaseGui {
 
     @Override
     public void onRender() {
+        final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
+        GiocoPalla.getInstance().rect(0, 0, res.getScaledWidth(), res.getScaledHeight(), backgroundColor.getRGB());
+        
         entityManager.render();
         super.onRender();
     }
