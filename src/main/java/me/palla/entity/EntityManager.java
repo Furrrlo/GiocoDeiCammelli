@@ -9,7 +9,6 @@ public class EntityManager {
     public EntityManager() {
         this.entities = new ArrayList<>();
         this.addEntity(new BallEntity());
-        //this.addEntity(new PoolEntity());
     }
 
     public void render() {
