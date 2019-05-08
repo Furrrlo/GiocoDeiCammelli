@@ -35,6 +35,17 @@ public class PoolEntity implements Entity {
 
     public PoolEntity(float xPos, float yPos,
                       float width, float length,
+                      float leftBorderHeight, float rightBorderHeight) {
+        this(
+                xPos, yPos,
+                width, length,
+                leftBorderHeight, rightBorderHeight,
+                (width * length * Math.min(leftBorderHeight, rightBorderHeight)) / 2F
+        );
+    }
+
+    public PoolEntity(float xPos, float yPos,
+                      float width, float length,
                       float leftBorderHeight, float rightBorderHeight,
                       float waterVolume) {
 

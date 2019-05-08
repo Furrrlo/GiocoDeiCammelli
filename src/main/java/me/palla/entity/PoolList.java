@@ -36,8 +36,7 @@ public class PoolList {
                 addPool(new PoolEntity(
                         lastX, lastY,
                         lenghtX, lenghtY,
-                        10,10,
-                        5));
+                        10,10));
                 lastX += lenghtX + 2;
             }
             lastX = border;

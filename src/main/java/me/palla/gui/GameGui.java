@@ -38,7 +38,7 @@ public class GameGui extends BaseGui {
     public void onRender() {
         final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
         GiocoPalla.getInstance().rect(0, 0, res.getScaledWidth(), res.getScaledHeight(), backgroundColor.getRGB());
-        
+
         entityManager.render();
         super.onRender();
     }
