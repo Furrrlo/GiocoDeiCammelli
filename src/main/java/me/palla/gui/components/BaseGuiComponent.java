@@ -1,6 +1,7 @@
 package me.palla.gui.components;
 
 import me.palla.GiocoPalla;
+import me.palla.util.ScaledResolution;
 
 public abstract class BaseGuiComponent implements GuiComponent {
 
@@ -15,7 +16,9 @@ public abstract class BaseGuiComponent implements GuiComponent {
     }
 
     protected boolean isHovered() {
-        return intersects(GiocoPalla.getInstance().mouseX, GiocoPalla.getInstance().mouseY);
+        final GiocoPalla inst = GiocoPalla.getInstance();
+        final ScaledResolution res = inst.getScaledResolution();
+        return intersects(res.scaleX(inst.mouseX), res.scaleY(inst.mouseY));
     }
 
     protected void onResize() {}

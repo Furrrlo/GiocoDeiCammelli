@@ -45,7 +45,7 @@ public class OptionsGui extends BaseGui {
         //altezzaSchermo/2 - altezzaComponenti/2 --> punto iniziale
         inizioY = GiocoPalla.getInstance().height/2 - totHeight/2;
         
-        //1 componente: quella y; 2 componente: quella y + altezza 1 e così via
+        //1 componente: quella y; 2 componente: quella y + altezza 1 e cosï¿½ via
         for (int i = 0; i < components.size(); i++) {
             int temp = 0;
             for (int j = 0; j < i; j++) {
@@ -54,7 +54,7 @@ public class OptionsGui extends BaseGui {
             components.get(i).setY(inizioY + temp);
             //per la x:
             //lunghezzaSchermo/2 e lo butto in setCenterX()
-            components.get(i).setCenterX(GiocoPalla.getInstance().width/2);
+            components.get(i).setCenterX(width / 2);
         }
     }
 }

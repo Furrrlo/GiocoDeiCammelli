@@ -31,8 +31,8 @@ public class PauseMenuGui extends BaseGui {
                 .count();
         final int totalHeight = buttonsN * (BUTTON_SIZE + BUTTON_MARGIN) - BUTTON_MARGIN;
 
-        final int x = GiocoPalla.getInstance().width / 2;
-        final int[] y = new int[] { (GiocoPalla.getInstance().height - totalHeight) / 2 };
+        final float x = width / 2;
+        final float[] y = new float[] { (height - totalHeight) / 2 };
 
         components.stream()
                 .filter(PauseMenuButton.class::isInstance)

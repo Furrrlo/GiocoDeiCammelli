@@ -30,6 +30,26 @@ class GiocoPalla {
     +displayGui(newGui: Gui): void
 }
 
+GiocoPalla"1" -- "1"ScaledResolution: >
+
+class ScaledResolution {
+    -width: float
+    -height: float
+    --
+    -scaledWidth: float
+    -scaledHeight: float
+    --
+    -widthScaleFactor: float
+    -heightScaleFactor: float
+    --
+    +ScaledResolution(width: float, height: float, scaledWidth: float, scaledHeight: float)
+    +ScaledResolution(width: float, height: float, scaleFactor: float)
+    
+    +setupScaling(enable: true): void
+    +scaleX(toScale: float): float
+    +scaleY(toScale: float): float
+}
+
 GiocoPalla"1" -- "1"InputManager: >
 
 class InputManager {
@@ -80,7 +100,7 @@ interface Gui {
     'Disegna la Gui
     +onRender(): void
     'Chiamato quando la finestra cambia dimensioni
-    +onResize(): void
+    +onResize(newWidth: float, newHeight: float): void
     'Clicka la gui alle coordinate date
     +onClick(xPos: float, yPos: float): void
     'Chiamato quando la gui viene chiusa (perchè cambiata con un'altra)
@@ -95,11 +115,16 @@ abstract class BaseGui {
     'Componenti che compongono questa gui
     ~components: List<GuiComponent>
 
+    ~width: float;
+    ~height: float;
+
     'Disegna i componenti della gui
     +onRender(): void
     'Si occupa di determinare quale elemento della gui sia stato clickato
     'e richiama il relativo metodo
     +onClick(xPos: float, yPos: float): void
+    'Setta dimensioni e richiama l'altro onResize
+    +onResize(newWidth: float, newHeight: float): void
     --
     'Metodi vuoti implementati solo per evitare di doverlo
     'poi fare per ogni classe che estende questa

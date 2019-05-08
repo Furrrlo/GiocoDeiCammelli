@@ -9,6 +9,9 @@ public abstract class BaseGui implements Gui {
 
     protected final List<GuiComponent> components = new ArrayList<>();
 
+    protected float width;
+    protected float height;
+
     @Override
     public void onRender() {
         components.forEach(GuiComponent::onRender);
@@ -40,6 +43,12 @@ public abstract class BaseGui implements Gui {
     }
 
     @Override
+    public void onResize(float width, float height) {
+        this.width = width;
+        this.height = height;
+        onResize();
+    }
+
     public void onResize() {
     }
 }

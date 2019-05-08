@@ -7,16 +7,15 @@ public class EntityManager {
 
     private final List<Entity> entities;
     private final PoolList pools;
- 
-    public EntityManager(int poolNumberX,int poolNumberY) {
+
+    public EntityManager(int poolNumberX, int poolNumberY) {
         this.entities = new ArrayList<>();
 
-        this.addEntity(new BallEntity());
-
-        this.pools = new PoolList(poolNumberX,poolNumberY);
+        this.pools = new PoolList(poolNumberX, poolNumberY);
         for(int i = 0; i < pools.getList().size(); i++) {
             this.addEntity(pools.getList().get(i));
         }
+        this.addEntity(new BallEntity());
     }
 
     public void render() {
@@ -25,7 +24,7 @@ public class EntityManager {
         }
     }
 
-    private void addEntity(Entity e){
+    private void addEntity(Entity e) {
         entities.add(e);
     }
 }

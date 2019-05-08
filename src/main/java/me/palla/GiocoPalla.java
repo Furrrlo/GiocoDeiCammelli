@@ -3,6 +3,7 @@ package me.palla;
 import me.palla.entity.EntityManager;
 import me.palla.gui.GameGui;
 import me.palla.gui.Gui;
+import me.palla.util.ScaledResolution;
 import me.palla.value.ValueManager;
 import processing.core.PApplet;
 import processing.event.KeyEvent;
@@ -10,19 +11,20 @@ import processing.event.MouseEvent;
 
 public class GiocoPalla extends PApplet {
 
+    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_HEIGHT = 800;
+
     private static GiocoPalla INSTANCE;
 
     private ValueManager valueManager;
     private EntityManager entityManager;
     private Gui currentGui;
 
+    private ScaledResolution scaledResolution;
     private float oldWidth;
     private float oldHeight;
     
     private boolean isPaused;
-    
-    private int sizeX=800;
-    private int sizeY=800;
 
     public GiocoPalla() {}
 
@@ -32,7 +34,8 @@ public class GiocoPalla extends PApplet {
 
     @Override
     public void settings() {
-        size(sizeX, sizeY);
+        size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        scaledResolution = new ScaledResolution(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     @Override
@@ -41,26 +44,30 @@ public class GiocoPalla extends PApplet {
         surface.setResizable(true);
 
         valueManager = new ValueManager();
-        entityManager = new EntityManager(7,7);
+        entityManager = new EntityManager(7, 7);
         displayGui(new GameGui());
     }
 
     @Override
     public void draw() {
 
-        if(width != oldWidth || height != oldHeight)
-            currentGui.onResize();
+        if(width != oldWidth || height != oldHeight) {
+            scaledResolution = new ScaledResolution(width, height, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+            currentGui.onResize(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+        }
         oldWidth = width;
         oldHeight = height;
 
         clear();
         background(33, 33, 33);
+        scaledResolution.setupScaling(true);
         currentGui.onRender();
+        scaledResolution.setupScaling(false);
     }
 
     @Override
     public void mouseClicked(MouseEvent event) {
-        currentGui.onClick(event.getX(), event.getY());
+        currentGui.onClick(scaledResolution.scaleX(event.getX()), scaledResolution.scaleY(event.getY()));
     }
 
     @Override
@@ -76,7 +83,7 @@ public class GiocoPalla extends PApplet {
             currentGui.onGuiClose();
 
         currentGui = newGui;
-        currentGui.onResize();
+        currentGui.onResize(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
     }
 
     // Getters
@@ -97,14 +104,7 @@ public class GiocoPalla extends PApplet {
         return isPaused;
     }
 
-    public int getSizeX() {
-        return sizeX;
+    public ScaledResolution getScaledResolution() {
+        return scaledResolution;
     }
-
-    public int getSizeY() {
-        return sizeY;
-    }
-    
-    
-
 }

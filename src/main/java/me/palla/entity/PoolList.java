@@ -1,6 +1,7 @@
 
 package me.palla.entity;
 import me.palla.GiocoPalla;
+import me.palla.util.ScaledResolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +13,22 @@ public class PoolList {
     private final int poolNumberX;
     private final int poolNumberY;
     
-    private int lastX;  
-    private int lastY;
-    private int lenghtX;
-    private int lenghtY;
+    private float lastX;
+    private float lastY;
+    private float lenghtX;
+    private float lenghtY;
     private final int border = 50;
-    
-    
      
-    public PoolList(int poolNumberX,int poolNumberY){
+    public PoolList(int poolNumberX, int poolNumberY){
         this.poolNumberX = poolNumberX;
         this.poolNumberY = poolNumberY;
+
+        final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
+        lenghtX = (res.getScaledWidth() - (border * 2)) / poolNumberX;
+        lenghtY = (res.getScaledHeight() - (border * 2)) / poolNumberY;
         lastX = border;
         lastY = border;
-        lenghtX = (GiocoPalla.getInstance().getSizeX() - (border * 2)) / poolNumberX;
-        lenghtY = (GiocoPalla.getInstance().getSizeY() - (border * 2)) / poolNumberY;
+
         this.list = new ArrayList<>();
         for(int i = 0; i < poolNumberX; i++){
             for(int j = 0; j < poolNumberY; j++){
