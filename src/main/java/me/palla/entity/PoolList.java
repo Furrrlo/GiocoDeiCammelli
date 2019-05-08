@@ -1,37 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package me.palla.entity;
 import java.util.ArrayList;
 import java.util.List;
+import me.palla.GiocoPalla;
 
-/**
- *
- * @author tiabr
- */
 public class PoolList {
     
     private List<PoolEntity> list;
-    private final int poolNumber;
+    
+    private final int poolNumberX;
+    private final int poolNumberY;
+    
+    private int lastX;  
+    private int lastY;
+    private int lenghtX;
+    private int lenghtY;
+    private final int border=50;
+    
+    
      
-    public PoolList(int poolNumber){
-        this.poolNumber=poolNumber;
+    public PoolList(int poolNumberX,int poolNumberY){
+        this.poolNumberX=poolNumberX;
+        this.poolNumberY=poolNumberY;
+        lastX=border;
+        lastY=border;
+        lenghtX=(GiocoPalla.getInstance().getSizeX()-(border*2))/(poolNumberX);
+        lenghtY=(GiocoPalla.getInstance().getSizeY()-(border*2))/(poolNumberY);
         this.list = new ArrayList<>();
-        for(int i=0;i<poolNumber;i++){
-            //addPool(new PoolEntity(100,100,200,200,10,10,5));
+        for(int i=0;i<poolNumberX;i++){
+            for(int j=0;j<poolNumberY;j++){         
+                addPool(new PoolEntity(lastX,lastY,lenghtX,lenghtY,10,10,5));
+                lastX+=lenghtX+2;
+            }
+            lastX=border;
+            lastY+=lenghtY+2;
         }
     }
     
     public void addPool(PoolEntity pool){
-        if(list.size()<poolNumber){
+        if(list.size()<poolNumberX*poolNumberY){
             list.add(pool);
         } 
     }
 
-    public int getPoolNumber() {
-        return poolNumber;
+    public int getPoolNumberX() {
+        return poolNumberX;
+    }
+    
+     public int getPoolNumberY() {
+        return poolNumberY;
     }
 
     public List<PoolEntity> getList() {
@@ -42,3 +59,4 @@ public class PoolList {
     
     
 }
+
