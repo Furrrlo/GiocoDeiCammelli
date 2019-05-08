@@ -5,10 +5,16 @@ import java.util.List;
 
 public class EntityManager {
     private final List<Entity> entities;
-
-    public EntityManager() {
+    
+    private final PoolList pools;
+ 
+    public EntityManager(int poolNumberX,int poolNumberY) {
         this.entities = new ArrayList<>();
+        pools=new PoolList(poolNumberX,poolNumberY);
         this.addEntity(new BallEntity());
+        for(int i=0;i<pools.getList().size();i++){
+            this.addEntity(pools.getList().get(i));
+        }
     }
 
     public void render() {
