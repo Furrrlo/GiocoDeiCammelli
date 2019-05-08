@@ -54,7 +54,7 @@ public class OptionsGui extends BaseGui {
             components.get(i).setY(inizioY + temp);
             //per la x:
             //lunghezzaSchermo/2 e lo butto in setCenterX()
-            components.get(i).setCenterX(GiocoPalla.getInstance().width);
+            components.get(i).setCenterX(GiocoPalla.getInstance().width/2);
         }
     }
 }
