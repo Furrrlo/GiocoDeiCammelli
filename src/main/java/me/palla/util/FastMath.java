@@ -17,18 +17,22 @@ public class FastMath {
 
     private FastMath() {}
 
-    private static float lookup(float angle) {
-        final int angle0 = (int) (angle * 180F / PI) % 360;
-        if(angle0 < 0)
-            return -SIN_TABLE[-angle0 * PRECISION_PER_DEGREE];
-        return SIN_TABLE[angle0 * PRECISION_PER_DEGREE];
+    private static float lookup(float degrees) {
+        degrees = degrees % 360;
+        if(degrees < 0)
+            return -SIN_TABLE[(int) (-degrees * PRECISION_PER_DEGREE)];
+        return SIN_TABLE[(int) (degrees * PRECISION_PER_DEGREE)];
     }
 
-    public static float sin(float angle) {
-        return lookup(angle);
+    public static float sin(float radians) {
+        return lookup(toDegrees(radians));
     }
 
-    public static float cos(float angle) {
-        return lookup(angle + 90);
+    public static float cos(float radians) {
+        return lookup(toDegrees(radians) + 90);
+    }
+
+    private static float toDegrees(float radians) {
+        return radians * 180.0F / PI;
     }
 }
