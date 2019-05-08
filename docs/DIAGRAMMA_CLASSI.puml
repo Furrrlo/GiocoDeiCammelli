@@ -3,7 +3,7 @@
 PApplet <|-- GiocoPalla
 
 class GiocoPalla {
-    -{static} INSTANCE: GiocoDeiCammelli
+    -{static}INSTANCE: GiocoDeiCammelli
     --
     -inputManager: InputManager
     -valueManager: ValueManager
@@ -151,7 +151,7 @@ BaseGui <|-- GameGui
 
 'Schermata di gioco, in cui si svolge il gioco vero e proprio
 class GameGui {
-    -backgroundColor: ColorValue
+    -{static}backgroundColor: ColorValue
     'Inizializza il bottone per mettere il gioco in pausa
     +GameGui()
     'Disegna il gioco e i componenti della gui

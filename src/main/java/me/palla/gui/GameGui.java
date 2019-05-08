@@ -8,11 +8,13 @@ import me.palla.value.ColorValue;
 public class GameGui extends BaseGui {
 
     private final EntityManager entityManager;
-    private final ColorValue backgroundColor;
+    private static ColorValue backgroundColor;
 
     public GameGui() {
+        if(backgroundColor == null)
+            backgroundColor = new ColorValue("Colore sfondo", 255,255,255);
+
         entityManager = GiocoPalla.getInstance().getEntityManager();
-        this.backgroundColor = new ColorValue("Colore sfondo", 255,255,255);        
         PauseButton pauseButton = new PauseButton(new PauseButtonClickPerformed());
         pauseButton.setX(200);
         pauseButton.setY(300);
