@@ -20,6 +20,9 @@ public class GiocoPalla extends PApplet {
     private float oldHeight;
     
     private boolean isPaused;
+    
+    private int sizeX=800;
+    private int sizeY=800;
 
     public GiocoPalla() {}
 
@@ -29,7 +32,7 @@ public class GiocoPalla extends PApplet {
 
     @Override
     public void settings() {
-        size(800, 800);
+        size(sizeX, sizeY);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class GiocoPalla extends PApplet {
         surface.setResizable(true);
 
         valueManager = new ValueManager();
-        entityManager = new EntityManager();
+        entityManager = new EntityManager(7,7);
         displayGui(new GameGui());
     }
 
@@ -93,5 +96,15 @@ public class GiocoPalla extends PApplet {
     public boolean isPaused() {
         return isPaused;
     }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
+    
+    
 
 }
