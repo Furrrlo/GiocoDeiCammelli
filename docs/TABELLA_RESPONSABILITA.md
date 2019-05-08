@@ -22,7 +22,7 @@ sono modificate da tutti in base alle necessità
 |GiocoPalla                     |X       |      |       |        |
 |EntityManager                  |        |X     |       |        |
 |BallEntity                     |        |X     |       |        |
-|PoolEntity                     |        |X     |       |        |
+|PoolEntity                     |X       |      |       |        |
 |PhysicsThread                  |        |X     |       |        |
 |OptionsGui                     |        |      |       |X       |
 |PauseMenuGui                   |        |      |X      |        |
