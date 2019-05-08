@@ -5,6 +5,7 @@ import me.palla.gui.GameGui;
 import me.palla.gui.Gui;
 import me.palla.value.ValueManager;
 import processing.core.PApplet;
+import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
 public class GiocoPalla extends PApplet {
@@ -57,6 +58,14 @@ public class GiocoPalla extends PApplet {
     @Override
     public void mouseClicked(MouseEvent event) {
         currentGui.onClick(event.getX(), event.getY());
+    }
+
+    @Override
+    public void keyPressed(KeyEvent event) {
+        if(event.getKeyCode() == ESC) {
+            key = 0;
+            keyCode = 0;
+        }
     }
 
     public void displayGui(Gui newGui) {
