@@ -43,7 +43,7 @@ public class OptionsGui extends BaseGui {
             totHeight += components.get(i).getHeight();
         }
         //altezzaSchermo/2 - altezzaComponenti/2 --> punto iniziale
-        inizioY = GiocoPalla.getInstance().height/2 - totHeight/2;
+        inizioY = (int) (height / 2 - totHeight / 2);
         
         //1 componente: quella y; 2 componente: quella y + altezza 1 e cos� via
         for (int i = 0; i < components.size(); i++) {
