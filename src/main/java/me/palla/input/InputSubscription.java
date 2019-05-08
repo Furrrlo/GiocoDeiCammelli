@@ -1,6 +1,11 @@
 package me.palla.input;
 
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InputSubscription {
 
@@ -10,6 +15,12 @@ public class InputSubscription {
     protected InputSubscription(boolean isBlocking) {
         // Se isBlocking è vero, inizializza queue a LinkedBlockingQueue
         // altrimenti a ConcurrentLinkedQueue
+        if (isBlocking){
+            queue = new LinkedBlockingQueue();
+        }
+        else {
+            queue = new ConcurrentLinkedQueue();
+        }
     }
 
     public InputData poll() {
@@ -18,7 +29,18 @@ public class InputSubscription {
         // altrimenti il poll normale
 
         // Se poll o take ritornano null, ritornare NoData#instance()
-        return null;
+        Object temp = null;
+        if (isBlocking) {
+            try {
+                temp = ((BlockingQueue)queue).take();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(InputSubscription.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (temp == null)
+            return NoInput.instance();
+        else
+            return null;
     }
 
     public <T extends InputData> T poll(Class<T> type) {
