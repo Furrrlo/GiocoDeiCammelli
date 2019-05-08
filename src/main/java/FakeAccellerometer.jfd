@@ -1,0 +1,83 @@
+JFDML JFormDesigner: "6.0.4.1.172" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.swingx.VerticalLayout ) {
+			"gap": 15
+		} ) {
+			name: "panel1"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "X Axis:"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "changeX"
+				"text": "Auto change"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) {
+				"alignment": 0
+			} ) {
+				name: "panel3"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label4"
+					"text": "Change Step:"
+				} )
+				add( new FormComponent( "javax.swing.JSpinner" ) {
+					name: "spinnerX"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JSlider" ) {
+				name: "sliderX"
+				"majorTickSpacing": 100
+				"maximum": 850
+				"minimum": -850
+				"minorTickSpacing": 10
+				"paintLabels": true
+				"paintTicks": true
+				"value": 0
+				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "sliderStateChanged", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "Y Axis:"
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "changeY"
+				"text": "Auto change"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) {
+				"alignment": 0
+			} ) {
+				name: "panel2"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "Change Step:"
+				} )
+				add( new FormComponent( "javax.swing.JSpinner" ) {
+					name: "spinnerY"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JSlider" ) {
+				name: "sliderY"
+				"majorTickSpacing": 100
+				"maximum": 850
+				"minimum": -850
+				"minorTickSpacing": 10
+				"paintLabels": true
+				"paintTicks": true
+				"value": 0
+				addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "sliderStateChanged", true ) )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 500, 400 )
+		} )
+	}
+}

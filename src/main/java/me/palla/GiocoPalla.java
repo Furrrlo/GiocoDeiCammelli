@@ -3,6 +3,7 @@ package me.palla;
 import me.palla.entity.EntityManager;
 import me.palla.gui.GameGui;
 import me.palla.gui.Gui;
+import me.palla.input.InputManager;
 import me.palla.util.ScaledResolution;
 import me.palla.value.ValueManager;
 import processing.core.PApplet;
@@ -17,6 +18,7 @@ public class GiocoPalla extends PApplet {
     private static GiocoPalla INSTANCE;
 
     private ValueManager valueManager;
+    private InputManager inputManager;
     private EntityManager entityManager;
     private Gui currentGui;
 
@@ -44,6 +46,7 @@ public class GiocoPalla extends PApplet {
         surface.setResizable(true);
 
         valueManager = new ValueManager();
+        inputManager = new InputManager();
         entityManager = new EntityManager(7, 6);
         displayGui(new GameGui());
     }
@@ -90,6 +93,10 @@ public class GiocoPalla extends PApplet {
 
     public ValueManager getValueManager() {
         return valueManager;
+    }
+
+    public InputManager getInputManager() {
+        return inputManager;
     }
 
     public EntityManager getEntityManager() {
