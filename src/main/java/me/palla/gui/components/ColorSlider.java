@@ -108,7 +108,7 @@ public class ColorSlider extends BaseGuiComponent {
         GiocoPalla.getInstance().fill(ColorValue.getRainbowColor().getRGB());
         GiocoPalla.getInstance().rect(0, -1, rectWidth, sliderHeight + 1, radius);
 
-        GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER),0);
+        GiocoPalla.getInstance().translate(-(sliderWidth + RECT_BORDER),0);
         GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER),0);
         GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER),0);
         GiocoPalla.getInstance().translate(0, -(firstLineHeight + VERTICAL_BORDER));
