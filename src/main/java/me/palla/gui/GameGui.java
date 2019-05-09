@@ -16,11 +16,12 @@ public class GameGui extends BaseGui {
             backgroundColor = new ColorValue("Colore sfondo", 255,255,255);
 
         entityManager = GiocoPalla.getInstance().getEntityManager();
-        PauseButton pauseButton = new PauseButton(new PauseButtonClickPerformed());
-        pauseButton.setX(10);
-        pauseButton.setY(GiocoPalla.getInstance().getScaledResolution().getWidth() - 10); 
+        PauseButton pauseButton = new PauseButton(new PauseButtonClickPerformed());        
+        final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
         pauseButton.setWidth(200);
         pauseButton.setHeight(50);
+        pauseButton.setX(res.getWidth() - pauseButton.getWidth() - 10);
+        pauseButton.setY(10);         
         components.add(pauseButton);        
         //classe che estende Runnable e dentro l'override del run dire di cambiare la 
         //schermata con displayGui passando come parametro la nuova schermata (pausa)
