@@ -6,13 +6,14 @@ public class InputManager {
 
     private Map<Object, InputSubscription> subscriptions;
 
-    public InputSubscription subscribe(Object obj) {
-        //
-        return null;
+    public InputSubscription subscribe(Object obj, boolean isBlocking) {
+        InputSubscription temp = new InputSubscription(isBlocking);
+        subscriptions.put(obj, temp);
+        return temp;
     }
 
     public void unsubscribe(Object obj) {
-
+        subscriptions.remove(obj);
     }
 
     public void post(InputData letto) {
