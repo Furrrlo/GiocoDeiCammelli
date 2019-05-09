@@ -10,6 +10,11 @@ public class InputGyroscope implements InputData {
         this.yAxis = yAxis;
     }
     
+    public InputGyroscope(){
+        xAxis = 0;
+        yAxis = 0;
+    }
+    
     //get e set
     public float getxAxis() {
         return xAxis;
