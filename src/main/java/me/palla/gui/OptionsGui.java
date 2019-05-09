@@ -3,58 +3,56 @@ import me.palla.GiocoPalla;
 import me.palla.gui.components.ColorSlider;
 import me.palla.value.ColorValue;
 import me.palla.value.Value;
-
+import me.palla.gui.components.PauseMenuButton;
 import java.awt.*;
 import java.util.List;
 
-/**
- * @author Borzì Davide
- * @brief gestisce le opzioni di gioco modificabili dall'utente
- * @version 1.0
- */
-
 public class OptionsGui extends BaseGui {
     private final List<Value<?>> temp;
+    private PauseMenuButton button;
+    
+    private static final int BUTTON_SIZE = 50;
+    private static final int BUTTON_MARGIN = 10;
+    private static final int NORMAL_COLOR = new Color(0xFF000000, true).getRGB();
+    private static final int FOCUSED_COLOR = new Color(0xFFf4c842, true).getRGB();
     
     public OptionsGui(){
-        //inizializzazione nel costruttore
-        //in base al tipo di opzioni, genero un tipo diversi di componente (tot: 2 funzioni, 1 componente)
-        
-        //prendo valori
         temp = GiocoPalla.getInstance().getValueManager().getValues();
-        
+        button = new PauseMenuButton("Resume", NORMAL_COLOR, FOCUSED_COLOR, BUTTON_SIZE,
+                () -> GiocoPalla.getInstance().displayGui(new GameGui()));
+        components.add(button);
+
         for (Integer i = 0; i < temp.size(); i++) {
             final Value<?> value = temp.get(i);
-
-            //per ogni elemento controllo se getType è quello che mi serve (per ora solo Color)
-            if (temp.get(i).getValueType().equals(Color.class)) {        //E' GIUSTO?
-                //se è di tipo Color, creo un nuovo ColorSlider e lo aggiungo ai componenti
+            if (temp.get(i).getValueType().equals(Color.class)) {        
                 components.add(new ColorSlider((ColorValue) value));
             }
         }
     }
     
-    public void onResize(){
-        //posizionamento al centro
-        
+    public void onResize(){        
         int totHeight = 0, inizioY = 0;
-        //calcolo altezza totale dei componenti
         for (int i = 0; i < components.size(); i++) {
             totHeight += components.get(i).getHeight();
         }
-        //altezzaSchermo/2 - altezzaComponenti/2 --> punto iniziale
-        inizioY = (int) (height / 2 - totHeight / 2);
         
-        //1 componente: quella y; 2 componente: quella y + altezza 1 e cos� via
+        inizioY = (int) (height / 2 - totHeight / 2);
         for (int i = 0; i < components.size(); i++) {
             int temp = 0;
             for (int j = 0; j < i; j++) {
-                temp += components.get(j).getHeight();
+                if(!components.get(j).equals(PauseMenuButton.class))
+                    temp += components.get(j).getHeight();
             }
-            components.get(i).setY(inizioY + temp);
-            //per la x:
-            //lunghezzaSchermo/2 e lo butto in setCenterX()
-            components.get(i).setCenterX(width / 2);
+            
+            if(!components.get(i).equals(PauseMenuButton.class)){
+                components.get(i).setY(inizioY + temp);
+                components.get(i).setCenterX(width / 2);
+            }
+            
+            if(components.get(i).equals(PauseMenuButton.class)){
+                
+            }
+                
         }
     }
 }
