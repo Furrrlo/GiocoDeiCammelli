@@ -6,6 +6,7 @@ import me.palla.value.Value;
 import me.palla.gui.components.PauseMenuButton;
 import java.awt.*;
 import java.util.List;
+import me.palla.util.ScaledResolution;
 
 public class OptionsGui extends BaseGui {
     private final List<Value<?>> temp;
@@ -18,7 +19,7 @@ public class OptionsGui extends BaseGui {
     
     public OptionsGui(){
         temp = GiocoPalla.getInstance().getValueManager().getValues();
-        button = new PauseMenuButton("Resume", NORMAL_COLOR, FOCUSED_COLOR, BUTTON_SIZE,
+        button = new PauseMenuButton("Options", NORMAL_COLOR, FOCUSED_COLOR, BUTTON_SIZE,
                 () -> GiocoPalla.getInstance().displayGui(new GameGui()));
         components.add(button);
 
@@ -50,7 +51,11 @@ public class OptionsGui extends BaseGui {
             }
             
             if(components.get(i).equals(PauseMenuButton.class)){
-                
+                final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
+                button.setHeight(50);
+                button.setWidth(250);
+                button.setX(button.getWidth() + 10);
+                button.setY(10);
             }
                 
         }
