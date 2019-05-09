@@ -17,8 +17,8 @@ public class GameGui extends BaseGui {
 
         entityManager = GiocoPalla.getInstance().getEntityManager();
         PauseButton pauseButton = new PauseButton(new PauseButtonClickPerformed());
-        pauseButton.setX(200);
-        pauseButton.setY(300);
+        pauseButton.setX(10);
+        pauseButton.setY(10);
         pauseButton.setWidth(200);
         pauseButton.setHeight(50);
         components.add(pauseButton);        
