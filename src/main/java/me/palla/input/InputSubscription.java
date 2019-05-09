@@ -61,7 +61,7 @@ public class InputSubscription {
     }
 
     protected void post(InputData letto) {
-        // Aggiunge il valore alla queue
-        queue.add(letto);
+        // Aggiunge il valore alla queue 
+        queue.add(letto); //ok
     }
 }
