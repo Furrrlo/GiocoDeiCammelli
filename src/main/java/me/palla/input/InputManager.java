@@ -1,11 +1,16 @@
 package me.palla.input;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class InputManager {
 
     private Map<Object, InputSubscription> subscriptions;
 
+    public InputManager()
+    {
+        subscriptions = new HashMap<Object, InputSubscription>();
+    }
     public InputSubscription subscribe(Object obj, boolean isBlocking) {
         InputSubscription temp = new InputSubscription(isBlocking);
         subscriptions.put(obj, temp);
