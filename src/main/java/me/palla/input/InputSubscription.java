@@ -49,10 +49,19 @@ public class InputSubscription {
         // è quello ritornato dal metodo poll
         //
         // Se value è instanza di NoInput, ritornare null
-        return null;
+        InputData value = null;
+        do
+        {
+            value = poll();
+        } while (!type.isAssignableFrom(value.getClass()));
+        
+        if (value == NoInput.instance())
+           return null;
+        return (T)value;
     }
 
     protected void post(InputData letto) {
         // Aggiunge il valore alla queue
+        queue.add(letto);
     }
 }
