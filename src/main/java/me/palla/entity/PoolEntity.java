@@ -82,10 +82,10 @@ public class PoolEntity implements Entity {
 
         GiocoPalla.getInstance().stroke(33, 33, 33);
         GiocoPalla.getInstance().fill(33, 33, 33);
-        GiocoPalla.getInstance().rect(xPos, yPos, width, length);
+        GiocoPalla.getInstance().rect(xPos, yPos, width, length,20);
 
         GiocoPalla.getInstance().fill(Color.BLUE.getRGB());
-        GiocoPalla.getInstance().rect(xPos + startWaterX, yPos, waterXWidth, length);
+        //GiocoPalla.getInstance().rect(xPos + startWaterX, yPos, waterXWidth,length);
 
         GiocoPalla.getInstance().popStyle();
     }
