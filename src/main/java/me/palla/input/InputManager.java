@@ -11,8 +11,8 @@ public class InputManager {
     {
         subscriptions = new HashMap<Object, InputSubscription>();
     }
-    public InputSubscription subscribe(Object obj, boolean isBlocking) {
-        InputSubscription temp = new InputSubscription(isBlocking);
+    public InputSubscription subscribe(Object obj) {
+        InputSubscription temp = new InputSubscription();
         subscriptions.put(obj, temp);
         return temp;
     }

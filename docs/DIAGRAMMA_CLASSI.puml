@@ -65,13 +65,8 @@ InputManager"1" -- "0...*"InputSubscription: >
 
 class InputSubscription {
     -queue: Queue<InputData>
-    -isBlocking: boolean
-
-    ~InputSubscription(isBlocking: boolean)
 
     +poll(): InputData
-    +poll(Class<T> type): <T extends InputData> T
-
     ~post(letto: InputData);
 }
 
