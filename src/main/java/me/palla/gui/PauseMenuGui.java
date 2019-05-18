@@ -5,7 +5,7 @@ import me.palla.gui.components.PauseMenuButton;
 
 import java.awt.*;
 
-public class PauseMenuGui extends BaseGui {
+public class PauseMenuGui extends PauseGui {
 
     private static final int BUTTON_SIZE = 50;
     private static final int BUTTON_MARGIN = 10;

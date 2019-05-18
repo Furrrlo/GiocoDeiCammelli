@@ -1,14 +1,15 @@
 package me.palla.gui;
 import me.palla.GiocoPalla;
 import me.palla.gui.components.ColorSlider;
+import me.palla.gui.components.PauseMenuButton;
+import me.palla.util.ScaledResolution;
 import me.palla.value.ColorValue;
 import me.palla.value.Value;
-import me.palla.gui.components.PauseMenuButton;
+
 import java.awt.*;
 import java.util.List;
-import me.palla.util.ScaledResolution;
 
-public class OptionsGui extends BaseGui {
+public class OptionsGui extends PauseGui {
     private final List<Value<?>> temp;
     private PauseMenuButton button;
     

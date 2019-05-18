@@ -85,7 +85,7 @@ public class GiocoPalla extends PApplet {
         if(currentGui != null)
             currentGui.onGuiClose();
 
-        isPaused = (newGui instanceof GameGui);
+        isPaused = !(newGui instanceof GameGui);
         currentGui = newGui;
         currentGui.onResize(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
     }
