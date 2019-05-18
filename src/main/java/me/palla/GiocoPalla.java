@@ -69,7 +69,7 @@ public class GiocoPalla extends PApplet {
     }
 
     @Override
-    public void mouseClicked(MouseEvent event) {
+    public void mousePressed(MouseEvent event) {
         currentGui.onClick(scaledResolution.scaleX(event.getX()), scaledResolution.scaleY(event.getY()));
     }
 
