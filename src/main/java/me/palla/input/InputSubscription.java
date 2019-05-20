@@ -13,9 +13,10 @@ public class InputSubscription {
     private LinkedBlockingQueue<InputData> queue;
     private Semaphore sem;
     protected InputSubscription() {
+        sem = new Semaphore(0);
     }
 
-    public InputData poll() {
+    public InputData poll() {        
         try {
             sem.acquire();
         } catch (InterruptedException ex) {
@@ -26,7 +27,6 @@ public class InputSubscription {
     }
 
     protected void post(InputData letto) {
-        // Aggiunge il valore alla queue 
         queue.add(letto); //ok
         sem.release();
     }
