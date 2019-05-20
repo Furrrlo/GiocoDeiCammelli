@@ -22,7 +22,6 @@ public class InputManager {
     }
 
     public void post(InputData letto) {
-        // per ogni subscription, richiamare il metodo post
         for (InputSubscription subscription : subscriptions.values())
             subscription.post(letto);
     }
