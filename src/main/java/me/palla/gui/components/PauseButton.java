@@ -11,6 +11,7 @@ public class PauseButton extends BaseGuiComponent {
 
     private int rectColor;
     private int strokeColor;
+    private int focusedColor;
     private int focusedStrokeColor;
 
     private final Collection<Runnable> actionListeners;
@@ -21,26 +22,34 @@ public class PauseButton extends BaseGuiComponent {
 
         rectColor = new Color(0xFF42a4f4, true).getRGB();
         strokeColor = new Color(0xFFD9D9D9, true).getRGB();
-        focusedStrokeColor = new Color(0xffffaa23, true).getRGB();
+        focusedColor = new Color(0xffffaa23, true).getRGB();
+        focusedStrokeColor = new Color(0x000000, true).getRGB();
     }
 
     @Override
     public void onRender() {
         
+        if (GiocoPalla.getInstance().isPaused())
+            return;
         GiocoPalla.getInstance().pushStyle();
-        if (!GiocoPalla.getInstance().isPaused())
+        
+        if (this.isHovered())
+        {
+            GiocoPalla.getInstance().fill(focusedColor); 
+            GiocoPalla.getInstance().stroke(focusedStrokeColor);
+        }
+        else     
         {
             GiocoPalla.getInstance().fill(rectColor); 
-        if (this.isHovered())
-            GiocoPalla.getInstance().fill(focusedStrokeColor);   
-        else        
             GiocoPalla.getInstance().stroke(strokeColor);
+        }
         
         GiocoPalla.getInstance().strokeWeight(2.5F);
-
         GiocoPalla.getInstance().rect(x, y, width, height, 10);
 
-        GiocoPalla.getInstance().fill(strokeColor);
+        
+        //GiocoPalla.getInstance().fill(new Color(0xffffe8, true).getRGB());
+        GiocoPalla.getInstance().stroke(strokeColor);
         GiocoPalla.getInstance().strokeWeight(1);
 
         final float topPadding = height / 4;
@@ -51,8 +60,6 @@ public class PauseButton extends BaseGuiComponent {
         GiocoPalla.getInstance().rect(x + width - strokeWidth - leftPadding, y + topPadding, strokeWidth, height - topPadding * 2);
 
         GiocoPalla.getInstance().popStyle();
-        }      
-        //GiocoPalla.getInstance().fill(new Color(0xffcc66ff, true).getRGB()); 
     }
 
     @Override
