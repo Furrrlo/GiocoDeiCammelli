@@ -11,6 +11,7 @@ public class PauseButton extends BaseGuiComponent {
 
     private int rectColor;
     private int strokeColor;
+    private int focusedStrokeColor;
 
     private final Collection<Runnable> actionListeners;
 
@@ -20,14 +21,19 @@ public class PauseButton extends BaseGuiComponent {
 
         rectColor = new Color(0xFF42a4f4, true).getRGB();
         strokeColor = new Color(0xFFD9D9D9, true).getRGB();
+        focusedStrokeColor = new Color(0xffffaa23, true).getRGB();
     }
 
     @Override
     public void onRender() {
         GiocoPalla.getInstance().pushStyle();
 
-        GiocoPalla.getInstance().fill(rectColor);
-        GiocoPalla.getInstance().stroke(strokeColor);
+        GiocoPalla.getInstance().fill(rectColor); 
+        if (this.isHovered())
+            GiocoPalla.getInstance().fill(focusedStrokeColor);   
+        else        
+            GiocoPalla.getInstance().stroke(strokeColor);
+        
         GiocoPalla.getInstance().strokeWeight(2.5F);
 
         GiocoPalla.getInstance().rect(x, y, width, height, 10);
