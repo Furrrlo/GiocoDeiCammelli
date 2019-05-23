@@ -8,7 +8,7 @@ import java.awt.*;
 public class PauseGui extends BaseGui {
 
     private static final GameGui BACKGROUND_GUI = new GameGui();
-    private static final int OVERLAY_COLOR = new Color(22, 22, 22, 127).getRGB();
+    private static final int OVERLAY_COLOR = new Color(22, 22, 22, 175).getRGB();
 
     @Override
     public void onRender() {

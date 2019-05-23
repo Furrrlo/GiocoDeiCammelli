@@ -10,7 +10,7 @@ public class PauseMenuGui extends PauseGui {
     private static final int BUTTON_SIZE = 50;
     private static final int BUTTON_MARGIN = 10;
 
-    private static final int NORMAL_COLOR = new Color(0xFF000000, true).getRGB();
+    private static final int NORMAL_COLOR = new Color(0xFFFFFFFF, true).getRGB();
     private static final int FOCUSED_COLOR = new Color(0xFFf4c842, true).getRGB();
 
     public PauseMenuGui() {
