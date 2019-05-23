@@ -45,13 +45,15 @@ public class BallEntity implements Entity {
     la velocità, inizializza e starta il thread per onTick e onRender 
     */
     public BallEntity() {
-        xPos=100;
-        yPos=100;
-        radius=50;
-        th=new PhysicsThread(this);
+        xPos = 100;
+        yPos = 100;
+        radius = 50;
+        
+        th = new PhysicsThread(this);
         th.start();
-        xSpeed=1f;
-        ySpeed=1f;
+        
+        xSpeed = 1f;
+        ySpeed = 1f;
     }
 
     /*
@@ -87,18 +89,21 @@ public class BallEntity implements Entity {
     
     /*
     @brief metodo che setta la velocità sull'asse X della pallina
-    @param xSpeed la nuova velocità sull'asse X della pallina
+    @param rotationX la nuova velocità sull'asse X della pallina
     */
-    public void setxSpeed(float xSpeed) {
-        this.xSpeed = xSpeed;
+    @Override
+    public void rotateX(float rotationX) {
+        //this.xSpeed = rotationX;
+        
     }
 
     /*
     @brief metodo che setta la velocità sull'asse Y della pallina
-    @param ySpeed la nuova velocità sull'asse Y della pallina
+    @param rotationY la nuova velocità sull'asse Y della pallina
     */
-    public void setySpeed(float ySpeed) {
-        this.ySpeed = ySpeed;
+    @Override
+    public void rotateY(float rotationY) {
+        //this.ySpeed = rotationY;
     }
     
     

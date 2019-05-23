@@ -14,4 +14,8 @@ public interface Entity {
     @brief metodo che ridisegna la Entity
     */
     void onRender();
+    
+    void rotateX(float rotationX);
+    
+    void rotateY(float rotationY);
 }

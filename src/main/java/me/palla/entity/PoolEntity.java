@@ -23,6 +23,8 @@ public class PoolEntity implements Entity {
     private float rightBorderHeight;
 
     private float waterVolume;
+    
+    private final Thread physicsThread;
 
     // Rotation
 
@@ -56,6 +58,9 @@ public class PoolEntity implements Entity {
         this.leftBorderHeight = leftBorderHeight;
         this.rightBorderHeight = rightBorderHeight;
         this.waterVolume = waterVolume;
+        
+        this.physicsThread = new PhysicsThread(this);
+        this.physicsThread.start();
 
         invalidateRotationX = true;
         targetRotationX = 0;
@@ -66,14 +71,14 @@ public class PoolEntity implements Entity {
     public void onTick() {
 
         if(invalidateRotationX || targetRotationX != currRotationX) {
-            rotateX(currRotationX);
+            applyRotationX(currRotationX);
             invalidateRotationX = false;
         }
 
-        if(targetRotationX > 0)
-            currRotationX += ROTATION_STEP;
-        else if(targetRotationX < 0)
-            currRotationX -= ROTATION_STEP;
+        if(targetRotationX > 0 && currRotationX < targetRotationX)
+            currRotationX = Math.min(currRotationX + ROTATION_STEP, targetRotationX);
+        else if(targetRotationX < 0 && currRotationX > targetRotationX)
+            currRotationX = Math.max(currRotationX - ROTATION_STEP, targetRotationX);
     }
 
     @Override
@@ -82,15 +87,24 @@ public class PoolEntity implements Entity {
 
         GiocoPalla.getInstance().stroke(33, 33, 33);
         GiocoPalla.getInstance().fill(33, 33, 33);
-        GiocoPalla.getInstance().rect(xPos, yPos, width, length,20);
+        GiocoPalla.getInstance().rect(xPos, yPos, width, length, 20);
 
         GiocoPalla.getInstance().fill(Color.BLUE.getRGB());
-        //GiocoPalla.getInstance().rect(xPos + startWaterX, yPos, waterXWidth,length);
+        GiocoPalla.getInstance().rect(xPos + startWaterX, yPos, waterXWidth, length, 20);
 
         GiocoPalla.getInstance().popStyle();
     }
 
-    private void rotateX(float delta) {
+    @Override
+    public void rotateX(float rotationX) {
+        this.targetRotationX = rotationX;
+    }
+
+    @Override
+    public void rotateY(float rotationY) {
+    }
+
+    private void applyRotationX(float delta) {
 
         // For comments on how it works refer to
         // the Paint.NET file /docs/PAINT_POOL.pdn
@@ -225,9 +239,5 @@ public class PoolEntity implements Entity {
 
     public float getTargetRotationX() {
         return targetRotationX;
-    }
-
-    public void setTargetRotationX(float targetRotationX) {
-        this.targetRotationX = targetRotationX;
     }
 }

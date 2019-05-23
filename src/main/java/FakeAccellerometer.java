@@ -2,13 +2,13 @@
  * Created by JFormDesigner on Sat May 04 17:45:55 CEST 2019
  */
 
+import java.awt.FlowLayout;
 import me.palla.GiocoPalla;
 import me.palla.input.InputGyroscope;
-import org.jdesktop.swingx.VerticalLayout;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import java.awt.*;
+import org.jdesktop.swingx.VerticalLayout;
 
 public class FakeAccellerometer extends JFrame {
 
@@ -19,64 +19,102 @@ public class FakeAccellerometer extends JFrame {
         pack();
         setSize(1000, getHeight());
 
-        new Thread(() -> {
-            try {
-                int xDir = 0, yDir = 0;
-
-                while(true) {
-                    int newValue = sliderX.getValue();
-
-                    if(changeX.isSelected()) {
-                        switch (xDir) {
-                            case 0:
-                                newValue += (Integer)spinnerX.getValue();
-                                if(newValue >= sliderX.getMaximum())
-                                    xDir = 1;
-                                break;
-                            case 1:
-                                newValue -= (Integer)spinnerX.getValue();
-                                if(newValue <= sliderX.getMinimum())
-                                    xDir = 0;
-                                break;
-                        }
-                    }
-                    sliderX.setValue(newValue);
-
-                    newValue = sliderY.getValue();
-                    if(changeY.isSelected()) {
-                        switch (yDir) {
-                            case 0:
-                                newValue += (Integer)spinnerY.getValue();
-                                if(newValue >= sliderY.getMaximum())
-                                    yDir = 1;
-                                break;
-                            case 1:
-                                newValue -= (Integer)spinnerY.getValue();
-                                if(newValue <= sliderY.getMinimum())
-                                    yDir = 0;
-                                break;
-                        }
-                    }
-                    sliderY.setValue(newValue);
-
-                    Thread.sleep(1000 / 20);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        final Thread th1 = new Thread(new SensorRunnable());
+        final Thread th2 = new Thread(new AutoChangeRunnable());
+        
+        th1.setDaemon(true);
+        th2.setDaemon(true);
+        
+        th1.start();
+        th2.start();
     }
 
     private void sliderStateChanged(ChangeEvent e) {
-        JSlider source = (JSlider)e.getSource();
+    }
 
-        if (source.getValueIsAdjusting())
-            return;
+    private class SensorRunnable implements Runnable {
 
-        GiocoPalla.getInstance().getInputManager().post(new InputGyroscope(
-                sliderX.getValue() / 10f,
-                sliderY.getValue() / 10f
-        ));
+        @Override
+        public void run() {
+            try {
+                run0();
+            } catch (InterruptedException ex) {
+                System.err.println("Sensor thread got unexpectedly interrupted");
+                ex.printStackTrace();
+                System.exit(-1);
+            }
+        }
+
+        private void run0() throws InterruptedException {
+            while (true) {
+                GiocoPalla.getInstance().getInputManager().post(new InputGyroscope(
+                        sliderX.getValue() / 10f,
+                        sliderY.getValue() / 10f
+                ));
+                Thread.sleep(50);
+            }
+        }
+    }
+
+    private class AutoChangeRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                run0();
+            } catch (InterruptedException ex) {
+                System.err.println("Sensor thread got unexpectedly interrupted");
+                ex.printStackTrace();
+                System.exit(-1);
+            }
+        }
+
+        private void run0() throws InterruptedException {
+            int xDir = 0, yDir = 0;
+
+            while (true) {
+                int newValue = sliderX.getValue();
+
+                if (changeX.isSelected()) {
+                    switch (xDir) {
+                        case 0:
+                            newValue += (Integer) spinnerX.getValue();
+                            if (newValue >= sliderX.getMaximum()) {
+                                xDir = 1;
+                            }
+                            break;
+                        case 1:
+                            newValue -= (Integer) spinnerX.getValue();
+                            if (newValue <= sliderX.getMinimum()) {
+                                xDir = 0;
+                            }
+                            break;
+                    }
+                }
+                sliderX.setValue(newValue);
+
+                newValue = sliderY.getValue();
+                if (changeY.isSelected()) {
+                    switch (yDir) {
+                        case 0:
+                            newValue += (Integer) spinnerY.getValue();
+                            if (newValue >= sliderY.getMaximum()) {
+                                yDir = 1;
+                            }
+                            break;
+                        case 1:
+                            newValue -= (Integer) spinnerY.getValue();
+                            if (newValue <= sliderY.getMinimum()) {
+                                yDir = 0;
+                            }
+                            break;
+                    }
+                }
+                sliderY.setValue(newValue);
+
+                Thread.sleep(1000 / 20);
+            }
+        }
     }
 
     private void initComponents() {

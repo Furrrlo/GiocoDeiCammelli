@@ -2,7 +2,9 @@ package me.palla.input;
 
 // TODO: rewrite this class using semaphores or whatever you prefer as long as you can explain it
 
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,8 +12,9 @@ import java.util.logging.Logger;
 
 public class InputSubscription {
 
-    private LinkedBlockingQueue<InputData> queue;
+    private InputData lastData;
     private Semaphore sem;
+    
     protected InputSubscription() {
         sem = new Semaphore(0);
     }
@@ -21,13 +24,12 @@ public class InputSubscription {
             sem.acquire();
         } catch (InterruptedException ex) {
             Logger.getLogger(InputSubscription.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        InputData ret = queue.poll();        
-        return ret;
+        }        
+        return lastData;
     }
 
     protected void post(InputData letto) {
-        queue.add(letto); //ok
+        lastData = letto; //ok
         sem.release();
     }
 }

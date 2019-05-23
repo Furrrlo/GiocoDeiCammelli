@@ -4,6 +4,9 @@ import me.palla.GiocoPalla;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import me.palla.input.InputData;
+import me.palla.input.InputGyroscope;
+import me.palla.input.InputSubscription;
 
 /*
 @author Mattia Broch
@@ -16,12 +19,15 @@ public class PhysicsThread extends Thread {
     */
     private Entity entity;
     
+    private InputSubscription in;
+    
     /*
     @brief costruttore che inizializza l'attributo entity con la Entity che
     richiama il costruttore del thread  
     */
     public PhysicsThread(Entity entity){
         this.entity = entity;
+        this.in = GiocoPalla.getInstance().getInputManager().subscribe(this);
     }
 
     /*
@@ -30,14 +36,16 @@ public class PhysicsThread extends Thread {
     */
     public void run() {
         while(true) {
+            InputData data = in.poll();
+            
             if(!GiocoPalla.getInstance().isPaused()) {
-                entity.onTick();
-            }
-
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PhysicsThread.class.getName()).log(Level.SEVERE, null, ex);
+                if(data instanceof InputGyroscope){
+                    InputGyroscope dataGy = (InputGyroscope)data;
+                    
+                    entity.rotateX(dataGy.getxAxis());
+                    entity.rotateY(dataGy.getyAxis());
+                    entity.onTick();
+                }
             }
         }
     }
