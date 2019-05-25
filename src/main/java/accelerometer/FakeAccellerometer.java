@@ -25,6 +25,7 @@ public class FakeAccellerometer extends JFrame {
         th2.start();
     }
 
+    @SuppressWarnings("ALL")
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
