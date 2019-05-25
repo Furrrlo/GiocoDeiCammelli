@@ -11,13 +11,15 @@
 
 ### Moduli Software
 
+####Implementazione
+
 Le interfacce non necessitano di implementazione dei metodi
 
 Le classi con prefisso _Base_ sono implementazioni di base di interfacce e, 
 in quanto contengono funzionalità condivise da tutte le classi che le implementano, 
 sono modificate da tutti in base alle necessità
 
-| Classi                        | Frarlo | Bork | Ferra | Brozio |
+| Classe                        | Frarlo | Bork | Ferra | Brozio |
 | ----------------------------- |:------:|:----:|:-----:|:------:|
 |GiocoPalla                     |X       |      |       |        |
 |EntityManager                  |        |X     |       |        |
@@ -25,18 +27,55 @@ sono modificate da tutti in base alle necessità
 |PoolEntity                     |X       |      |       |        |
 |PoolList                       |        |X     |       |        |
 |PhysicsThread                  |        |X     |       |        |
-|OptionsGui                     |        |      |       |X       |
-|PauseMenuGui                   |        |      |X      |        |
 |GameGui                        |        |      |X      |        |
+|PauseGui                       |X       |      |       |        |
+|PauseMenuGui                   |        |      |X      |        |
+|OptionsGui                     |        |      |       |X       |
+|ColorSlider                    |X       |      |       |        |
+|PauseMenuButton                |X       |      |       |        |
+|PauseButton                    |        |      |X      |        |
 |ValueManager                   |        |      |       |X       |
 |Value                          |        |      |       |X       |
 |ColorValue                     |X       |      |       |        |
-|ColorSlider                    |X       |      |       |        |
-|PauseMenuButton                |X       |      |       |        |
-|PauseButton                    |X       |      |       |        |
 |InputManager                   |        |      |X      |        |
 |InputSubscription              |        |      |X      |        |
 |InputGyroscope                 |        |      |       |X       |
-|NoInput                        |X       |      |       |        |
+|NoInput                        |        |      |       |X       |
+|FastMath                       |X       |      |       |        |
+|ScaledResolution               |X       |      |       |        |
+
+####Commenti
+
+| Classe                        | Frarlo | Bork | Ferra | Brozio |
+| ----------------------------- |:------:|:----:|:-----:|:------:|
+|GiocoPalla                     |        |      |       |        |
+|Entity                         |        |      |       |        |
+|EntityManager                  |        |      |       |        |
+|BallEntity                     |        |      |       |        |
+|PoolEntity                     |        |      |       |        |
+|PoolList                       |        |      |       |        |
+|PhysicsThread                  |        |      |       |        |
+|Gui                            |        |      |       |        |
+|BaseGui                        |        |      |       |        |
+|GameGui                        |        |      |       |        |
+|PauseGui                       |        |      |       |        |
+|PauseMenuGui                   |        |      |       |        |
+|OptionsGui                     |        |      |       |        |
+|Component                      |        |      |       |        |
+|BaseGuiComponent               |        |      |       |        |
+|ColorSlider                    |        |      |       |        |
+|PauseMenuButton                |        |      |       |        |
+|PauseButton                    |        |      |       |        |
+|ValueManager                   |        |      |       |        |
+|Value                          |        |      |       |        |
+|ColorValue                     |        |      |       |        |
+|InputManager                   |        |      |       |        |
+|InputSubscription              |        |      |      |        |
+|InputData                      |        |      |       |        |
+|InputGyroscope                 |        |      |       |        |
+|NoInput                        |        |      |       |        |
+|FastMath                       |        |      |       |        |
+|ScaledResolution               |        |      |       |        |
+
 
 > [Torna al README](../README.md)
