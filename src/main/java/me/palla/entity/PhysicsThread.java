@@ -1,9 +1,6 @@
 package me.palla.entity;
 
 import me.palla.GiocoPalla;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import me.palla.input.InputData;
 import me.palla.input.InputGyroscope;
 import me.palla.input.InputSubscription;

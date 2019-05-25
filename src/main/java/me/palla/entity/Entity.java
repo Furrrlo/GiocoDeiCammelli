@@ -3,7 +3,7 @@ package me.palla.entity;
 /*
 @author Mattia Broch
 @version 1.0
-@brief interfaccia per ogni elemento che dovr‡ essere disegnato (Es Pallina, Vasche) 
+@brief interfaccia per ogni elemento che dovr√† essere disegnato (Es Pallina, Vasche) 
 */
 public interface Entity {
     /*

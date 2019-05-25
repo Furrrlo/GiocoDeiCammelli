@@ -1,8 +1,6 @@
 package me.palla.entity;
 
 import me.palla.GiocoPalla;
-import me.palla.util.ScaledResolution;
-import me.palla.value.Value;
 
 /*
 @author Mattia Broch
@@ -11,20 +9,20 @@ import me.palla.value.Value;
 */
 public class BallEntity implements Entity {
     /*
-    @brief attributo di classe PhysicsThread, far‡ startare nella pallina il thread
-    che permetter‡ la ripetizione di onTick() e onRender()
+    @brief attributo di classe PhysicsThread, far√† startare nella pallina il thread
+    che permetter√† la ripetizione di onTick() e onRender()
     */
     private PhysicsThread th;
     
     
     /*
     @brief attributo che definisce la coordinata X della pallina,
-    verr‡ aggiornato da onTick()
+    verr√† aggiornato da onTick()
     */
     private float xPos;
     /*
     @brief attributo che definisce la coordinata Y della pallina,
-    verr‡ aggiornato da onTick()
+    verr√† aggiornato da onTick()
     */
     private float yPos;
     /*
@@ -32,17 +30,17 @@ public class BallEntity implements Entity {
     */
     private float radius;
     /*
-    @brief attributo che definisce la velocit‡ sull'asse X della pallina
+    @brief attributo che definisce la velocit√† sull'asse X della pallina
     */
     private float xSpeed;
     /*
-    @brief attributo che definisce la velocit‡ sull'asse Y della pallina
+    @brief attributo che definisce la velocit√† sull'asse Y della pallina
     */
     private float ySpeed;
     
     /*
     @brief costruttore della pallina, setta la posizione iniziale, il raggio,
-    la velocit‡, inizializza e starta il thread per onTick e onRender 
+    la velocit√†, inizializza e starta il thread per onTick e onRender 
     */
     public BallEntity() {
         xPos = 100;
@@ -58,7 +56,7 @@ public class BallEntity implements Entity {
 
     /*
     @brief metodo ripetuto continuamente che setta le nuove coordinate
-    di X e Y della pallina in base alla velocit‡
+    di X e Y della pallina in base alla velocit√†
     */
     @Override
     public void onTick() {
@@ -88,8 +86,8 @@ public class BallEntity implements Entity {
     }
     
     /*
-    @brief metodo che setta la velocit‡ sull'asse X della pallina
-    @param rotationX la nuova velocit‡ sull'asse X della pallina
+    @brief metodo che setta la velocit√† sull'asse X della pallina
+    @param rotationX la nuova velocit√† sull'asse X della pallina
     */
     @Override
     public void rotateX(float rotationX) {
@@ -98,8 +96,8 @@ public class BallEntity implements Entity {
     }
 
     /*
-    @brief metodo che setta la velocit‡ sull'asse Y della pallina
-    @param rotationY la nuova velocit‡ sull'asse Y della pallina
+    @brief metodo che setta la velocit√† sull'asse Y della pallina
+    @param rotationY la nuova velocit√† sull'asse Y della pallina
     */
     @Override
     public void rotateY(float rotationY) {

@@ -13,7 +13,7 @@ import java.util.List;
 */
 public class PoolList {
     /*
-    @brief la lista che verr‡ gestita come una matrice di vasche
+    @brief la lista che verr√† gestita come una matrice di vasche
     */
     private List<PoolEntity> list;
     
