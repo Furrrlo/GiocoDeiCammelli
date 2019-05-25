@@ -7,10 +7,6 @@ import java.awt.*;
 
 public class PoolEntity implements Entity {
 
-    // Constants
-
-    private static final int ROTATION_STEP = 1;
-
     // Attributes
 
     private float xPos;
@@ -65,6 +61,7 @@ public class PoolEntity implements Entity {
         invalidateRotationX = true;
         targetRotationX = 0;
         currRotationX = 0;
+        applyRotationX(currRotationX);
     }
 
     @Override
@@ -75,10 +72,11 @@ public class PoolEntity implements Entity {
             invalidateRotationX = false;
         }
 
-        if(targetRotationX > 0 && currRotationX < targetRotationX)
-            currRotationX = Math.min(currRotationX + ROTATION_STEP, targetRotationX);
-        else if(targetRotationX < 0 && currRotationX > targetRotationX)
-            currRotationX = Math.max(currRotationX - ROTATION_STEP, targetRotationX);
+        final float rotationStep = Math.abs(currRotationX - targetRotationX) / 10f;
+        if(currRotationX < targetRotationX)
+            currRotationX = Math.min(currRotationX + rotationStep, targetRotationX);
+        else if(currRotationX > targetRotationX)
+            currRotationX = Math.max(currRotationX - rotationStep, targetRotationX);
     }
 
     @Override
