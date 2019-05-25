@@ -23,7 +23,7 @@ sono modificate da tutti in base alle necessità
 |EntityManager                  |        |X     |       |        |
 |BallEntity                     |        |X     |       |        |
 |PoolEntity                     |X       |      |       |        |
-|PoolList                     |        |X     |       |        |
+|PoolList                       |        |X     |       |        |
 |PhysicsThread                  |        |X     |       |        |
 |OptionsGui                     |        |      |       |X       |
 |PauseMenuGui                   |        |      |X      |        |
