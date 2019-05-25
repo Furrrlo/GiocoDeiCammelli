@@ -51,7 +51,7 @@ class AutoChangeRunnable implements Runnable {
                             int max, int min,
                             int[] dir) {
 
-        if(dir.length < 1) // Using an array just so the values can be passed by reference
+        if (dir.length < 1) // Using an array just so the values can be passed by reference
             throw new UnsupportedOperationException("Dir array is supposed to hold 1 value");
 
         int newValue = currentValue;

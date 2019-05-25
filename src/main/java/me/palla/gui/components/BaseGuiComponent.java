@@ -21,7 +21,8 @@ public abstract class BaseGuiComponent implements GuiComponent {
         return intersects(res.scaleX(inst.mouseX), res.scaleY(inst.mouseY));
     }
 
-    protected void onResize() {}
+    protected void onResize() {
+    }
 
     @Override
     public float getX() {

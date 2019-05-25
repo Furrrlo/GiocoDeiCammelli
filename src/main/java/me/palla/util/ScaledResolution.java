@@ -39,7 +39,7 @@ public class ScaledResolution {
     }
 
     public void setupScaling(boolean enable) {
-        if(enable) {
+        if (enable) {
             GiocoPalla.getInstance().translate(getWidthDifference() / 2, getHeightDifference() / 2);
             GiocoPalla.getInstance().scale(getWidthScaleFactor(), getHeightScaleFactor());
         } else {

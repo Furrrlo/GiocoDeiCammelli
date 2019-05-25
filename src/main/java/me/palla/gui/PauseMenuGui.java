@@ -32,7 +32,7 @@ public class PauseMenuGui extends PauseGui {
         final int totalHeight = buttonsN * (BUTTON_SIZE + BUTTON_MARGIN) - BUTTON_MARGIN;
 
         final float x = width / 2;
-        final float[] y = new float[] { (height - totalHeight) / 2 };
+        final float[] y = new float[]{(height - totalHeight) / 2};
 
         components.stream()
                 .filter(PauseMenuButton.class::isInstance)

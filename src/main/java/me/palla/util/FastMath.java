@@ -15,11 +15,12 @@ public class FastMath {
         }
     }
 
-    private FastMath() {}
+    private FastMath() {
+    }
 
     private static float lookup(float degrees) {
         degrees = degrees % 360;
-        if(degrees < 0)
+        if (degrees < 0)
             return -SIN_TABLE[(int) (-degrees * PRECISION_PER_DEGREE)];
         return SIN_TABLE[(int) (degrees * PRECISION_PER_DEGREE)];
     }

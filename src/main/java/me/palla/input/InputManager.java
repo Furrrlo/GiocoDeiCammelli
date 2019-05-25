@@ -7,10 +7,10 @@ public class InputManager {
 
     private Map<Object, InputSubscription> subscriptions;
 
-    public InputManager()
-    {
-        subscriptions = new HashMap<Object, InputSubscription>();
+    public InputManager() {
+        subscriptions = new HashMap<>();
     }
+
     public InputSubscription subscribe(Object obj) {
         InputSubscription temp = new InputSubscription();
         subscriptions.put(obj, temp);

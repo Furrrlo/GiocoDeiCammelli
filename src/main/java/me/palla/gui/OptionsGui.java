@@ -11,12 +11,12 @@ import java.util.List;
 
 public class OptionsGui extends PauseGui {
 
-    private final List<Value<?>> temp;
-    private PauseMenuButton button;
-
     private static final int BUTTON_SIZE = 50;
     private static final int NORMAL_COLOR = new Color(0xFFFFFFFF, true).getRGB();
     private static final int FOCUSED_COLOR = new Color(0xFFf4c842, true).getRGB();
+
+    private final List<Value<?>> temp;
+    private PauseMenuButton button;
 
     public OptionsGui() {
         temp = GiocoPalla.getInstance().getValueManager().getValues();
@@ -40,7 +40,7 @@ public class OptionsGui extends PauseGui {
         inizioY = (int) (height / 2 - totHeight / 2);
         for (int i = 0; i < components.size(); i++) {
             int temp = 0;
-            
+
             for (int j = 0; j < i; j++) {
                 if (!components.get(j).equals(this.button)) {
                     temp += components.get(j).getHeight();
@@ -57,7 +57,7 @@ public class OptionsGui extends PauseGui {
         button.setY(height - button.getHeight() - 10);
         button.setCenterX(width / 2);
     }
-    
+
     private class OnClickListener implements Runnable {
         @Override
         public void run() {

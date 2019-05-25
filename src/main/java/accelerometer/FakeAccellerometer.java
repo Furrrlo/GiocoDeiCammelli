@@ -17,10 +17,10 @@ public class FakeAccellerometer extends JFrame {
 
         final Thread th1 = new Thread(new SensorRunnable(this));
         final Thread th2 = new Thread(new AutoChangeRunnable(this));
-        
+
         th1.setDaemon(true);
         th2.setDaemon(true);
-        
+
         th1.start();
         th2.start();
     }

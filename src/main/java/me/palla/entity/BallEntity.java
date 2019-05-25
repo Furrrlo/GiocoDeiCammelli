@@ -13,8 +13,8 @@ public class BallEntity implements Entity {
     che permetterà la ripetizione di onTick() e onRender()
     */
     private PhysicsThread th;
-    
-    
+
+
     /*
     @brief attributo che definisce la coordinata X della pallina,
     verrà aggiornato da onTick()
@@ -37,7 +37,7 @@ public class BallEntity implements Entity {
     @brief attributo che definisce la velocità sull'asse Y della pallina
     */
     private float ySpeed;
-    
+
     /*
     @brief costruttore della pallina, setta la posizione iniziale, il raggio,
     la velocità, inizializza e starta il thread per onTick e onRender 
@@ -46,10 +46,10 @@ public class BallEntity implements Entity {
         xPos = 100;
         yPos = 100;
         radius = 50;
-        
+
         th = new PhysicsThread(this);
         th.start();
-        
+
         xSpeed = 1f;
         ySpeed = 1f;
     }
@@ -60,31 +60,32 @@ public class BallEntity implements Entity {
     */
     @Override
     public void onTick() {
-        xPos+=xSpeed;
-        yPos+=ySpeed;
+        xPos += xSpeed;
+        yPos += ySpeed;
     }
-    
+
     /*
     @brief metodo ripetuto continuamente che ogni volta richiama il metodo per
     il disegno della pallina
     */
     @Override
     public void onRender() {
-        draw(xPos,yPos,radius);
+        draw(xPos, yPos, radius);
     }
+
     /*
     @brief metodo che disegna la pallina
     @param xPos la coordinata X della pallina
     @param yPos la coordinata Y della pallina
     @param radius il raggio della pallina
     */
-    private void draw(float xPos,float yPos,float radius){
+    private void draw(float xPos, float yPos, float radius) {
         GiocoPalla.getInstance().pushStyle();
-        GiocoPalla.getInstance().fill(255,0,0);
-        GiocoPalla.getInstance().ellipse(xPos,yPos,radius,radius);
+        GiocoPalla.getInstance().fill(255, 0, 0);
+        GiocoPalla.getInstance().ellipse(xPos, yPos, radius, radius);
         GiocoPalla.getInstance().popStyle();
     }
-    
+
     /*
     @brief metodo che setta la velocità sull'asse X della pallina
     @param rotationX la nuova velocità sull'asse X della pallina
@@ -92,7 +93,7 @@ public class BallEntity implements Entity {
     @Override
     public void rotateX(float rotationX) {
         //this.xSpeed = rotationX;
-        
+
     }
 
     /*
@@ -103,6 +104,6 @@ public class BallEntity implements Entity {
     public void rotateY(float rotationY) {
         //this.ySpeed = rotationY;
     }
-    
-    
+
+
 }

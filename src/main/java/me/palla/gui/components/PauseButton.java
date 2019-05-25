@@ -28,26 +28,23 @@ public class PauseButton extends BaseGuiComponent {
 
     @Override
     public void onRender() {
-        
+
         if (GiocoPalla.getInstance().isPaused())
             return;
         GiocoPalla.getInstance().pushStyle();
-        
-        if (this.isHovered())
-        {
-            GiocoPalla.getInstance().fill(focusedColor); 
+
+        if (this.isHovered()) {
+            GiocoPalla.getInstance().fill(focusedColor);
             GiocoPalla.getInstance().stroke(focusedStrokeColor);
-        }
-        else     
-        {
-            GiocoPalla.getInstance().fill(rectColor); 
+        } else {
+            GiocoPalla.getInstance().fill(rectColor);
             GiocoPalla.getInstance().stroke(strokeColor);
         }
-        
+
         GiocoPalla.getInstance().strokeWeight(2.5F);
         GiocoPalla.getInstance().rect(x, y, width, height, 10);
 
-        
+
         //GiocoPalla.getInstance().fill(new Color(0xffffe8, true).getRGB());
         GiocoPalla.getInstance().stroke(strokeColor);
         GiocoPalla.getInstance().strokeWeight(1);
@@ -64,7 +61,7 @@ public class PauseButton extends BaseGuiComponent {
 
     @Override
     public void onClick(float xPos, float yPos) {
-        actionListeners.forEach(Runnable::run);        
+        actionListeners.forEach(Runnable::run);
     }
 
     // Action Listeners

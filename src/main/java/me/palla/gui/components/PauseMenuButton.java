@@ -37,7 +37,7 @@ public class PauseMenuButton extends BaseGuiComponent {
 
         GiocoPalla.getInstance().textAlign(LEFT, TOP);
         GiocoPalla.getInstance().textSize(height);
-        if(isHovered())
+        if (isHovered())
             GiocoPalla.getInstance().fill(focusedColor);
         else
             GiocoPalla.getInstance().fill(color);

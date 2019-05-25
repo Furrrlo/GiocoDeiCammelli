@@ -96,7 +96,7 @@ public class ColorSlider extends BaseGuiComponent {
 
         GiocoPalla.getInstance().fill(0xFF000000);
         GiocoPalla.getInstance().rect(0, -1, rectWidth, sliderHeight + 1, radius);
-        GiocoPalla.getInstance().translate(rectWidth + RECT_BORDER,0);
+        GiocoPalla.getInstance().translate(rectWidth + RECT_BORDER, 0);
 
         drawBorderedRainbowRect(0, -1, sliderWidth, sliderHeight + 1, radius);
 
@@ -108,9 +108,9 @@ public class ColorSlider extends BaseGuiComponent {
         GiocoPalla.getInstance().fill(ColorValue.getRainbowColor().getRGB());
         GiocoPalla.getInstance().rect(0, -1, rectWidth, sliderHeight + 1, radius);
 
-        GiocoPalla.getInstance().translate(-(sliderWidth + RECT_BORDER),0);
-        GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER),0);
-        GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER),0);
+        GiocoPalla.getInstance().translate(-(sliderWidth + RECT_BORDER), 0);
+        GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER), 0);
+        GiocoPalla.getInstance().translate(-(rectWidth + RECT_BORDER), 0);
         GiocoPalla.getInstance().translate(0, -(firstLineHeight + VERTICAL_BORDER));
 
         // End
@@ -122,7 +122,7 @@ public class ColorSlider extends BaseGuiComponent {
 
     private String getHex() {
         String hex = Integer.toHexString(value.getRGB()).toUpperCase();
-        if(hex.length() > 2)
+        if (hex.length() > 2)
             hex = hex.substring(2);
         hex = "#" + hex;
 
@@ -134,18 +134,18 @@ public class ColorSlider extends BaseGuiComponent {
 
         final float secondLineY = y + firstLineHeight + VERTICAL_BORDER - 1;
 
-        if(collides(x, secondLineY, rectWidth, secondLineHeight, xPos, yPos)) {
+        if (collides(x, secondLineY, rectWidth, secondLineHeight, xPos, yPos)) {
             value.set(Color.white);
             value.setRainbow(false);
-        } else if(collides(x + rectWidth + RECT_BORDER, secondLineY, rectWidth, secondLineHeight, xPos, yPos)) {
+        } else if (collides(x + rectWidth + RECT_BORDER, secondLineY, rectWidth, secondLineHeight, xPos, yPos)) {
             value.set(Color.black);
             value.setRainbow(false);
-        } else if(collides(x + (rectWidth + RECT_BORDER) * 2, secondLineY, sliderWidth, sliderHeight, xPos, yPos)) {
+        } else if (collides(x + (rectWidth + RECT_BORDER) * 2, secondLineY, sliderWidth, sliderHeight, xPos, yPos)) {
             final float sliderX = x + (rectWidth + RECT_BORDER) * 2;
             final float currentHue = 999 * (xPos - sliderX) / sliderWidth;
             value.set(Color.getHSBColor(currentHue / 1000f, 1, 1));
             value.setRainbow(false);
-        } else if(collides(x + (rectWidth + RECT_BORDER) * 2 + sliderWidth + RECT_BORDER,
+        } else if (collides(x + (rectWidth + RECT_BORDER) * 2 + sliderWidth + RECT_BORDER,
                 secondLineY, rectWidth, sliderHeight, xPos, yPos)) {
             value.setRainbow(true);
         }
@@ -175,7 +175,7 @@ public class ColorSlider extends BaseGuiComponent {
         float hue = 0;
 
         GiocoPalla.getInstance().beginShape(LINES);
-        for(int i = 0; i <= 90; i++) {
+        for (int i = 0; i <= 90; i++) {
             GiocoPalla.getInstance().stroke(Color.getHSBColor(hue / 1000f, 1, 1).getRGB());
             GiocoPalla.getInstance().vertex(
                     (float) (left + radius + Math.sin((i + 180) * 3.141526 / 180.0) * radius),
@@ -188,14 +188,14 @@ public class ColorSlider extends BaseGuiComponent {
             hue += (radius / 90f) * hueSkip;
         }
 
-        for(float i = left + radius; i < right - radius; i += 0.1f) {
+        for (float i = left + radius; i < right - radius; i += 0.1f) {
             GiocoPalla.getInstance().stroke(Color.getHSBColor(hue / 1000f, 1, 1).getRGB());
             GiocoPalla.getInstance().vertex(i, top);
             GiocoPalla.getInstance().vertex(i, bottom);
             hue += hueSkip;
         }
 
-        for(int i = 0; i <= 90; i++) {
+        for (int i = 0; i <= 90; i++) {
             GiocoPalla.getInstance().stroke(Color.getHSBColor(hue / 1000f, 1, 1).getRGB());
             GiocoPalla.getInstance().vertex(
                     (float) (right - radius - Math.sin((i + 180) * 3.141526 / 180.0) * radius),

@@ -17,7 +17,7 @@ public class ColorValue extends Value<Color> {
 
     @Override
     public Color get() {
-        if(isRainbow)
+        if (isRainbow)
             return getRainbowColor();
         return super.get();
     }

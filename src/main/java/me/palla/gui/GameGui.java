@@ -9,33 +9,33 @@ import me.palla.value.ColorValue;
 public class GameGui extends BaseGui {
 
     private static ColorValue backgroundColor;
-    
+
     private final EntityManager entityManager;
     private PauseButton pauseButton;
 
     public GameGui() {
-        if(backgroundColor == null)
-            backgroundColor = new ColorValue("Colore sfondo", 255,255,255);
+        if (backgroundColor == null)
+            backgroundColor = new ColorValue("Colore sfondo", 255, 255, 255);
 
         entityManager = GiocoPalla.getInstance().getEntityManager();
-        
-        pauseButton = new PauseButton(new PauseButtonClickPerformed());       
+
+        pauseButton = new PauseButton(new PauseButtonClickPerformed());
         components.add(pauseButton);
     }
-    
+
     public class PauseButtonClickPerformed implements Runnable {
-        @Override 
+        @Override
         public void run() {
             GiocoPalla.getInstance().displayGui(new PauseMenuGui());
         }
     }
-    
+
     @Override
     public void onResize() {
         pauseButton.setWidth(60);
         pauseButton.setHeight(70);
         pauseButton.setX(width - pauseButton.getWidth() - 10);
-        pauseButton.setY(10);         
+        pauseButton.setY(10);
     }
 
     @Override
@@ -47,5 +47,5 @@ public class GameGui extends BaseGui {
         entityManager.render();
         super.onRender();
     }
-    
+
 }

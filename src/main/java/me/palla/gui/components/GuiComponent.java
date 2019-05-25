@@ -4,10 +4,13 @@ import processing.core.PConstants;
 
 public interface GuiComponent extends PConstants {
     void onRender();
+
     boolean intersects(float xPos, float yPos);
+
     void onClick(float xPos, float yPos);
 
     float getX();
+
     void setX(float x);
 
     default void setCenterX(float x) {
@@ -15,6 +18,7 @@ public interface GuiComponent extends PConstants {
     }
 
     float getY();
+
     void setY(float y);
 
     default void setCenterY(float y) {
@@ -22,8 +26,10 @@ public interface GuiComponent extends PConstants {
     }
 
     float getWidth();
+
     void setWidth(float width);
 
     float getHeight();
+
     void setHeight(float height);
 }

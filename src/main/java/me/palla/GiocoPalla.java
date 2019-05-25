@@ -25,10 +25,11 @@ public class GiocoPalla extends PApplet {
     private ScaledResolution scaledResolution;
     private float oldWidth;
     private float oldHeight;
-    
+
     private boolean isPaused;
 
-    public GiocoPalla() {}
+    public GiocoPalla() {
+    }
 
     public static GiocoPalla getInstance() {
         return INSTANCE;
@@ -54,7 +55,7 @@ public class GiocoPalla extends PApplet {
     @Override
     public void draw() {
 
-        if(width != oldWidth || height != oldHeight) {
+        if (width != oldWidth || height != oldHeight) {
             scaledResolution = new ScaledResolution(width, height, DEFAULT_WIDTH, DEFAULT_HEIGHT);
             currentGui.onResize(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
         }
@@ -75,14 +76,14 @@ public class GiocoPalla extends PApplet {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        if(event.getKeyCode() == ESC) {
+        if (event.getKeyCode() == ESC) {
             key = 0;
             keyCode = 0;
         }
     }
 
     public void displayGui(Gui newGui) {
-        if(currentGui != null)
+        if (currentGui != null)
             currentGui.onGuiClose();
 
         isPaused = !(newGui instanceof GameGui);

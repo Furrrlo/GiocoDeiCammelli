@@ -21,10 +21,10 @@ public abstract class BaseGui implements Gui {
     public void onClick(float xPos, float yPos) {
 
         GuiComponent clicked = null;
-        for(int i = components.size() - 1; i >= 0; i--) {
+        for (int i = components.size() - 1; i >= 0; i--) {
             final GuiComponent component = components.get(i);
 
-            if(component.intersects(xPos, yPos)) {
+            if (component.intersects(xPos, yPos)) {
                 component.onClick(xPos, yPos);
                 clicked = component;
                 break;
@@ -32,7 +32,7 @@ public abstract class BaseGui implements Gui {
         }
         // Bring the clicked component up so it gets
         // rendered before others
-        if(clicked != null) {
+        if (clicked != null) {
             components.remove(clicked);
             components.add(clicked);
         }

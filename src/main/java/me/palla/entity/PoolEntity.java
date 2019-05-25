@@ -19,7 +19,7 @@ public class PoolEntity implements Entity {
     private float rightBorderHeight;
 
     private float waterVolume;
-    
+
     private final Thread physicsThread;
 
     // Rotation
@@ -54,7 +54,7 @@ public class PoolEntity implements Entity {
         this.leftBorderHeight = leftBorderHeight;
         this.rightBorderHeight = rightBorderHeight;
         this.waterVolume = waterVolume;
-        
+
         this.physicsThread = new PhysicsThread(this);
         this.physicsThread.start();
 
@@ -67,15 +67,15 @@ public class PoolEntity implements Entity {
     @Override
     public void onTick() {
 
-        if(invalidateRotationX || targetRotationX != currRotationX) {
+        if (invalidateRotationX || targetRotationX != currRotationX) {
             applyRotationX(currRotationX);
             invalidateRotationX = false;
         }
 
         final float rotationStep = Math.abs(currRotationX - targetRotationX) / 10f;
-        if(currRotationX < targetRotationX)
+        if (currRotationX < targetRotationX)
             currRotationX = Math.min(currRotationX + rotationStep, targetRotationX);
-        else if(currRotationX > targetRotationX)
+        else if (currRotationX > targetRotationX)
             currRotationX = Math.max(currRotationX - rotationStep, targetRotationX);
     }
 
@@ -109,7 +109,7 @@ public class PoolEntity implements Entity {
         // or to the exported /docs/PAINT_POOL.png
 
         boolean reversed = false;
-        if(delta < 0) {
+        if (delta < 0) {
             // If the angle is on the other side I can use the same exact
             // method to calculate stuff and then just change the point
             // where I start to draw water
@@ -162,7 +162,7 @@ public class PoolEntity implements Entity {
 
         // Make the last difference and find where the water starts
 
-        if(!reversed) {
+        if (!reversed) {
             startWaterX = width - b;
             waterXWidth = b;
         } else {
