@@ -11,7 +11,7 @@
 
 ### Moduli Software
 
-####Implementazione
+#### Implementazione
 
 Le interfacce non necessitano di implementazione dei metodi
 
@@ -44,7 +44,7 @@ sono modificate da tutti in base alle necessità
 |FastMath                       |X       |      |       |        |
 |ScaledResolution               |X       |      |       |        |
 
-####Commenti
+#### Commenti
 
 | Classe                        | Frarlo | Bork | Ferra | Brozio |
 | ----------------------------- |:------:|:----:|:-----:|:------:|
