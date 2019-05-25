@@ -70,7 +70,7 @@ sono modificate da tutti in base alle necessità
 |Value                          |        |      |       |        |
 |ColorValue                     |        |      |       |        |
 |InputManager                   |        |      |       |        |
-|InputSubscription              |        |      |      |        |
+|InputSubscription              |        |      |       |        |
 |InputData                      |        |      |       |        |
 |InputGyroscope                 |        |      |       |        |
 |NoInput                        |        |      |       |        |
