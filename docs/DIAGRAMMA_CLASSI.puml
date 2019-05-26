@@ -5,15 +5,13 @@ PApplet <|-- GiocoPalla
 class GiocoPalla {
     -{static}INSTANCE: GiocoDeiCammelli
     --
-    -inputManager: InputManager
     -valueManager: ValueManager
+    -inputManager: InputManager
     -entityManager: EntityManager
     -currentGui: Gui
     --
-    'Ereditato da PApplet
-    +width: int
-    'Ereditato da PApplet
-    +height: int
+    -scaledResolution: ScaledResolution
+    -isPaused: boolean
     --
     -GiocoDeiCammelli()
     +{static} getInstance(): GiocoDeiCammelli
@@ -195,6 +193,8 @@ interface Entity {
     +onTick(): void
     'Disegna l'entità
     +onRender(): void
+    +rotateX(rotationX: float): void
+    +rotateY(rotationY: float): void
 }
 
 Thread <|-- PhysicsThread
@@ -218,6 +218,8 @@ class BallEntity {
     +onTick(): void
     'Disegna la palla
     +onRender(): void
+    +rotateX(rotationX: float): void
+    +rotateY(rotationY: float): void
 }
 
 Entity <|-- PoolEntity
@@ -232,6 +234,8 @@ class PoolEntity {
 
     +onTick(): void
     +onRender(): void
+    +rotateX(rotationX: float): void
+    +rotateY(rotationY: float): void
 }
 
 BaseGui <|-- PauseMenuGui
