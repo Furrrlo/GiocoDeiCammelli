@@ -2,36 +2,38 @@ package me.palla.util;
 
 import me.palla.GiocoPalla;
 
-/**@author Brozio01
- * @brief Gestisce le dimensioni della schermata di gioco
- * Questa classe ha il compito di gestire le dimensioni della schermata di gioco:
- * nel caso in cui la finestra venga ridimensionata, i componenti vengono ridimensionati
- * e spostati a loro volta
+/**
+ * @brief Gestisce le dimensioni della schermata di gioco Questa classe ha il compito di gestire le dimensioni
+ *         della schermata di gioco: nel caso in cui la finestra venga ridimensionata, i componenti vengono
+ *         ridimensionati e spostati a loro volta
+ * @author Francesco Ferlin
  */
 
 public class ScaledResolution {
 
-    /**Lunghezza schermo*/
+    /** Lunghezza schermo */
     private final float width;
-    /**Altezza schermo*/
+    /** Altezza schermo */
     private final float height;
 
-    /**Lunghezza schermo ridimensionato*/
+    /** Lunghezza schermo ridimensionato */
     private final float scaledWidth;
-    /**Altezza schermo ridimensionato*/
+    /** Altezza schermo ridimensionato */
     private final float scaledHeight;
 
-    /**Grado di ridimensionamento in larghezza*/
+    /** Grado di ridimensionamento in larghezza */
     private final float widthScaleFactor;
-    /**Grado di ridimensionamento in altezza*/
+    /** Grado di ridimensionamento in altezza */
     private final float heightScaleFactor;
 
-    /** @brief Costruttore con parametri
-     * Inizializza le variabili secondi i parametri e calcola gradi di ridimensionamento
-     * @param width Lunghezza schermo
-     * @param height Altezza schermo
+    /**
+     * @brief Costruttore con parametri Inizializza le variabili secondi i parametri e calcola gradi di
+     *         ridimensionamento
+     *
+     * @param width        Lunghezza schermo
+     * @param height       Altezza schermo
      * @param scaledHeight Altezza schermo ridimensionato
-     * @param scaledWidth Lunghezza schermo ridimensionato
+     * @param scaledWidth  Lunghezza schermo ridimensionato
      */
     @SuppressWarnings("unused")
     public ScaledResolution(float width,
@@ -46,10 +48,12 @@ public class ScaledResolution {
         this.heightScaleFactor = this.widthScaleFactor = Math.min(height / scaledHeight, width / scaledWidth);
     }
 
-    /** @brief Costruttore con parametri
-     * Inizializza le variabili secondi i parametri e calcola gradi di ridimensionamento
-     * @param width Lunghezza schermo
-     * @param height Altezza schermo
+    /**
+     * @brief Costruttore con parametri Inizializza le variabili secondi i parametri e calcola gradi di
+     *         ridimensionamento
+     *
+     * @param width       Lunghezza schermo
+     * @param height      Altezza schermo
      * @param scaleFactor Scala di ridimensionamento
      */
     public ScaledResolution(float width,
@@ -64,7 +68,9 @@ public class ScaledResolution {
         this.scaledHeight = height * scaleFactor;
     }
 
-    /** @brief Attiva o disattiva il calcolo della risoluzione
+    /**
+     * @brief Attiva o disattiva il calcolo della risoluzione
+     *
      * @param enable Booleana per attivare o disattivare il metodo
      */
     public void setupScaling(boolean enable) {
@@ -77,17 +83,21 @@ public class ScaledResolution {
         }
     }
 
-    /** @brief calcolo posizione sulla X con valore da scalare
+    /**
+     * @brief Calcolo posizione sulla X con valore da scalare
+     *
      * @param toScale Il valore da adattare allo schermo
-     * @retun Ritorna la posizione sulla X secondo la dimensione della schermo
+     * @return Ritorna la posizione sulla X secondo la dimensione della schermo
      */
     public float scaleX(float toScale) {
         return (toScale - getWidthDifference() / 2) / getWidthScaleFactor();
     }
 
-    /** @brief Calcolo posizione sulla Y con valore da scalare
+    /**
+     * @brief Calcolo posizione sulla Y con valore da scalare
+     *
      * @param toScale Il valore da adattare allo schermo
-     * @retun Ritorna la posizione sulla Y secondo la dimensione della schermo
+     * @return Ritorna la posizione sulla Y secondo la dimensione della schermo
      */
     public float scaleY(float toScale) {
         return (toScale - getHeightDifference() / 2) / getHeightScaleFactor();

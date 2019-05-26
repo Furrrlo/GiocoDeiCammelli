@@ -50,11 +50,11 @@ sono modificate da tutti in base alle necessità
 | ----------------------------- |:------:|:----:|:-----:|:------:|
 |GiocoPalla                     |        |      |       |        |
 |Entity                         |        |      |       |        |
-|EntityManager                  |        |      |       |        |
-|BallEntity                     |        |      |       |        |
+|EntityManager                  |        |X     |       |        |
+|BallEntity                     |        |X     |       |        |
 |PoolEntity                     |        |      |       |        |
-|PoolList                       |        |      |       |        |
-|PhysicsThread                  |        |      |       |        |
+|PoolList                       |        |X     |       |        |
+|PhysicsThread                  |        |X     |       |        |
 |Gui                            |        |      |       |        |
 |BaseGui                        |        |      |       |        |
 |GameGui                        |        |      |       |        |
@@ -66,16 +66,16 @@ sono modificate da tutti in base alle necessità
 |ColorSlider                    |        |      |       |        |
 |PauseMenuButton                |        |      |       |        |
 |PauseButton                    |        |      |       |        |
-|ValueManager                   |        |      |       |        |
-|Value                          |        |      |       |        |
-|ColorValue                     |        |      |       |        |
-|InputManager                   |        |      |       |        |
-|InputSubscription              |        |      |       |        |
+|ValueManager                   |        |      |       |X       |
+|Value                          |        |      |       |X       |
+|ColorValue                     |        |      |       |X       |
+|InputManager                   |        |      |       |X       |
+|InputSubscription              |        |      |       |X       |
 |InputData                      |        |      |       |        |
-|InputGyroscope                 |        |      |       |        |
-|NoInput                        |        |      |       |        |
-|FastMath                       |        |      |       |        |
-|ScaledResolution               |        |      |       |        |
+|InputGyroscope                 |        |      |       |X       |
+|NoInput                        |        |      |       |X       |
+|FastMath                       |        |      |       |X       |
+|ScaledResolution               |        |      |       |X       |
 
 
 > [Torna al README](../README.md)

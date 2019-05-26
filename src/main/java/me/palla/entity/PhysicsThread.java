@@ -6,21 +6,19 @@ import me.palla.input.InputGyroscope;
 import me.palla.input.InputSubscription;
 
 /**
+ * @brief Thread contenuto in ogni Entity, che continua a runnare e richiama onTick
  * @author Mattia Broch
  * @version 1.0
- * @brief thread contenuto in ogni Entity, che continua a runnare e richiama onTick
  */
 public class PhysicsThread extends Thread {
-    /**
-     * @brief l'Entity in cui è contenuto il thread
-     */
+    /** @brief L'Entity in cui Ã¨ contenuto il thread */
     private Entity entity;
 
     private InputSubscription in;
 
     /**
-     * @brief costruttore che inizializza l'attributo entity con la Entity che
-     * richiama il costruttore del thread
+     * @brief costruttore che inizializza l'attributo entity con la Entity che richiama il costruttore del
+     *         thread
      */
     public PhysicsThread(Entity entity) {
         this.entity = entity;
@@ -28,8 +26,8 @@ public class PhysicsThread extends Thread {
     }
 
     /**
-     * @brief metodo run che controlla se il gioco non è in pausa, se non è
-     * in pausa richiamo il metodo onTick dell'attributo entity
+     * @brief Metodo run che controlla se il gioco non ï¿½ in pausa, se non ï¿½ in pausa richiamo il metodo onTick
+     *         dell'attributo entity
      */
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {

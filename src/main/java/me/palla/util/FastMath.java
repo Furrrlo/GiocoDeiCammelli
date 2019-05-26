@@ -1,8 +1,9 @@
 package me.palla.util;
 
-/** @author Brozio01
- * @brief Libreria per calcolare velocemente funzioni goniometriche (seno, coseno
- * e conversione da radianti a gradi.
+/**
+ * @brief Libreria per calcolare velocemente funzioni goniometriche (seno, coseno e conversione da radianti a
+ *         gradi).
+ * @author Francesco Ferlin
  */
 public class FastMath {
 

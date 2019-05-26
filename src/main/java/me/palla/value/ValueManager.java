@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**@author Davide Borzì 
+/**
  * @brief Classe per gestire tutti gli elementi grafici tramite liste
+ * @author Davide Borzì
  */
 public class ValueManager {
 
