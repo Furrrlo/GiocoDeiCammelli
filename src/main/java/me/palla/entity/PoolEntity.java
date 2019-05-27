@@ -10,10 +10,12 @@ import java.util.function.DoubleConsumer;
 
 public class PoolEntity implements Entity {
 
+    // Constants
+
     private static final int POOL_COLOR = new Color(33, 33, 33).getRGB();
     private static final int SAND_COLOR = new Color(244, 217, 66).getRGB();
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // Attributes
 
