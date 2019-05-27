@@ -62,16 +62,54 @@ public class PoolList {
      * @brief Metodo che aggiunge tutte le vasche alla lista list
      */
     public void addAll() {
+
+        final float standardBorder = 0;
         for (int i = 0; i < poolNumberY; i++) {
+
+            float topBorder = standardBorder;
+            float bottomBorder = standardBorder;
+
+            if(i == 0)
+                topBorder = Float.MAX_VALUE;
+            else if(i + 1 == poolNumberY)
+                bottomBorder = Float.MAX_VALUE;
+
             for (int j = 0; j < poolNumberX; j++) {
+
+                float leftBorder = standardBorder;
+                float rightBorder = standardBorder;
+
+                if(j == 0)
+                    leftBorder = Float.MAX_VALUE;
+                else if(j + 1 == poolNumberX)
+                    rightBorder = Float.MAX_VALUE;
+
                 addPool(new PoolEntity(
                         lastX, lastY,
                         lenghtX, lenghtY,
-                        10, 10, 10, 10));
+                        topBorder, bottomBorder,
+                        leftBorder, rightBorder));
                 lastX += lenghtX + 2;
             }
             lastX = border;
             lastY += lenghtY + 2;
+        }
+
+        // For each pools set the nearby pools
+
+        for (int i = 0; i < poolNumberY; i++) {
+            for (int j = 0; j < poolNumberX; j++) {
+                final PoolEntity currPool = getAt(i, j);
+
+                if(i != 0)
+                    currPool.setTopPool(getAt(i - 1, j));
+                if(i + 1 != poolNumberY)
+                    currPool.setBottomPool(getAt(i + 1, j));
+                if(j != 0)
+                    currPool.setLeftPool(getAt(i, j - 1));
+                if(j + 1 != poolNumberX)
+                    currPool.setRightPool(getAt(i, j + 1));
+            }
         }
     }
 
@@ -84,6 +122,10 @@ public class PoolList {
         if (list.size() < poolNumberX * poolNumberY) {
             list.add(pool);
         }
+    }
+
+    private PoolEntity getAt(int row, int column) {
+        return list.get(row * poolNumberY + column);
     }
 
     /** @brief Metodo get che restituisce poolNumberX */
