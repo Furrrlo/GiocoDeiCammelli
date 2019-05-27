@@ -106,31 +106,33 @@ public class PoolEntity implements Entity {
 
         // Rotate X
 
-        if (invalidateRotationX || targetRotationX != currRotationX) {
-            applyRotationX(currRotationX);
-            invalidateRotationX = false;
-        }
-
         // Change the x rotation towards the target one
-        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
+        final float rotationStepX = Float.MAX_VALUE;
+//        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
         if (currRotationX < targetRotationX)
             currRotationX = Math.min(currRotationX + rotationStepX, targetRotationX);
         else if (currRotationX > targetRotationX)
             currRotationX = Math.max(currRotationX - rotationStepX, targetRotationX);
 
+        if (invalidateRotationX || targetRotationX != currRotationX) {
+            applyRotationX(currRotationX);
+            invalidateRotationX = false;
+        }
+
         // Rotate Y
+
+        // Change the y rotation towards the target one
+        final float rotationStepY = Float.MAX_VALUE;
+//        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
+        if (currRotationY < targetRotationY)
+            currRotationY = Math.min(currRotationY + rotationStepY, targetRotationY);
+        else if (currRotationY > targetRotationY)
+            currRotationY = Math.max(currRotationY - rotationStepY, targetRotationY);
 
         if (invalidateRotationY || targetRotationY != currRotationY) {
             applyRotationY(currRotationY);
             invalidateRotationY = false;
         }
-
-        // Change the y rotation towards the target one
-        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
-        if (currRotationY < targetRotationY)
-            currRotationY = Math.min(currRotationY + rotationStepY, targetRotationY);
-        else if (currRotationY > targetRotationY)
-            currRotationY = Math.max(currRotationY - rotationStepY, targetRotationY);
     }
 
     @Override
@@ -154,11 +156,13 @@ public class PoolEntity implements Entity {
     @Override
     public void rotateX(float rotationX) {
         this.targetRotationX = rotationX;
+        invalidateRotationX = true;
     }
 
     @Override
     public void rotateY(float rotationY) {
         this.targetRotationY = rotationY;
+        invalidateRotationY = true;
     }
 
     private void applyRotationX(float delta) {
