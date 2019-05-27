@@ -286,6 +286,10 @@ public class PoolEntity implements Entity {
             onWaterBounds.accept(0f, b);
     }
 
+    /**
+     * @brief Disegna per ogni direzione se è presente una vasca (Pool) e l'altezza utilizzata (h), per rendere
+     *         più semplice la ricerca di bug.
+     */
     private void drawDebug() {
         GiocoPalla.getInstance().pushStyle();
 

@@ -12,6 +12,10 @@ import java.util.List;
  * @version 1.0
  */
 public class PoolList {
+
+    /** @brief Bordo da uitilizzare tra due vasche adiacenti */
+    private static final int POOLS_BORDER = 0;
+
     /** @brief La lista che verrà gestita come una matrice di vasche */
     private List<PoolEntity> list;
 
@@ -63,26 +67,15 @@ public class PoolList {
      */
     public void addAll() {
 
-        final float standardBorder = 0;
         for (int i = 0; i < poolNumberY; i++) {
 
-            float topBorder = standardBorder;
-            float bottomBorder = standardBorder;
-
-            if(i == 0)
-                topBorder = Float.MAX_VALUE;
-            else if(i + 1 == poolNumberY)
-                bottomBorder = Float.MAX_VALUE;
+            float topBorder = i != 0 ? POOLS_BORDER : Float.MAX_VALUE; // If it's the first row, upper border is infinite
+            float bottomBorder = i + 1 != poolNumberY ? POOLS_BORDER : Float.MAX_VALUE; // If it's the last row, bottom border is infinite
 
             for (int j = 0; j < poolNumberX; j++) {
 
-                float leftBorder = standardBorder;
-                float rightBorder = standardBorder;
-
-                if(j == 0)
-                    leftBorder = Float.MAX_VALUE;
-                else if(j + 1 == poolNumberX)
-                    rightBorder = Float.MAX_VALUE;
+                float leftBorder = j != 0 ? POOLS_BORDER : Float.MAX_VALUE; // If it's the first column, left border is infinite
+                float rightBorder = j + 1 != poolNumberX ? POOLS_BORDER : Float.MAX_VALUE; // If it's the last column, right border is infinite
 
                 addPool(new PoolEntity(
                         lastX, lastY,
@@ -101,13 +94,13 @@ public class PoolList {
             for (int j = 0; j < poolNumberX; j++) {
                 final PoolEntity currPool = getAt(i, j);
 
-                if(i != 0)
+                if(i != 0) // If it's not the first row
                     currPool.setTopPool(getAt(i - 1, j));
-                if(i + 1 != poolNumberY)
+                if(i + 1 != poolNumberY)  // If it's not the last row
                     currPool.setBottomPool(getAt(i + 1, j));
-                if(j != 0)
+                if(j != 0) // If it's not the first column
                     currPool.setLeftPool(getAt(i, j - 1));
-                if(j + 1 != poolNumberX)
+                if(j + 1 != poolNumberX) // If it's not the last column
                     currPool.setRightPool(getAt(i, j + 1));
             }
         }
@@ -125,7 +118,7 @@ public class PoolList {
     }
 
     private PoolEntity getAt(int row, int column) {
-        return list.get(row * poolNumberY + column);
+        return list.get(row * poolNumberX + column);
     }
 
     /** @brief Metodo get che restituisce poolNumberX */
