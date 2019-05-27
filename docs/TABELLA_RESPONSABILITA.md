@@ -52,7 +52,7 @@ sono modificate da tutti in base alle necessità
 |Entity                         |        |      |       |        |
 |EntityManager                  |        |X     |       |        |
 |BallEntity                     |        |X     |       |        |
-|PoolEntity                     |        |      |       |        |
+|PoolEntity                     |X       |      |       |        |
 |PoolList                       |        |X     |       |        |
 |PhysicsThread                  |        |X     |       |        |
 |Gui                            |        |      |       |        |
@@ -64,8 +64,8 @@ sono modificate da tutti in base alle necessità
 |Component                      |        |      |       |        |
 |BaseGuiComponent               |        |      |       |        |
 |ColorSlider                    |        |      |       |        |
-|PauseMenuButton                |        |      |       |        |
-|PauseButton                    |        |      |       |        |
+|PauseMenuButton                |        |      |       |X       |
+|PauseButton                    |        |      |       |X       |
 |ValueManager                   |        |      |       |X       |
 |Value                          |        |      |       |X       |
 |ColorValue                     |        |      |       |X       |
