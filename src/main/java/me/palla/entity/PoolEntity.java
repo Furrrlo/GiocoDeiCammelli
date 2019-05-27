@@ -2,12 +2,15 @@ package me.palla.entity;
 
 import me.palla.GiocoPalla;
 import me.palla.util.FastMath;
+import processing.core.PConstants;
 
 import java.awt.*;
 import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
 
 public class PoolEntity implements Entity {
+
+    private static final boolean DEBUG = true;
 
     // Attributes
 
@@ -107,8 +110,8 @@ public class PoolEntity implements Entity {
             invalidateRotationX = false;
         }
 
-        final float rotationStepX = Float.MAX_VALUE;
-//        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
+        // Change the x rotation towards the target one
+        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
         if (currRotationX < targetRotationX)
             currRotationX = Math.min(currRotationX + rotationStepX, targetRotationX);
         else if (currRotationX > targetRotationX)
@@ -121,8 +124,8 @@ public class PoolEntity implements Entity {
             invalidateRotationY = false;
         }
 
-        final float rotationStepY = Float.MAX_VALUE;
-//        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
+        // Change the y rotation towards the target one
+        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
         if (currRotationY < targetRotationY)
             currRotationY = Math.min(currRotationY + rotationStepY, targetRotationY);
         else if (currRotationY > targetRotationY)
@@ -138,10 +141,13 @@ public class PoolEntity implements Entity {
         GiocoPalla.getInstance().rect(xPos, yPos, width, length, 20);
 
         GiocoPalla.getInstance().fill(Color.BLUE.getRGB());
-        if(Math.abs(waterXWidth) > 0.001 && Math.abs(waterYWidth) > 0.001)
+        if(Math.abs(waterXWidth) > 1 && Math.abs(waterYWidth) > 1) // Kind of fixes horrible rendering
             GiocoPalla.getInstance().rect(xPos + startWaterX, yPos + startWaterY, waterXWidth, waterYWidth, 20);
 
         GiocoPalla.getInstance().popStyle();
+
+        if(DEBUG)
+            drawDebug();
     }
 
     @Override
@@ -278,6 +284,47 @@ public class PoolEntity implements Entity {
             onWaterBounds.accept(width - b, b);
         else
             onWaterBounds.accept(0f, b);
+    }
+
+    private void drawDebug() {
+        GiocoPalla.getInstance().pushStyle();
+
+        final float textSize = 10;
+        GiocoPalla.getInstance().stroke(Color.white.getRGB());
+        GiocoPalla.getInstance().textSize(textSize);
+
+        GiocoPalla.getInstance().textAlign(PConstants.CENTER, PConstants.TOP);
+        GiocoPalla.getInstance().text("Pool: " + (topPool != null),
+                xPos + width / 2f,
+                yPos);
+        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", topBorderHeight),
+                xPos + width / 2f,
+                yPos + textSize + 0.25f);
+
+        GiocoPalla.getInstance().text("Pool: " + (bottomPool != null),
+                xPos + width / 2f,
+                yPos + length - textSize);
+        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", bottomBorderHeight),
+                xPos + width / 2f,
+                yPos + length - textSize - textSize - 0.25f);
+
+        GiocoPalla.getInstance().textAlign(PConstants.LEFT, PConstants.TOP);
+        GiocoPalla.getInstance().text("Pool: " + (leftPool != null),
+                xPos,
+                yPos + length / 2 - (0.125f + textSize) * 2);
+        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", leftBorderHeight),
+                xPos,
+                yPos + length / 2 - 0.125f - textSize);
+
+        GiocoPalla.getInstance().textAlign(PConstants.RIGHT, PConstants.TOP);
+        GiocoPalla.getInstance().text("Pool: " + (rightPool != null),
+                xPos + width,
+                yPos + length / 2 + 0.125f);
+        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", rightBorderHeight),
+                xPos + width,
+                yPos + length / 2 + 0.25f + textSize);
+
+        GiocoPalla.getInstance().popStyle();
     }
 
     // Important getters and setters
