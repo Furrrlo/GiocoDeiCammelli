@@ -50,22 +50,29 @@ public class PauseButton extends BaseGuiComponent {
         if (GiocoPalla.getInstance().isPaused())
             return;
         GiocoPalla.getInstance().pushStyle();
+        
+        
 
         if (this.isHovered()) {
             GiocoPalla.getInstance().fill(focusedColor);
-            GiocoPalla.getInstance().stroke(focusedStrokeColor);
+            GiocoPalla.getInstance().stroke(focusedStrokeColor);                   
         } else {
             GiocoPalla.getInstance().fill(rectColor);
             GiocoPalla.getInstance().stroke(strokeColor);
-        }
-
+            
+            GiocoPalla.getInstance().strokeWeight(2.5F);
+            GiocoPalla.getInstance().rect(x, y, width, height, 10);
+        }   
+        
         GiocoPalla.getInstance().strokeWeight(2.5F);
-        GiocoPalla.getInstance().rect(x, y, width, height, 10);
-
-
-        //GiocoPalla.getInstance().fill(new Color(0xffffe8, true).getRGB());
-        GiocoPalla.getInstance().stroke(strokeColor);
+        GiocoPalla.getInstance().rect(x, y, width, height, 10);  
+            
         GiocoPalla.getInstance().strokeWeight(1);
+        GiocoPalla.getInstance().fill(new Color(strokeColor, true).getRGB());
+        GiocoPalla.getInstance().stroke(focusedStrokeColor);   
+            
+        
+        
 
         final float topPadding = height / 4;
         final float strokeWidth = width / 6;
