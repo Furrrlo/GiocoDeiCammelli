@@ -9,56 +9,105 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
 
+/**
+ * @brief Entity che rappresenta una vasca e gestisce la sabbia al suo interno
+ * @author Francesco Ferlin
+ */
 public class PoolEntity implements Entity {
 
     // Constants
 
+    /** Colore della vasca */
     private static final int POOL_COLOR = new Color(33, 33, 33).getRGB();
+    /** Colore della sabbia */
     private static final int SAND_COLOR = new Color(244, 217, 66).getRGB();
 
+    /** Indica se disegnare le informazioni di debug (vedi {@link #drawDebug()}) */
     private static final boolean DEBUG = false;
 
     // Attributes
 
+    /** Posizione x su schermo */
     private float xPos;
+    /** Posizione y su schermo */
     private float yPos;
 
+    /** Lunghezza delle vasce in pixel */
     private float width;
+    /** Altezza delle vasche in pixel (corrisponde anche alla profondità) */
     private float length;
 
+    /** Altezza del bordo di sinistra */
     private float leftBorderHeight;
+    /** Altezza del bordo di destra */
     private float rightBorderHeight;
-
+    /** Altezza del bordo sopra */
     private float topBorderHeight;
+    /** Altezza del bordo sotto */
     private float bottomBorderHeight;
 
+    /** Volume di sabbia presente nella vasca */
     private float sandVolume;
 
+    /** Thread che gestisce l'input e la fisica della vasca */
     private final Thread physicsThread;
 
     // Pools
 
-    private PoolEntity topPool;
-    private PoolEntity bottomPool;
+    /** Vasca a destra di questa, o null se non presente */
     private PoolEntity rightPool;
+    /** Vasca a sinistra di questa, o null se non presente */
     private PoolEntity leftPool;
+    /** Vasca sopra di questa, o null se non presente */
+    private PoolEntity topPool;
+    /** Vasca sotto di questa, o null se non presente */
+    private PoolEntity bottomPool;
 
     // Rotation
 
+    /**
+     * Indica se i dati dipendenti dalla rotazione X sono stati modificati e, quindi, la rotazione deve essere
+     * ricalcolata. Variabile atomica in quanto può essere modificata da altre vasche, gestite da altri thread.
+     */
     private final AtomicBoolean invalidateRotationX = new AtomicBoolean();
+    /** Rotazione x corrente usata per animare il movimento della sabbia */
     private float currRotationX;
+    /** Rotazione x dell'oscilloscopio da raggiungere */
     private float targetRotationX;
 
+    /**
+     * Indica se i dati dipendenti dalla rotazione Y sono stati modificati e, quindi, la rotazione deve essere
+     * ricalcolata. Variabile atomica in quanto può essere modificata da altre vasche, gestite da altri thread.
+     */
     private final AtomicBoolean invalidateRotationY = new AtomicBoolean();
+    /** Rotazione y corrente usata per animare il movimento della sabbia */
     private float currRotationY;
+    /** Rotazione y dell'oscilloscopio da raggiungere */
     private float targetRotationY;
 
+    /** Posizione delle x con origine lo spigolo in alto a sinistra della vasca dove iniziare a disegnare la sabbia */
     private float startSandX;
+    /** Lunghezza per disegnare la sabbia */
     private float sandXWidth;
 
+    /** Posizione delle x con origine lo spigolo in alto a sinistra della vasca dove iniziare a disegnare la sabbia */
     private float startSandY;
+    /** Altezza per disegnare la sabbia */
     private float sandYWidth;
 
+    /**
+     * @brief Crea una nuova vasca con i dati passati e un volume di sabbia adatto
+     *          e starta il thread della fisica
+     *
+     * @param xPos               posizione x su schermo
+     * @param yPos               posizione y su schermo
+     * @param width              lunghezza delle vasce in pixel
+     * @param length             altezza delle vasche in pixel (corrisponde anche alla profondità)
+     * @param topBorderHeight    altezza del bordo sopra
+     * @param bottomBorderHeight altezza del bordo sotto
+     * @param leftBorderHeight   altezza del bordo di sinistra
+     * @param rightBorderHeight  altezza del bordo di destra
+     */
     public PoolEntity(float xPos, float yPos,
                       float width, float length,
                       float topBorderHeight, float bottomBorderHeight,
@@ -72,6 +121,19 @@ public class PoolEntity implements Entity {
         );
     }
 
+    /**
+     * @brief Crea una nuova vasca con i dati passati e starta il thread della fisica
+     *
+     * @param xPos               posizione x su schermo
+     * @param yPos               posizione y su schermo
+     * @param width              lunghezza delle vasce in pixel
+     * @param length             altezza delle vasche in pixel (corrisponde anche alla profondità)
+     * @param topBorderHeight    altezza del bordo sopra
+     * @param bottomBorderHeight altezza del bordo sotto
+     * @param leftBorderHeight   altezza del bordo di sinistra
+     * @param rightBorderHeight  altezza del bordo di destra
+     * @param sandVolume         volume di sabbia
+     */
     public PoolEntity(float xPos, float yPos,
                       float width, float length,
                       float topBorderHeight, float bottomBorderHeight,
@@ -102,6 +164,7 @@ public class PoolEntity implements Entity {
         applyRotationY(currRotationY);
     }
 
+    /** @brief Aggiorna la fisica della vasca (posizione della sabbia, sabbia che straborda, etc) */
     @Override
     public void onTick() {
 
@@ -164,6 +227,11 @@ public class PoolEntity implements Entity {
         invalidateRotationY.set(true);
     }
 
+    /**
+     * @brief Aggiorna la posizione e il volume della sabbia sull'asse delle x
+     *
+     * @param delta angolo di rotazione delle x
+     */
     private void applyRotationX(float delta) {
         rotate(delta, sandVolume / length, width, rightBorderHeight, leftBorderHeight,
                 (sandStart, sandWidth) -> {
@@ -181,6 +249,11 @@ public class PoolEntity implements Entity {
                 });
     }
 
+    /**
+     * @brief Aggiorna la posizione e il volume della sabbia sull'asse delle y
+     *
+     * @param delta angolo di rotazione delle y
+     */
     private void applyRotationY(float delta) {
         rotate(delta, sandVolume / width, length, topBorderHeight, bottomBorderHeight,
                 (sandStart, sandWidth) -> {
@@ -198,6 +271,18 @@ public class PoolEntity implements Entity {
                 });
     }
 
+    /**
+     * @brief Calcola la rotazione su un asse in base ai dati ottenuti e restituisce la posizione della sabbia e
+     *         l'area della sabbia che sta uscendo attraverso i listener passati come parametri
+     *
+     * @param delta            angolo di rotazione dell'asse
+     * @param area             area della sabbia
+     * @param width            lunghezza della sabbia
+     * @param borderHeight1    primo bordo
+     * @param borderHeight2    secondo bordo
+     * @param onWaterBounds    listener su cui sono ritornati l'inizio e la lunchezza della sabbia
+     * @param overflowingWater listener con cui si ritorna l'area della sabbia in eccesso
+     */
     private static void rotate(float delta,
                                float area,
                                float width,
@@ -340,110 +425,235 @@ public class PoolEntity implements Entity {
 
     // Important getters and setters
 
+    /**
+     * @brief Setta la lunghezza delle vasce in pixel
+     *
+     * @param width lunghezza
+     */
     public void setWidth(float width) {
         this.width = width;
         invalidateRotationX.set(true);
     }
 
+    /**
+     * @brief Setta l'altezza delle vasche in pixel (corrisponde anche alla profondità)
+     *
+     * @param length altezza
+     */
     public void setLength(float length) {
         this.length = length;
         invalidateRotationY.set(true);
     }
 
+    /**
+     * Setta il volume di sabbia presente nella vasca
+     *
+     * @param sandVolume volume
+     */
     private void setSandVolume(float sandVolume) {
         this.sandVolume = sandVolume;
         invalidateRotationX.set(true);
         invalidateRotationY.set(true);
     }
 
+    /**
+     * Aggiunge il volume di sabbia alla vasca
+     *
+     * @param sandVolume volume da aggiungere
+     */
     private void addSandVolume(float sandVolume) {
         setSandVolume(this.sandVolume + sandVolume);
     }
 
     // Package access so the entityManager can use them
 
+    /**
+     * @brief Setta la vasca soprastante
+     *
+     * @param topPool vasca o null se non presente
+     */
     void setTopPool(PoolEntity topPool) {
         this.topPool = topPool;
     }
 
+    /**
+     * @brief Setta la vasca sottostante
+     *
+     * @param bottomPool vasca o null se non presente
+     */
     void setBottomPool(PoolEntity bottomPool) {
         this.bottomPool = bottomPool;
     }
 
+    /**
+     * @brief Setta la vasca di destra
+     *
+     * @param rightPool vasca o null se non presente
+     */
     void setRightPool(PoolEntity rightPool) {
         this.rightPool = rightPool;
     }
 
+    /**
+     * Setta la vasca di sinistra
+     *
+     * @param leftPool vasca o null se non presente
+     */
     void setLeftPool(PoolEntity leftPool) {
         this.leftPool = leftPool;
     }
 
     // Getters and setters
 
+    /**
+     * Restituisce la posizione x su schermo
+     *
+     * @return posizione x
+     */
     public float getPosX() {
         return xPos;
     }
 
+    /**
+     * Setta la posizione x su schermo
+     *
+     * @param xPos posizione x
+     */
     public void setPosX(float xPos) {
         this.xPos = xPos;
     }
 
+    /**
+     * Restituisce la posizione y su schermo
+     *
+     * @return posizione y
+     */
     public float getPosY() {
         return yPos;
     }
 
+    /**
+     * Setta la posizione y su schermo
+     *
+     * @param yPos posizione y
+     */
     public void setPosY(float yPos) {
         this.yPos = yPos;
     }
 
+    /**
+     * Restituisce la lunghezza delle vasce in pixel
+     *
+     * @return lunghezza
+     */
     public float getWidth() {
         return width;
     }
 
+    /**
+     * Restituisce la altezza delle vasche in pixel (corrisponde anche alla profondità)
+     *
+     * @return altezza
+     */
     public float getLength() {
         return length;
     }
 
+    /**
+     * Restituisce l'altezza del bordo di sinistra
+     *
+     * @return altezza del bordo sx
+     */
     public float getLeftBorderHeight() {
         return leftBorderHeight;
     }
 
+    /**
+     * Setta l'altezza del bordo di sinistra
+     *
+     * @param leftBorderHeight altezza del bordo sx
+     */
     public void setLeftBorderHeight(float leftBorderHeight) {
         this.leftBorderHeight = leftBorderHeight;
     }
 
+    /**
+     * Restituisce l'altezza del bordo di destra
+     *
+     * @return altezza del bordo dx
+     */
     public float getRightBorderHeight() {
         return rightBorderHeight;
     }
 
+    /**
+     * Setta l'altezza del bordo di destra
+     *
+     * @param rightBorderHeight altezza del bordo dx
+     */
     public void setRightBorderHeight(float rightBorderHeight) {
         this.rightBorderHeight = rightBorderHeight;
     }
 
+    /**
+     * Restituisce l'altezza del bordo sopra
+     *
+     * @return altezza del bordo sopra
+     */
     public float getTopBorderHeight() {
         return topBorderHeight;
     }
 
+    /**
+     * Setta l'altezza del bordo sopra
+     *
+     * @param topBorderHeight altezza del bordo sopra
+     */
     public void setTopBorderHeight(float topBorderHeight) {
         this.topBorderHeight = topBorderHeight;
     }
 
+    /**
+     * Restituisce l'altezza del bordo sotto
+     *
+     * @return altezza del bordo sotto
+     */
     public float getBottomBorderHeight() {
         return bottomBorderHeight;
     }
 
+    /**
+     * Setta l'altezza del bordo sotto
+     *
+     * @param bottomBorderHeight altezza del bordo sotto
+     */
     public void setBottomBorderHeight(float bottomBorderHeight) {
         this.bottomBorderHeight = bottomBorderHeight;
     }
 
+    /**
+     * Restituisce il volume di sabbia presente nella vasca
+     *
+     * @return volume
+     */
     public float getSandVolume() {
         return sandVolume;
     }
 
+    /**
+     * Restituisce la rotazione x dell'oscilloscopio da raggiungere
+     *
+     * @return rotazione x da raggiungere
+     */
     public float getTargetRotationX() {
         return targetRotationX;
     }
 
+    /**
+     * Restituisce la rotazione y dell'oscilloscopio da raggiungere
+     *
+     * @return rotazione y da raggiungere
+     */
     public float getTargetRotationY() {
         return targetRotationY;
     }
