@@ -27,6 +27,13 @@ public class PoolEntity implements Entity {
 
     private final Thread physicsThread;
 
+    // Pools
+
+    private PoolEntity topPool;
+    private PoolEntity bottomPool;
+    private PoolEntity rightPool;
+    private PoolEntity leftPool;
+
     // Rotation
 
     private boolean invalidateRotationX;
@@ -52,7 +59,7 @@ public class PoolEntity implements Entity {
                 width, length,
                 topBorderHeight, bottomBorderHeight,
                 leftBorderHeight, rightBorderHeight,
-                (width * length * getMin(topBorderHeight, bottomBorderHeight, leftBorderHeight, rightBorderHeight)) / 2F
+                (width * length * 10) / 2F
         );
     }
 
@@ -100,7 +107,8 @@ public class PoolEntity implements Entity {
             invalidateRotationX = false;
         }
 
-        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
+        final float rotationStepX = Float.MAX_VALUE;
+//        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
         if (currRotationX < targetRotationX)
             currRotationX = Math.min(currRotationX + rotationStepX, targetRotationX);
         else if (currRotationX > targetRotationX)
@@ -113,7 +121,8 @@ public class PoolEntity implements Entity {
             invalidateRotationY = false;
         }
 
-        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
+        final float rotationStepY = Float.MAX_VALUE;
+//        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
         if (currRotationY < targetRotationY)
             currRotationY = Math.min(currRotationY + rotationStepY, targetRotationY);
         else if (currRotationY > targetRotationY)
@@ -129,7 +138,8 @@ public class PoolEntity implements Entity {
         GiocoPalla.getInstance().rect(xPos, yPos, width, length, 20);
 
         GiocoPalla.getInstance().fill(Color.BLUE.getRGB());
-        GiocoPalla.getInstance().rect(xPos + startWaterX, yPos + startWaterY, waterXWidth, waterYWidth, 20);
+        if(Math.abs(waterXWidth) > 0.001 && Math.abs(waterYWidth) > 0.001)
+            GiocoPalla.getInstance().rect(xPos + startWaterX, yPos + startWaterY, waterXWidth, waterYWidth, 20);
 
         GiocoPalla.getInstance().popStyle();
     }
@@ -152,13 +162,12 @@ public class PoolEntity implements Entity {
                 },
                 (overflowingArea) -> {
                     final float overflowingVolume = (float) (overflowingArea * waterYWidth);
-                    System.out.println("Overflowing X " + overflowingVolume);
+                    final PoolEntity pool = delta > 0 ? rightPool : leftPool;
 
-//                    waterVolume -= overflowingVolume;
-//                    if(delta > 0)
-//                        Set the right pool
-//                    else
-//                        Set the left pool
+                    if(pool != null) {
+                        waterVolume -= overflowingVolume;
+                        pool.addWaterVolume(overflowingVolume);
+                    }
                 });
     }
 
@@ -170,13 +179,12 @@ public class PoolEntity implements Entity {
                 },
                 (overflowingArea) -> {
                     final float overflowingVolume = (float) (overflowingArea * waterXWidth);
-                    System.out.println("Overflowing Y " + overflowingVolume);
+                    final PoolEntity pool = delta > 0 ? topPool : bottomPool;
 
-//                    waterVolume -= overflowingVolume;
-//                    if(delta > 0)
-//                        Set the top pool
-//                    else
-//                        Set the bottom pool
+                    if(pool != null) {
+                        waterVolume -= overflowingVolume;
+                        pool.addWaterVolume(overflowingVolume);
+                    }
                 });
     }
 
@@ -284,10 +292,32 @@ public class PoolEntity implements Entity {
         invalidateRotationY = true;
     }
 
-    public void setWaterVolume(float waterVolume) {
+    private void setWaterVolume(float waterVolume) {
         this.waterVolume = waterVolume;
         invalidateRotationX = true;
         invalidateRotationY = true;
+    }
+
+    private void addWaterVolume(float waterVolume) {
+        setWaterVolume(this.waterVolume + waterVolume);
+    }
+
+    // Package access so the entityManager can use them
+
+    void setTopPool(PoolEntity topPool) {
+        this.topPool = topPool;
+    }
+
+    void setBottomPool(PoolEntity bottomPool) {
+        this.bottomPool = bottomPool;
+    }
+
+    void setRightPool(PoolEntity rightPool) {
+        this.rightPool = rightPool;
+    }
+
+    void setLeftPool(PoolEntity leftPool) {
+        this.leftPool = leftPool;
     }
 
     // Getters and setters
