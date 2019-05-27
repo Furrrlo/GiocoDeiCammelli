@@ -117,6 +117,13 @@ public class PoolList {
         }
     }
 
+    /**
+     * @brief Restituisce la vasca alla posizione corrente, trattando la lista come matrice
+     *
+     * @param row    riga della matrice
+     * @param column colonna della matrice
+     * @return la vasca alla posizione richiesta
+     */
     private PoolEntity getAt(int row, int column) {
         return list.get(row * poolNumberX + column);
     }
