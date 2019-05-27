@@ -14,7 +14,7 @@ import java.util.List;
 public class PoolList {
 
     /** @brief Bordo da uitilizzare tra due vasche adiacenti */
-    private static final int POOLS_BORDER = 0;
+    private static final int POOLS_BORDER = 10;
 
     /** @brief La lista che verrà gestita come una matrice di vasche */
     private List<PoolEntity> list;
