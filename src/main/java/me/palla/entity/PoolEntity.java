@@ -5,6 +5,7 @@ import me.palla.util.FastMath;
 import processing.core.PConstants;
 
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
 
@@ -44,11 +45,11 @@ public class PoolEntity implements Entity {
 
     // Rotation
 
-    private boolean invalidateRotationX;
+    private final AtomicBoolean invalidateRotationX = new AtomicBoolean();
     private float currRotationX;
     private float targetRotationX;
 
-    private boolean invalidateRotationY;
+    private final AtomicBoolean invalidateRotationY = new AtomicBoolean();
     private float currRotationY;
     private float targetRotationY;
 
@@ -90,12 +91,12 @@ public class PoolEntity implements Entity {
         this.physicsThread = new PhysicsThread(this);
         this.physicsThread.start();
 
-        invalidateRotationX = true;
+        invalidateRotationX.set(true);
         targetRotationX = 0;
         currRotationX = 0;
         applyRotationX(currRotationX);
 
-        invalidateRotationY = true;
+        invalidateRotationY.set(true);
         targetRotationY = 0;
         currRotationY = 0;
         applyRotationY(currRotationY);
@@ -106,33 +107,31 @@ public class PoolEntity implements Entity {
 
         // Rotate X
 
+        if (invalidateRotationX.getAndSet(false))
+            applyRotationX(currRotationX);
+        if(targetRotationX != currRotationX)
+            invalidateRotationX.set(true);
+
         // Change the x rotation towards the target one
-        final float rotationStepX = Float.MAX_VALUE;
-//        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
+        final float rotationStepX = Math.abs(currRotationX - targetRotationX) / 10f;
         if (currRotationX < targetRotationX)
             currRotationX = Math.min(currRotationX + rotationStepX, targetRotationX);
         else if (currRotationX > targetRotationX)
             currRotationX = Math.max(currRotationX - rotationStepX, targetRotationX);
 
-        if (invalidateRotationX || targetRotationX != currRotationX) {
-            applyRotationX(currRotationX);
-            invalidateRotationX = false;
-        }
-
         // Rotate Y
 
+        if (invalidateRotationY.getAndSet(false))
+            applyRotationY(currRotationY);
+        if(targetRotationY != currRotationY)
+            invalidateRotationY.set(true);
+
         // Change the y rotation towards the target one
-        final float rotationStepY = Float.MAX_VALUE;
-//        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
+        final float rotationStepY = Math.abs(currRotationY - targetRotationY) / 10f;
         if (currRotationY < targetRotationY)
             currRotationY = Math.min(currRotationY + rotationStepY, targetRotationY);
         else if (currRotationY > targetRotationY)
             currRotationY = Math.max(currRotationY - rotationStepY, targetRotationY);
-
-        if (invalidateRotationY || targetRotationY != currRotationY) {
-            applyRotationY(currRotationY);
-            invalidateRotationY = false;
-        }
     }
 
     @Override
@@ -156,13 +155,13 @@ public class PoolEntity implements Entity {
     @Override
     public void rotateX(float rotationX) {
         this.targetRotationX = rotationX;
-        invalidateRotationX = true;
+        invalidateRotationX.set(true);
     }
 
     @Override
     public void rotateY(float rotationY) {
         this.targetRotationY = rotationY;
-        invalidateRotationY = true;
+        invalidateRotationY.set(true);
     }
 
     private void applyRotationX(float delta) {
@@ -343,18 +342,18 @@ public class PoolEntity implements Entity {
 
     public void setWidth(float width) {
         this.width = width;
-        invalidateRotationX = true;
+        invalidateRotationX.set(true);
     }
 
     public void setLength(float length) {
         this.length = length;
-        invalidateRotationY = true;
+        invalidateRotationY.set(true);
     }
 
     private void setSandVolume(float sandVolume) {
         this.sandVolume = sandVolume;
-        invalidateRotationX = true;
-        invalidateRotationY = true;
+        invalidateRotationX.set(true);
+        invalidateRotationY.set(true);
     }
 
     private void addSandVolume(float sandVolume) {
