@@ -1,5 +1,7 @@
 package me.palla.input;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,8 +13,8 @@ import java.util.logging.Logger;
  */
 public class InputSubscription {
 
-    /** L'ultimo dato ricevuto */
-    private InputData lastData;
+    /** dati ricevuti */
+    private Queue<InputData> data;
     /** Semaforo per sincronizzazione */
     private Semaphore sem;
 
@@ -20,6 +22,7 @@ public class InputSubscription {
      * @brief Costrutto senza parametri Inizializza solamente il semaforo a 0
      */
     protected InputSubscription() {
+        data = new LinkedList<>();
         sem = new Semaphore(0);
     }
 
@@ -35,7 +38,7 @@ public class InputSubscription {
         } catch (InterruptedException ex) {
             Logger.getLogger(InputSubscription.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return lastData;
+        return data.poll();
     }
 
     /**
@@ -44,7 +47,7 @@ public class InputSubscription {
      * @param letto Il nuovo valore in input da registrare
      */
     void post(InputData letto) {
-        lastData = letto;
+        data.add(letto);
         sem.release();
     }
 }
