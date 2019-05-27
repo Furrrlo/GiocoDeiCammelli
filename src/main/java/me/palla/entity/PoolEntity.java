@@ -10,6 +10,9 @@ import java.util.function.DoubleConsumer;
 
 public class PoolEntity implements Entity {
 
+    private static final int POOL_COLOR = new Color(33, 33, 33).getRGB();
+    private static final int SAND_COLOR = new Color(244, 217, 66).getRGB();
+
     private static final boolean DEBUG = true;
 
     // Attributes
@@ -26,7 +29,7 @@ public class PoolEntity implements Entity {
     private float topBorderHeight;
     private float bottomBorderHeight;
 
-    private float waterVolume;
+    private float sandVolume;
 
     private final Thread physicsThread;
 
@@ -47,11 +50,11 @@ public class PoolEntity implements Entity {
     private float currRotationY;
     private float targetRotationY;
 
-    private float startWaterX;
-    private float waterXWidth;
+    private float startSandX;
+    private float sandXWidth;
 
-    private float startWaterY;
-    private float waterYWidth;
+    private float startSandY;
+    private float sandYWidth;
 
     public PoolEntity(float xPos, float yPos,
                       float width, float length,
@@ -70,7 +73,7 @@ public class PoolEntity implements Entity {
                       float width, float length,
                       float topBorderHeight, float bottomBorderHeight,
                       float leftBorderHeight, float rightBorderHeight,
-                      float waterVolume) {
+                      float sandVolume) {
 
         this.xPos = xPos;
         this.yPos = yPos;
@@ -80,7 +83,7 @@ public class PoolEntity implements Entity {
         this.bottomBorderHeight = bottomBorderHeight;
         this.leftBorderHeight = leftBorderHeight;
         this.rightBorderHeight = rightBorderHeight;
-        this.waterVolume = waterVolume;
+        this.sandVolume = sandVolume;
 
         this.physicsThread = new PhysicsThread(this);
         this.physicsThread.start();
@@ -94,10 +97,6 @@ public class PoolEntity implements Entity {
         targetRotationY = 0;
         currRotationY = 0;
         applyRotationY(currRotationY);
-    }
-
-    private static float getMin(float a, float b, float c, float d) {
-        return Math.min(a, Math.min(b, Math.min(c, d)));
     }
 
     @Override
@@ -136,13 +135,13 @@ public class PoolEntity implements Entity {
     public void onRender() {
         GiocoPalla.getInstance().pushStyle();
 
-        GiocoPalla.getInstance().stroke(33, 33, 33);
-        GiocoPalla.getInstance().fill(33, 33, 33);
+        GiocoPalla.getInstance().stroke(POOL_COLOR);
+        GiocoPalla.getInstance().fill(POOL_COLOR);
         GiocoPalla.getInstance().rect(xPos, yPos, width, length, 20);
 
-        GiocoPalla.getInstance().fill(Color.BLUE.getRGB());
-        if(Math.abs(waterXWidth) > 1 && Math.abs(waterYWidth) > 1) // Kind of fixes horrible rendering
-            GiocoPalla.getInstance().rect(xPos + startWaterX, yPos + startWaterY, waterXWidth, waterYWidth, 20);
+        GiocoPalla.getInstance().fill(SAND_COLOR);
+        if(Math.abs(sandXWidth) > 1 && Math.abs(sandYWidth) > 1) // Kind of fixes horrible rendering
+            GiocoPalla.getInstance().rect(xPos + startSandX, yPos + startSandY, sandXWidth, sandYWidth, 20);
 
         GiocoPalla.getInstance().popStyle();
 
@@ -161,35 +160,35 @@ public class PoolEntity implements Entity {
     }
 
     private void applyRotationX(float delta) {
-        rotate(delta, waterVolume / length, width, rightBorderHeight, leftBorderHeight,
-                (waterStart, waterWidth) -> {
-                    startWaterX = waterStart;
-                    waterXWidth = waterWidth;
+        rotate(delta, sandVolume / length, width, rightBorderHeight, leftBorderHeight,
+                (sandStart, sandWidth) -> {
+                    startSandX = sandStart;
+                    sandXWidth = sandWidth;
                 },
                 (overflowingArea) -> {
-                    final float overflowingVolume = (float) (overflowingArea * waterYWidth);
+                    final float overflowingVolume = (float) (overflowingArea * sandYWidth);
                     final PoolEntity pool = delta > 0 ? rightPool : leftPool;
 
                     if(pool != null) {
-                        waterVolume -= overflowingVolume;
-                        pool.addWaterVolume(overflowingVolume);
+                        sandVolume -= overflowingVolume;
+                        pool.addSandVolume(overflowingVolume);
                     }
                 });
     }
 
     private void applyRotationY(float delta) {
-        rotate(delta, waterVolume / width, length, topBorderHeight, bottomBorderHeight,
-                (waterStart, waterWidth) -> {
-                    startWaterY = waterStart;
-                    waterYWidth = waterWidth;
+        rotate(delta, sandVolume / width, length, topBorderHeight, bottomBorderHeight,
+                (sandStart, sandWidth) -> {
+                    startSandY = sandStart;
+                    sandYWidth = sandWidth;
                 },
                 (overflowingArea) -> {
-                    final float overflowingVolume = (float) (overflowingArea * waterXWidth);
+                    final float overflowingVolume = (float) (overflowingArea * sandXWidth);
                     final PoolEntity pool = delta > 0 ? topPool : bottomPool;
 
                     if(pool != null) {
-                        waterVolume -= overflowingVolume;
-                        pool.addWaterVolume(overflowingVolume);
+                        sandVolume -= overflowingVolume;
+                        pool.addSandVolume(overflowingVolume);
                     }
                 });
     }
@@ -218,7 +217,7 @@ public class PoolEntity implements Entity {
         if (delta < 0) {
             // If the angle is on the other side I can use the same exact
             // method to calculate stuff and then just change the point
-            // where I start to draw water
+            // where I start to draw sand
             delta = -delta;
             border = borderHeight2;
             reversed = true;
@@ -261,7 +260,7 @@ public class PoolEntity implements Entity {
         float b = a * FastMath.sin(beta);
         float c = a * FastMath.sin(gamma);
 
-        // Find area of the water which got out of the box
+        // Find area of the sand which got out of the box
 
         // Refer to
         // the Paint.NET file /docs/PAINT_OVERFLOWING_POOL.pdn
@@ -274,7 +273,7 @@ public class PoolEntity implements Entity {
             overflowingWater.accept(toRemoveArea);
         }
 
-        // Make the last difference and find where the water starts
+        // Make the last difference and find where the sand starts
 
         b = Math.min(width, b);
         // Unused
@@ -294,8 +293,11 @@ public class PoolEntity implements Entity {
         GiocoPalla.getInstance().pushStyle();
 
         final float textSize = 10;
-        GiocoPalla.getInstance().stroke(Color.white.getRGB());
         GiocoPalla.getInstance().textSize(textSize);
+
+        // Make the color reverse based on background
+        GiocoPalla.getInstance().blendMode(PConstants.DIFFERENCE);
+        GiocoPalla.getInstance().fill(Color.white.getRGB());
 
         GiocoPalla.getInstance().textAlign(PConstants.CENTER, PConstants.TOP);
         GiocoPalla.getInstance().text("Pool: " + (topPool != null),
@@ -343,14 +345,14 @@ public class PoolEntity implements Entity {
         invalidateRotationY = true;
     }
 
-    private void setWaterVolume(float waterVolume) {
-        this.waterVolume = waterVolume;
+    private void setSandVolume(float sandVolume) {
+        this.sandVolume = sandVolume;
         invalidateRotationX = true;
         invalidateRotationY = true;
     }
 
-    private void addWaterVolume(float waterVolume) {
-        setWaterVolume(this.waterVolume + waterVolume);
+    private void addSandVolume(float sandVolume) {
+        setSandVolume(this.sandVolume + sandVolume);
     }
 
     // Package access so the entityManager can use them
@@ -429,8 +431,8 @@ public class PoolEntity implements Entity {
         this.bottomBorderHeight = bottomBorderHeight;
     }
 
-    public float getWaterVolume() {
-        return waterVolume;
+    public float getSandVolume() {
+        return sandVolume;
     }
 
     public float getTargetRotationX() {
