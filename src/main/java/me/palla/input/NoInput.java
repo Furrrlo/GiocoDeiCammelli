@@ -9,7 +9,7 @@ public final class NoInput implements InputData {
     /** L'istanza della classe */
     private static final NoInput INSTANCE = new NoInput();
 
-    /** @brief Costruttore Csotruttore vuoto, senza parametri e privato per singleton */
+    /** @brief Costruttore vuoto, senza parametri e privato per singleton */
     private NoInput() {
     }
 
