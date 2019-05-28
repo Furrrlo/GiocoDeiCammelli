@@ -78,7 +78,7 @@ public class BallEntity implements Entity {
      */
     @Override
     public void rotateX(float rotationX) {
-        //this.xSpeed = rotationX;
+        this.xSpeed = rotationX/20;
 
     }
 
@@ -89,6 +89,6 @@ public class BallEntity implements Entity {
      */
     @Override
     public void rotateY(float rotationY) {
-        //this.ySpeed = rotationY;
+        this.ySpeed = rotationY/20;
     }
 }
