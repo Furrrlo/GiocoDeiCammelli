@@ -12,7 +12,7 @@ public class FakeAccellerometer extends JFrame {
         add(contentPanel);
 
         pack();
-        setSize(1000, getHeight());
+        setSize(700, getHeight());
         setLocationRelativeTo(null);
 
         final Thread th1 = new Thread(new SensorRunnable(this));
