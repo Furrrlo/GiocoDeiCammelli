@@ -255,14 +255,14 @@ public class PoolEntity implements Entity {
      * @param delta angolo di rotazione delle y
      */
     private void applyRotationY(float delta) {
-        rotate(delta, sandVolume / width, length, topBorderHeight, bottomBorderHeight,
+        rotate(delta, sandVolume / width, length, bottomBorderHeight, topBorderHeight,
                 (sandStart, sandWidth) -> {
                     startSandY = sandStart;
                     sandYWidth = sandWidth;
                 },
                 (overflowingArea) -> {
                     final float overflowingVolume = (float) (overflowingArea * sandXWidth);
-                    final PoolEntity pool = delta > 0 ? topPool : bottomPool;
+                    final PoolEntity pool = delta > 0 ? bottomPool : topPool;
 
                     if(pool != null) {
                         sandVolume -= overflowingVolume;
