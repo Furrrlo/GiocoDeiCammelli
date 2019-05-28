@@ -7,27 +7,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-/** @author Christian Ferrareis
- * @brief Bottone di pausa.
- * Classe per renderizzare un tasto di pausa per fermare l'esecuzione del gioco.
+/**
+ * @brief Bottone di pausa. Classe per renderizzare un tasto di pausa per fermare l'esecuzione del gioco.
+ * @author Christian Ferrareis
  */
-
 public class PauseButton extends BaseGuiComponent {
 
-    /**Colore interno*/
+    /** Colore interno */
     private int rectColor;
-    /**Colore del bordo*/
+    /** Colore del bordo */
     private int strokeColor;
-    /**Colore interno con mouseOver*/
+    /** Colore interno con mouseOver */
     private int focusedColor;
-    /**Colore del bordo con mouseOver*/
+    /** Colore del bordo con mouseOver */
     private int focusedStrokeColor;
 
-    /**Listener per click del bottone*/
+    /** Listener per click del bottone */
     private final Collection<Runnable> actionListeners;
 
-    /** @brief Costruttore con parametro
-     * Prende un actionListener e inizializza le variabili e i colori
+    /**
+     * @brief Costruttore con parametro Prende un actionListener e inizializza le variabili e i colori
+     *
      * @param actionListeners Elemento per click bottone
      */
     public PauseButton(Runnable... actionListeners) {
@@ -40,9 +40,9 @@ public class PauseButton extends BaseGuiComponent {
         focusedStrokeColor = new Color(0x000000, true).getRGB();
     }
 
-    /** @brief Renderizzazione
-     * Metodo che disegna il bottone di pausa e lo toglie dopo averlo cliccato
-     * e cambia i colori quando ci si passa sopra con il mouse
+    /**
+     * @brief Renderizzazione Metodo che disegna il bottone di pausa e lo toglie dopo averlo cliccato e cambia i
+     *         colori quando ci si passa sopra con il mouse
      */
     @Override
     public void onRender() {
@@ -50,29 +50,26 @@ public class PauseButton extends BaseGuiComponent {
         if (GiocoPalla.getInstance().isPaused())
             return;
         GiocoPalla.getInstance().pushStyle();
-        
-        
+
 
         if (this.isHovered()) {
             GiocoPalla.getInstance().fill(focusedColor);
-            GiocoPalla.getInstance().stroke(focusedStrokeColor);                   
+            GiocoPalla.getInstance().stroke(focusedStrokeColor);
         } else {
             GiocoPalla.getInstance().fill(rectColor);
             GiocoPalla.getInstance().stroke(strokeColor);
-            
+
             GiocoPalla.getInstance().strokeWeight(2.5F);
             GiocoPalla.getInstance().rect(x, y, width, height, 10);
-        }   
-        
+        }
+
         GiocoPalla.getInstance().strokeWeight(2.5F);
-        GiocoPalla.getInstance().rect(x, y, width, height, 10);  
-            
+        GiocoPalla.getInstance().rect(x, y, width, height, 10);
+
         GiocoPalla.getInstance().strokeWeight(1);
         GiocoPalla.getInstance().fill(new Color(strokeColor, true).getRGB());
-        GiocoPalla.getInstance().stroke(focusedStrokeColor);   
-            
-        
-        
+        GiocoPalla.getInstance().stroke(focusedStrokeColor);
+
 
         final float topPadding = height / 4;
         final float strokeWidth = width / 6;

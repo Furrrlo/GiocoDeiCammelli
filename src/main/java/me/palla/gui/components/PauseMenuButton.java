@@ -6,29 +6,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-/** @author Francesco Ferlina
- * @brief Tasti nel menù di pausa.
- * Classe per gestire (render, colori e click) i bottoni all'interno del menù di pausa
+/**
+ * @brief Tasti nel menù di pausa. Classe per gestire (render, colori e click) i bottoni all'interno del menù di
+ *         pausa
+ * @author Francesco Ferlin
  */
 public class PauseMenuButton extends BaseGuiComponent {
 
-    /**Parola all'interno del bottone*/
+    /** Parola all'interno del bottone */
     private String content;
 
-    /**Colore normale*/
+    /** Colore normale */
     private int color;
-    /**Colore con mouseOver*/
+    /** Colore con mouseOver */
     private int focusedColor;
 
     private final Collection<Runnable> actionListeners;
 
-    /** @brief Costruttore con parametri
-     * Inizializza le variabili con i valori passati come parametri
+    /**
+     * @brief Costruttore con parametri Inizializza le variabili con i valori passati come parametri
+     *
      * @param actionListeners Listener per i bottoni
-     * @param color Colore del bottone
-     * @param content La stringa all'interno del bottone
-     * @param focusedColor Colore del bottone quando il mouse si trova sopra
-     * @param size Dimensione del bottone in altezza
+     * @param color           Colore del bottone
+     * @param content         La stringa all'interno del bottone
+     * @param focusedColor    Colore del bottone quando il mouse si trova sopra
+     * @param size            Dimensione del bottone in altezza
      */
     public PauseMenuButton(String content,
                            int color,
@@ -44,9 +46,9 @@ public class PauseMenuButton extends BaseGuiComponent {
         Collections.addAll(this.actionListeners, actionListeners);
     }
 
-    /** @brief Disegna il bottone
-     * Metodo per renderizzare il bottone sulla schermata di gioco e cambiare il colore
-     * quando ci passa sopra il mouse.
+    /**
+     * @brief Disegna il bottone Metodo per renderizzare il bottone sulla schermata di gioco e cambiare il
+     *         colore quando ci passa sopra il mouse.
      */
     @Override
     public void onRender() {
