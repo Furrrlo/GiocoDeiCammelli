@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 /**
  * @brief Classe rappresentate la sottoscrizione
  * @author Christian Ferrareis
- * @version 1.0
  */
 public class InputSubscription {
 
