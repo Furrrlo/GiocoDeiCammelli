@@ -1,6 +1,8 @@
 # GiocoDeiCammelli
 E che cammelli
 
+![Demo](/docs/demo.gif)
+
 #### Roba da leggere
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables
 
