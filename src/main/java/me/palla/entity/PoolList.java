@@ -20,9 +20,9 @@ public class PoolList {
     private List<PoolEntity> list;
 
     /** @brief L'indice X della matrice di vasche */
-    private final int poolNumberX;
+    private final int columns;
     /** @brief L'indice Y della matrice di vasche */
-    private final int poolNumberY;
+    private final int rows;
 
     /** @brief La coordinata X dell'ultima vasca disegnata, usata per calcolare dove disegnare la prossima vasca */
     private float lastX;
@@ -40,15 +40,14 @@ public class PoolList {
      *         in base alla dimensione dello schermo e l'aggiunta delle vasche all lista con le giuste coordinate e
      *         dimensioni
      */
-    public PoolList(int poolNumberX, int poolNumberY) {
-        this.poolNumberX = poolNumberX;
-        this.poolNumberY = poolNumberY;
+    public PoolList(int columns, int rows) {
+        this.rows = rows;
+        this.columns = columns;
         lastX = border;
         lastY = border;
         this.list = new ArrayList<>();
 
         setLenght();
-
         addAll();
     }
 
@@ -58,8 +57,8 @@ public class PoolList {
      */
     public void setLenght() {
         final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
-        lenghtX = (res.getScaledWidth() - (border * 2)) / poolNumberX;
-        lenghtY = (res.getScaledHeight() - (border * 2)) / poolNumberY;
+        lenghtX = (res.getScaledWidth() - (border * 2)) / columns;
+        lenghtY = (res.getScaledHeight() - (border * 2)) / rows;
     }
 
     /**
@@ -67,15 +66,15 @@ public class PoolList {
      */
     public void addAll() {
 
-        for (int i = 0; i < poolNumberY; i++) {
+        for (int i = 0; i < rows; i++) {
 
             float topBorder = i != 0 ? POOLS_BORDER : Float.MAX_VALUE; // If it's the first row, upper border is infinite
-            float bottomBorder = i + 1 != poolNumberY ? POOLS_BORDER : Float.MAX_VALUE; // If it's the last row, bottom border is infinite
+            float bottomBorder = i + 1 != rows ? POOLS_BORDER : Float.MAX_VALUE; // If it's the last row, bottom border is infinite
 
-            for (int j = 0; j < poolNumberX; j++) {
+            for (int j = 0; j < columns; j++) {
 
                 float leftBorder = j != 0 ? POOLS_BORDER : Float.MAX_VALUE; // If it's the first column, left border is infinite
-                float rightBorder = j + 1 != poolNumberX ? POOLS_BORDER : Float.MAX_VALUE; // If it's the last column, right border is infinite
+                float rightBorder = j + 1 != columns ? POOLS_BORDER : Float.MAX_VALUE; // If it's the last column, right border is infinite
 
                 addPool(new PoolEntity(
                         lastX, lastY,
@@ -90,17 +89,17 @@ public class PoolList {
 
         // For each pools set the nearby pools
 
-        for (int i = 0; i < poolNumberY; i++) {
-            for (int j = 0; j < poolNumberX; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 final PoolEntity currPool = getAt(i, j);
 
                 if(i != 0) // If it's not the first row
                     currPool.setTopPool(getAt(i - 1, j));
-                if(i + 1 != poolNumberY)  // If it's not the last row
+                if(i + 1 != rows)  // If it's not the last row
                     currPool.setBottomPool(getAt(i + 1, j));
                 if(j != 0) // If it's not the first column
                     currPool.setLeftPool(getAt(i, j - 1));
-                if(j + 1 != poolNumberX) // If it's not the last column
+                if(j + 1 != columns) // If it's not the last column
                     currPool.setRightPool(getAt(i, j + 1));
             }
         }
@@ -112,7 +111,7 @@ public class PoolList {
      * @param pool la vasca da aggiungere alla lista list
      */
     private void addPool(PoolEntity pool) {
-        if (list.size() < poolNumberX * poolNumberY) {
+        if (list.size() < columns * rows) {
             list.add(pool);
         }
     }
@@ -125,17 +124,17 @@ public class PoolList {
      * @return la vasca alla posizione richiesta
      */
     private PoolEntity getAt(int row, int column) {
-        return list.get(row * poolNumberX + column);
+        return list.get(row * columns + column);
     }
 
-    /** @brief Metodo get che restituisce poolNumberX */
-    public int getPoolNumberX() {
-        return poolNumberX;
+    /** @brief Metodo get che restituisce columns */
+    public int getColumns() {
+        return columns;
     }
 
-    /** @brief Metodo get che restituisce poolNumberY */
-    public int getPoolNumberY() {
-        return poolNumberY;
+    /** @brief Metodo get che restituisce rows */
+    public int getRows() {
+        return rows;
     }
 
     /** @brief Metodo get che restituisce la lista list */
