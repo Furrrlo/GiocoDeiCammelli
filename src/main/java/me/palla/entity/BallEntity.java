@@ -29,16 +29,18 @@ public class BallEntity implements Entity {
      * @brief Costruttore della pallina, setta la posizione iniziale, il raggio, la velocità, inizializza e
      *         starta il thread per onTick e onRender
      */
-    public BallEntity() {
-        xPos = 100;
-        yPos = 100;
+    public BallEntity(float x,float y,float x2,float y2) {
+        xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2 +5;
+        yPos = GiocoPalla.getInstance().getScaledResolution().getScaledHeight() / 2;
         radius = 50;
 
         th = new PhysicsThread(this);
         th.start();
 
-        xSpeed = 1f;
-        ySpeed = 1f;
+        xSpeed = 0f;
+        ySpeed = 0f;
+        
+        
     }
 
     /**
@@ -49,6 +51,7 @@ public class BallEntity implements Entity {
     public void onTick() {
         xPos += xSpeed;
         yPos += ySpeed;
+        controllaBordo();
     }
 
     /** @brief Metodo ripetuto continuamente che ogni volta richiama il metodo per il disegno della pallina */
@@ -90,5 +93,18 @@ public class BallEntity implements Entity {
     @Override
     public void rotateY(float rotationY) {
         this.ySpeed = rotationY/20;
+    }
+    
+    private void controllaBordo(){
+        if(xPos<xMin)
+            xPos=xMin;
+        if(xPos>xMax){
+            xPos=xMax;
+        }
+         if(yPos<yMin)
+            yPos=yMin;
+        if(yPos>yMax){
+            yPos=yMax;
+        }
     }
 }

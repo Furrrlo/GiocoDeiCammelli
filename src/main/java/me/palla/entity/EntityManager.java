@@ -30,7 +30,14 @@ public class EntityManager {
         for (int i = 0; i < pools.getList().size(); i++) {
             this.addEntity(pools.getList().get(i));
         }
-        this.addEntity(new BallEntity());
+        float xPos=pools.getList().get(0).getPosX();
+        float yPos=pools.getList().get(0).getPosY();
+        PoolEntity lastPool=pools.getList().get(pools.getList().size()-1);
+        float lastYPos=lastPool.getPosY()+lastPool.getLength();
+        float lastXPos=lastPool.getPosX()+lastPool.getWidth();
+
+
+        this.addEntity(new BallEntity(xPos,yPos,lastYPos,lastXPos));
     }
 
     /** @brief Metodo che, ogni volta richiamato, chiama il render di ogni Entity */
