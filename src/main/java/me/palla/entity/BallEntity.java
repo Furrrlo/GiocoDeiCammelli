@@ -24,12 +24,22 @@ public class BallEntity implements Entity {
     private float xSpeed;
     /** @brief Attributo che definisce la velocità sull'asse Y della pallina */
     private float ySpeed;
+    
+    private float maxXPos;
+    /** @brief Attributo che definisce la coordinata Y della pallina, verrà aggiornato da onTick() */
+    private float minXPos;
+    /** @brief Attributo che definisce il raggio della pallina */
+    private float maxYPos;
+    /** @brief Attributo che definisce la velocità sull'asse X della pallina */
+    private float minYPos;
+
 
     /**
+     * @param maxXPos
      * @brief Costruttore della pallina, setta la posizione iniziale, il raggio, la velocità, inizializza e
      *         starta il thread per onTick e onRender
      */
-    public BallEntity(float x,float y,float x2,float y2) {
+    public BallEntity(float minXPos,float minYPos,float maxXPos,float maxYPos) {
         xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2 +5;
         yPos = GiocoPalla.getInstance().getScaledResolution().getScaledHeight() / 2;
         radius = 50;
@@ -39,7 +49,11 @@ public class BallEntity implements Entity {
 
         xSpeed = 0f;
         ySpeed = 0f;
-        
+        this.maxXPos=maxXPos;
+        this.maxYPos=maxYPos;
+        this.minXPos=minXPos;
+        this.minYPos=minYPos;
+
         
     }
 
@@ -81,7 +95,7 @@ public class BallEntity implements Entity {
      */
     @Override
     public void rotateX(float rotationX) {
-        this.xSpeed = rotationX/20;
+        this.xSpeed = rotationX/30;
 
     }
 
@@ -92,19 +106,19 @@ public class BallEntity implements Entity {
      */
     @Override
     public void rotateY(float rotationY) {
-        this.ySpeed = rotationY/20;
+        this.ySpeed = rotationY/30;
     }
     
     private void controllaBordo(){
-        if(xPos<xMin)
-            xPos=xMin;
-        if(xPos>xMax){
-            xPos=xMax;
+        if(xPos<minXPos)
+            xPos=minXPos;
+        if(xPos>maxXPos){
+            xPos=maxXPos;
         }
-         if(yPos<yMin)
-            yPos=yMin;
-        if(yPos>yMax){
-            yPos=yMax;
+         if(yPos<minYPos)
+            yPos=minYPos;
+        if(yPos>maxYPos){
+            yPos=maxYPos;
         }
     }
 }
