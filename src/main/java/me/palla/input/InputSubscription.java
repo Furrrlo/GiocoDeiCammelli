@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class InputSubscription {
 
-    /** dati ricevuti */
+    /** Dati ricevuti */
     private Queue<InputData> data;
     /** Semaforo per sincronizzazione */
     private Semaphore sem;

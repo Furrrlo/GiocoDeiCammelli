@@ -24,8 +24,7 @@ public class BallEntity implements Entity {
     private float xSpeed;
     /** @brief Attributo che definisce la velocità sull'asse Y della pallina */
     private float ySpeed;
-    
-    
+
     /** @brief Attributo che definisce la coordinata X dell'ultima vasca */
     private float maxXPos;
     /** @brief Attributo che definisce la coordinata X della prima vasca */
@@ -35,17 +34,17 @@ public class BallEntity implements Entity {
     /** @brief Attributo che definisce la coordinata Y della prima vasca */
     private float minYPos;
 
-
     /**
+     * @brief Costruttore della pallina, setta la posizione iniziale, il raggio, la velocità, inizializza e
+     *         starta il thread per onTick e onRender
+     *
      * @param minXPos la posizione più piccola che puo' assumere la X della pallina
      * @param minYPos la posizione più piccola che puo' assumere la Y della pallina
      * @param maxXPos la posizione più grande che puo' assumere la X della pallina
      * @param maxYPos la posizione più grande che puo' assumere la Y della pallina
-     * @brief Costruttore della pallina, setta la posizione iniziale, il raggio, la velocità, inizializza e
-     *         starta il thread per onTick e onRender
      */
-    public BallEntity(float minXPos,float minYPos,float maxXPos,float maxYPos) {
-        xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2 +5;
+    public BallEntity(float minXPos, float minYPos, float maxXPos, float maxYPos) {
+        xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2 + 5;
         yPos = GiocoPalla.getInstance().getScaledResolution().getScaledHeight() / 2;
         radius = 50;
 
@@ -54,12 +53,11 @@ public class BallEntity implements Entity {
 
         xSpeed = 0f;
         ySpeed = 0f;
-        this.maxXPos=maxXPos;
-        this.maxYPos=maxYPos;
-        this.minXPos=minXPos;
-        this.minYPos=minYPos;
 
-        
+        this.maxXPos = maxXPos;
+        this.maxYPos = maxYPos;
+        this.minXPos = minXPos;
+        this.minYPos = minYPos;
     }
 
     /**
@@ -100,8 +98,7 @@ public class BallEntity implements Entity {
      */
     @Override
     public void rotateX(float rotationX) {
-        this.xSpeed = rotationX/30;
-
+        this.xSpeed = rotationX / 30;
     }
 
     /**
@@ -111,24 +108,21 @@ public class BallEntity implements Entity {
      */
     @Override
     public void rotateY(float rotationY) {
-        this.ySpeed = rotationY/30;
+        this.ySpeed = rotationY / 30;
     }
-    
+
     /**
-     * @brief Metodo che controlla se la pallina sta toccando un bordo, se lo 
-     * sta toccanto setta la X e Y in modo che la pallina non esca
-     *
+     * @brief Metodo che controlla se la pallina sta toccando un bordo, se lo sta toccanto setta la X e Y in
+     *         modo che la pallina non esca
      */
-    private void controllaBordo(){
-        if(xPos<minXPos)
-            xPos=minXPos;
-        if(xPos>maxXPos){
-            xPos=maxXPos;
-        }
-         if(yPos<minYPos)
-            yPos=minYPos;
-        if(yPos>maxYPos){
-            yPos=maxYPos;
-        }
+    private void controllaBordo() {
+        if (xPos < minXPos)
+            xPos = minXPos;
+        if (xPos > maxXPos)
+            xPos = maxXPos;
+        if (yPos < minYPos)
+            yPos = minYPos;
+        if (yPos > maxYPos)
+            yPos = maxYPos;
     }
 }
