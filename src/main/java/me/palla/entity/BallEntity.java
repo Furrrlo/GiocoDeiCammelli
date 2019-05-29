@@ -25,17 +25,22 @@ public class BallEntity implements Entity {
     /** @brief Attributo che definisce la velocità sull'asse Y della pallina */
     private float ySpeed;
     
+    
+    /** @brief Attributo che definisce la coordinata X dell'ultima vasca */
     private float maxXPos;
-    /** @brief Attributo che definisce la coordinata Y della pallina, verrà aggiornato da onTick() */
+    /** @brief Attributo che definisce la coordinata X della prima vasca */
     private float minXPos;
-    /** @brief Attributo che definisce il raggio della pallina */
+    /** @brief Attributo che definisce la coordinata Y dell'ultima vasca */
     private float maxYPos;
-    /** @brief Attributo che definisce la velocità sull'asse X della pallina */
+    /** @brief Attributo che definisce la coordinata Y della prima vasca */
     private float minYPos;
 
 
     /**
-     * @param maxXPos
+     * @param minXPos la posizione più piccola che puo' assumere la X della pallina
+     * @param minYPos la posizione più piccola che puo' assumere la Y della pallina
+     * @param maxXPos la posizione più grande che puo' assumere la X della pallina
+     * @param maxYPos la posizione più grande che puo' assumere la Y della pallina
      * @brief Costruttore della pallina, setta la posizione iniziale, il raggio, la velocità, inizializza e
      *         starta il thread per onTick e onRender
      */
@@ -109,6 +114,11 @@ public class BallEntity implements Entity {
         this.ySpeed = rotationY/30;
     }
     
+    /**
+     * @brief Metodo che controlla se la pallina sta toccando un bordo, se lo 
+     * sta toccanto setta la X e Y in modo che la pallina non esca
+     *
+     */
     private void controllaBordo(){
         if(xPos<minXPos)
             xPos=minXPos;
