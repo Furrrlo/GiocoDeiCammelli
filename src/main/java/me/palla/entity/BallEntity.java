@@ -44,8 +44,8 @@ public class BallEntity implements Entity {
      * @param maxYPos la posizione più grande che puo' assumere la Y della pallina
      */
     public BallEntity(float minXPos, float minYPos, float maxXPos, float maxYPos) {
-        xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2 + 5;
-        yPos = GiocoPalla.getInstance().getScaledResolution().getScaledHeight() / 2;
+        xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2f + 5;
+        yPos = GiocoPalla.getInstance().getScaledResolution().getScaledHeight() / 2f;
         radius = 50;
 
         th = new PhysicsThread(this);
@@ -116,13 +116,13 @@ public class BallEntity implements Entity {
      *         modo che la pallina non esca
      */
     private void controllaBordo() {
-        if (xPos < minXPos)
-            xPos = minXPos;
-        if (xPos > maxXPos)
-            xPos = maxXPos;
-        if (yPos < minYPos)
-            yPos = minYPos;
-        if (yPos > maxYPos)
-            yPos = maxYPos;
+        if (xPos < minXPos + radius / 2f)
+            xPos = minXPos + radius / 2f;
+        if (xPos > maxXPos - radius / 2f)
+            xPos = maxXPos - radius / 2f;
+        if (yPos < minYPos + radius / 2f)
+            yPos = minYPos + radius / 2f;
+        if (yPos > maxYPos - radius / 2f)
+            yPos = maxYPos - radius / 2f;
     }
 }
