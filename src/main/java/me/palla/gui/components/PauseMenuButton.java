@@ -1,7 +1,6 @@
 package me.palla.gui.components;
 
-import me.palla.GiocoPalla;
-
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,15 +10,15 @@ import java.util.Collections;
  *         pausa
  * @author Francesco Ferlin
  */
-public class PauseMenuButton extends BaseGuiComponent {
+public class PauseMenuButton extends BaseGuiComponent<PauseMenuButton> {
 
     /** Parola all'interno del bottone */
     private String content;
 
     /** Colore normale */
-    private int color;
+    private Color color;
     /** Colore con mouseOver */
-    private int focusedColor;
+    private Color focusedColor;
 
     private final Collection<Runnable> actionListeners;
 
@@ -33,38 +32,17 @@ public class PauseMenuButton extends BaseGuiComponent {
      * @param size            Dimensione del bottone in altezza
      */
     public PauseMenuButton(String content,
-                           int color,
-                           int focusedColor,
+                           Color color,
+                           Color focusedColor,
                            float size,
                            Runnable... actionListeners) {
         this.color = color;
         this.focusedColor = focusedColor;
         this.height = size;
-        setContent(content);
+        this.content = content;
 
         this.actionListeners = new ArrayList<>();
         Collections.addAll(this.actionListeners, actionListeners);
-    }
-
-    /**
-     * @brief Disegna il bottone Metodo per renderizzare il bottone sulla schermata di gioco e cambiare il
-     *         colore quando ci passa sopra il mouse.
-     */
-    @Override
-    public void onRender() {
-        GiocoPalla.getInstance().pushStyle();
-
-        // GiocoPalla.getInstance().rect(x, y, width, height);
-
-        GiocoPalla.getInstance().textAlign(LEFT, TOP);
-        GiocoPalla.getInstance().textSize(height);
-        if (isHovered())
-            GiocoPalla.getInstance().fill(focusedColor);
-        else
-            GiocoPalla.getInstance().fill(color);
-        GiocoPalla.getInstance().text(content, x, y);
-
-        GiocoPalla.getInstance().popStyle();
     }
 
     @Override
@@ -102,28 +80,19 @@ public class PauseMenuButton extends BaseGuiComponent {
     }
 
     public void setContent(String content) {
-        GiocoPalla.getInstance().pushStyle();
-        GiocoPalla.getInstance().textSize(height);
-
         this.content = content;
-        this.width = GiocoPalla.getInstance().textWidth(content);
-
-        GiocoPalla.getInstance().popStyle();
+        onResize();
     }
 
-    public int getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
-
-    public int getFocusedColor() {
+    public Color getFocusedColor() {
         return focusedColor;
     }
 
-    public void setFocusedColor(int focusedColor) {
-        this.focusedColor = focusedColor;
+    public void setTextWidth(float textWidth) {
+        this.width = textWidth;
     }
 }

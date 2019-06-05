@@ -27,6 +27,14 @@ public class ValueManager {
         values.add(v);
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> T getValueByName(String name) {
+        return (T) values.stream()
+                .filter(v -> v.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
     /**
      * @brief Ritorna la lista dei valori standard
      * 

@@ -1,14 +1,16 @@
 package accelerometer;
 
-import me.palla.GiocoPalla;
+import me.palla.Game;
 import me.palla.input.InputGyroscope;
 
 class SensorRunnable implements Runnable {
 
     private final FakeAccellerometer gui;
+    private final Game[] games;
 
-    SensorRunnable(FakeAccellerometer gui) {
+    SensorRunnable(FakeAccellerometer gui, Game... games) {
         this.gui = gui;
+        this.games = games;
     }
 
     @Override
@@ -25,10 +27,11 @@ class SensorRunnable implements Runnable {
     @SuppressWarnings("InfiniteLoopStatement")
     private void run0() throws InterruptedException {
         while (true) {
-            GiocoPalla.getInstance().getInputManager().post(new InputGyroscope(
-                    gui.sliderX.getValue() / 10f,
-                    gui.sliderY.getValue() / 10f
-            ));
+            for (Game game : games)
+                game.inputManager().post(new InputGyroscope(
+                        gui.sliderX.getValue() / 10f,
+                        gui.sliderY.getValue() / 10f
+                ));
             Thread.sleep(50);
         }
     }

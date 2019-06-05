@@ -1,7 +1,5 @@
 package me.palla.util;
 
-import me.palla.GiocoPalla;
-
 /**
  * @brief Gestisce le dimensioni della schermata di gioco Questa classe ha il compito di gestire le dimensioni
  *         della schermata di gioco: nel caso in cui la finestra venga ridimensionata, i componenti vengono
@@ -66,21 +64,6 @@ public class ScaledResolution {
 
         this.scaledWidth = width * scaleFactor;
         this.scaledHeight = height * scaleFactor;
-    }
-
-    /**
-     * @brief Attiva o disattiva il calcolo della risoluzione
-     *
-     * @param enable Booleana per attivare o disattivare il metodo
-     */
-    public void setupScaling(boolean enable) {
-        if (enable) {
-            GiocoPalla.getInstance().translate(getWidthDifference() / 2, getHeightDifference() / 2);
-            GiocoPalla.getInstance().scale(getWidthScaleFactor(), getHeightScaleFactor());
-        } else {
-            GiocoPalla.getInstance().scale(1 / getWidthScaleFactor(), 1 / getHeightScaleFactor());
-            GiocoPalla.getInstance().translate(-getWidthDifference() / 2, -getHeightDifference() / 2);
-        }
     }
 
     /**

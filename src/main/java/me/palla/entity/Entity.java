@@ -1,5 +1,7 @@
 package me.palla.entity;
 
+import me.palla.renderer.RenderContext;
+
 /**
  * @author Mattia Broch
  * @version 1.0
@@ -14,7 +16,7 @@ public interface Entity {
     /**
      * @brief metodo che ridisegna la Entity
      */
-    void onRender();
+    void onRender(RenderContext ctx);
 
     void rotateX(float rotationX);
 

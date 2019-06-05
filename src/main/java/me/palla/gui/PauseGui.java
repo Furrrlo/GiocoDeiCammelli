@@ -1,31 +1,39 @@
 package me.palla.gui;
 
-import me.palla.GiocoPalla;
-import me.palla.util.ScaledResolution;
+import me.palla.Game;
+import me.palla.norender.NoRenderGame;
+import me.palla.renderer.RenderContext;
 
 import java.awt.*;
 
 public class PauseGui extends BaseGui {
 
-    private static final GameGui BACKGROUND_GUI = new GameGui();
-    private static final int OVERLAY_COLOR = new Color(22, 22, 22, 175).getRGB();
+    private static final Color OVERLAY_COLOR = new Color(22, 22, 22, 175);
+
+    private final GameGui backgroundGui;
+
+    protected PauseGui() {
+        backgroundGui = new GameGui();
+        backgroundColor = OVERLAY_COLOR;
+        setGame(NoRenderGame.instance());
+    }
 
     @Override
-    public void onRender() {
-        BACKGROUND_GUI.onRender();
-
-        GiocoPalla.getInstance().pushStyle();
-        final ScaledResolution res = GiocoPalla.getInstance().getScaledResolution();
-        GiocoPalla.getInstance().fill(OVERLAY_COLOR);
-        GiocoPalla.getInstance().rect(0, 0, res.getScaledWidth(), res.getScaledHeight());
-        GiocoPalla.getInstance().popStyle();
-
-        super.onRender();
+    public void onRender(RenderContext ctx) {
+        backgroundGui.onRender(ctx);
+        super.onRender(ctx);
     }
 
     @Override
     public void onResize(float width, float height) {
-        BACKGROUND_GUI.onResize(width, height);
+        backgroundGui.onResize(width, height);
         super.onResize(width, height);
+    }
+
+    @Override
+    public void setGame(Game game) {
+        super.setGame(game);
+        if(backgroundGui != null)
+            backgroundGui.setGame(game);
     }
 }

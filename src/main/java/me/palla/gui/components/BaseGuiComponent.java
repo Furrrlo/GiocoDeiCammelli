@@ -1,9 +1,16 @@
 package me.palla.gui.components;
 
-import me.palla.GiocoPalla;
+import me.palla.Game;
+import me.palla.GameReferencer;
+import me.palla.renderer.RenderContext;
+import me.palla.renderer.RenderManager;
+import me.palla.renderer.Renderer;
 import me.palla.util.ScaledResolution;
 
-public abstract class BaseGuiComponent implements GuiComponent {
+public abstract class BaseGuiComponent<T extends BaseGuiComponent> implements GuiComponent, GameReferencer {
+
+    protected Game game;
+    protected Renderer<? super T> renderer;
 
     protected float x;
     protected float y;
@@ -11,17 +18,33 @@ public abstract class BaseGuiComponent implements GuiComponent {
     protected float height;
 
     @Override
+    @SuppressWarnings("unchecked")
+    public void setGame(Game game) {
+        this.game = game;
+        this.renderer = (Renderer<? super T>) game.renderManager().getRendererFor(getClass());
+        onResize();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void onRender(RenderContext ctx) {
+        renderer.onRender(ctx, (T) this);
+    }
+
+    @Override
     public boolean intersects(float xPos, float yPos) {
         return xPos >= x && xPos <= x + width && yPos >= y && yPos <= y + height;
     }
 
-    protected boolean isHovered() {
-        final GiocoPalla inst = GiocoPalla.getInstance();
-        final ScaledResolution res = inst.getScaledResolution();
-        return intersects(res.scaleX(inst.mouseX), res.scaleY(inst.mouseY));
+    public boolean isHovered() {
+        final RenderManager renderManager = game.renderManager();
+        final ScaledResolution res = renderManager.getScaledResolution();
+        return intersects(res.scaleX(renderManager.getMouseX()), res.scaleY(renderManager.getMouseY()));
     }
 
+    @SuppressWarnings("unchecked")
     protected void onResize() {
+        renderer.onResize((T) this);
     }
 
     @Override

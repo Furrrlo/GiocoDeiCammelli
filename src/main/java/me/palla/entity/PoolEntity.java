@@ -1,10 +1,7 @@
 package me.palla.entity;
 
-import me.palla.GiocoPalla;
 import me.palla.util.FastMath;
-import processing.core.PConstants;
 
-import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
@@ -13,24 +10,7 @@ import java.util.function.DoubleConsumer;
  * @brief Entity che rappresenta una vasca e gestisce la sabbia al suo interno
  * @author Francesco Ferlin
  */
-public class PoolEntity implements Entity {
-
-    // Constants
-
-    /** Colore della vasca */
-    private static final int POOL_COLOR = new Color(33, 33, 33).getRGB();
-    /** Colore della sabbia */
-    private static final int SAND_COLOR = new Color(244, 217, 66).getRGB();
-
-    /** Indica se disegnare le informazioni di debug (vedi {@link #drawDebug()}) */
-    private static final boolean DEBUG = false;
-
-    // Attributes
-
-    /** Posizione x su schermo */
-    private float xPos;
-    /** Posizione y su schermo */
-    private float yPos;
+public class PoolEntity extends BaseEntity {
 
     /** Lunghezza delle vasce in pixel */
     private float width;
@@ -48,9 +28,6 @@ public class PoolEntity implements Entity {
 
     /** Volume di sabbia presente nella vasca */
     private float sandVolume;
-
-    /** Thread che gestisce l'input e la fisica della vasca */
-    private final Thread physicsThread;
 
     // Pools
 
@@ -139,9 +116,8 @@ public class PoolEntity implements Entity {
                       float topBorderHeight, float bottomBorderHeight,
                       float leftBorderHeight, float rightBorderHeight,
                       float sandVolume) {
+        super(xPos, yPos);
 
-        this.xPos = xPos;
-        this.yPos = yPos;
         this.width = width;
         this.length = length;
         this.topBorderHeight = topBorderHeight;
@@ -149,9 +125,6 @@ public class PoolEntity implements Entity {
         this.leftBorderHeight = leftBorderHeight;
         this.rightBorderHeight = rightBorderHeight;
         this.sandVolume = sandVolume;
-
-        this.physicsThread = new PhysicsThread(this);
-        this.physicsThread.start();
 
         invalidateRotationX.set(true);
         targetRotationX = 0;
@@ -195,24 +168,6 @@ public class PoolEntity implements Entity {
             currRotationY = Math.min(currRotationY + rotationStepY, targetRotationY);
         else if (currRotationY > targetRotationY)
             currRotationY = Math.max(currRotationY - rotationStepY, targetRotationY);
-    }
-
-    @Override
-    public void onRender() {
-        GiocoPalla.getInstance().pushStyle();
-
-        GiocoPalla.getInstance().stroke(POOL_COLOR);
-        GiocoPalla.getInstance().fill(POOL_COLOR);
-        GiocoPalla.getInstance().rect(xPos, yPos, width, length, 20);
-
-        GiocoPalla.getInstance().fill(SAND_COLOR);
-        if(Math.abs(sandXWidth) > 1 && Math.abs(sandYWidth) > 1) // Kind of fixes horrible rendering
-            GiocoPalla.getInstance().rect(xPos + startSandX, yPos + startSandY, sandXWidth, sandYWidth, 20);
-
-        GiocoPalla.getInstance().popStyle();
-
-        if(DEBUG)
-            drawDebug();
     }
 
     @Override
@@ -373,54 +328,6 @@ public class PoolEntity implements Entity {
             onWaterBounds.accept(width - b, b);
         else
             onWaterBounds.accept(0f, b);
-    }
-
-    /**
-     * @brief Disegna per ogni direzione se è presente una vasca (Pool) e l'altezza utilizzata (h), per rendere
-     *         più semplice la ricerca di bug.
-     */
-    private void drawDebug() {
-        GiocoPalla.getInstance().pushStyle();
-
-        final float textSize = 10;
-        GiocoPalla.getInstance().textSize(textSize);
-
-        // Make the color reverse based on background
-        GiocoPalla.getInstance().blendMode(PConstants.DIFFERENCE);
-        GiocoPalla.getInstance().fill(Color.white.getRGB());
-
-        GiocoPalla.getInstance().textAlign(PConstants.CENTER, PConstants.TOP);
-        GiocoPalla.getInstance().text("Pool: " + (topPool != null),
-                xPos + width / 2f,
-                yPos);
-        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", topBorderHeight),
-                xPos + width / 2f,
-                yPos + textSize + 0.25f);
-
-        GiocoPalla.getInstance().text("Pool: " + (bottomPool != null),
-                xPos + width / 2f,
-                yPos + length - textSize);
-        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", bottomBorderHeight),
-                xPos + width / 2f,
-                yPos + length - textSize - textSize - 0.25f);
-
-        GiocoPalla.getInstance().textAlign(PConstants.LEFT, PConstants.TOP);
-        GiocoPalla.getInstance().text("Pool: " + (leftPool != null),
-                xPos,
-                yPos + length / 2 - (0.125f + textSize) * 2);
-        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", leftBorderHeight),
-                xPos,
-                yPos + length / 2 - 0.125f - textSize);
-
-        GiocoPalla.getInstance().textAlign(PConstants.RIGHT, PConstants.TOP);
-        GiocoPalla.getInstance().text("Pool: " + (rightPool != null),
-                xPos + width,
-                yPos + length / 2 + 0.125f);
-        GiocoPalla.getInstance().text("h: " + String.format("%1$.2g", rightBorderHeight),
-                xPos + width,
-                yPos + length / 2 + 0.25f + textSize);
-
-        GiocoPalla.getInstance().popStyle();
     }
 
     // Important getters and setters
@@ -631,6 +538,22 @@ public class PoolEntity implements Entity {
         this.bottomBorderHeight = bottomBorderHeight;
     }
 
+    public PoolEntity getRightPool() {
+        return rightPool;
+    }
+
+    public PoolEntity getLeftPool() {
+        return leftPool;
+    }
+
+    public PoolEntity getTopPool() {
+        return topPool;
+    }
+
+    public PoolEntity getBottomPool() {
+        return bottomPool;
+    }
+
     /**
      * Restituisce il volume di sabbia presente nella vasca
      *
@@ -638,6 +561,22 @@ public class PoolEntity implements Entity {
      */
     public float getSandVolume() {
         return sandVolume;
+    }
+
+    public float getStartSandX() {
+        return startSandX;
+    }
+
+    public float getSandWidthX() {
+        return sandXWidth;
+    }
+
+    public float getStartSandY() {
+        return startSandY;
+    }
+
+    public float getSandWidthY() {
+        return sandYWidth;
     }
 
     /**

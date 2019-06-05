@@ -1,6 +1,6 @@
 package me.palla.gui.components;
 
-import me.palla.GiocoPalla;
+import me.palla.renderer.RenderContext;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,16 +11,16 @@ import java.util.Collections;
  * @brief Bottone di pausa. Classe per renderizzare un tasto di pausa per fermare l'esecuzione del gioco.
  * @author Christian Ferrareis
  */
-public class PauseButton extends BaseGuiComponent {
+public class PauseButton extends BaseGuiComponent<PauseButton> {
 
     /** Colore interno */
-    private int rectColor;
+    private Color rectColor;
     /** Colore del bordo */
-    private int strokeColor;
+    private Color strokeColor;
     /** Colore interno con mouseOver */
-    private int focusedColor;
+    private Color focusedColor;
     /** Colore del bordo con mouseOver */
-    private int focusedStrokeColor;
+    private Color focusedStrokeColor;
 
     /** Listener per click del bottone */
     private final Collection<Runnable> actionListeners;
@@ -34,10 +34,10 @@ public class PauseButton extends BaseGuiComponent {
         this.actionListeners = new ArrayList<>();
         Collections.addAll(this.actionListeners, actionListeners);
 
-        rectColor = new Color(0xFF42a4f4, true).getRGB();
-        strokeColor = new Color(0xFFD9D9D9, true).getRGB();
-        focusedColor = new Color(0xffffaa23, true).getRGB();
-        focusedStrokeColor = new Color(0x000000, true).getRGB();
+        rectColor = new Color(0xFF42a4f4, true);
+        strokeColor = new Color(0xFFD9D9D9, true);
+        focusedColor = new Color(0xffffaa23, true);
+        focusedStrokeColor = new Color(0xFF000000, true);
     }
 
     /**
@@ -45,40 +45,10 @@ public class PauseButton extends BaseGuiComponent {
      *         colori quando ci si passa sopra con il mouse
      */
     @Override
-    public void onRender() {
-
-        if (GiocoPalla.getInstance().isPaused())
+    public void onRender(RenderContext ctx) {
+        if (game.isPaused())
             return;
-        GiocoPalla.getInstance().pushStyle();
-
-
-        if (this.isHovered()) {
-            GiocoPalla.getInstance().fill(focusedColor);
-            GiocoPalla.getInstance().stroke(focusedStrokeColor);
-        } else {
-            GiocoPalla.getInstance().fill(rectColor);
-            GiocoPalla.getInstance().stroke(strokeColor);
-
-            GiocoPalla.getInstance().strokeWeight(2.5F);
-            GiocoPalla.getInstance().rect(x, y, width, height, 10);
-        }
-
-        GiocoPalla.getInstance().strokeWeight(2.5F);
-        GiocoPalla.getInstance().rect(x, y, width, height, 10);
-
-        GiocoPalla.getInstance().strokeWeight(1);
-        GiocoPalla.getInstance().fill(new Color(strokeColor, true).getRGB());
-        GiocoPalla.getInstance().stroke(focusedStrokeColor);
-
-
-        final float topPadding = height / 4;
-        final float strokeWidth = width / 6;
-        final float leftPadding = height / 4;
-
-        GiocoPalla.getInstance().rect(x + leftPadding, y + topPadding, strokeWidth, height - topPadding * 2);
-        GiocoPalla.getInstance().rect(x + width - strokeWidth - leftPadding, y + topPadding, strokeWidth, height - topPadding * 2);
-
-        GiocoPalla.getInstance().popStyle();
+        super.onRender(ctx);
     }
 
     @Override
@@ -94,5 +64,23 @@ public class PauseButton extends BaseGuiComponent {
 
     public void removeActionListener(Runnable listener) {
         actionListeners.remove(listener);
+    }
+
+    // Getters
+
+    public Color getRectColor() {
+        return rectColor;
+    }
+
+    public Color getStrokeColor() {
+        return strokeColor;
+    }
+
+    public Color getFocusedColor() {
+        return focusedColor;
+    }
+
+    public Color getFocusedStrokeColor() {
+        return focusedStrokeColor;
     }
 }

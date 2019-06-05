@@ -1,7 +1,5 @@
 package me.palla.value;
 
-import me.palla.GiocoPalla;
-
 /**
  * @brief Record per ogni elemento grafico e non.
  * @author Davide Borzì
@@ -27,8 +25,6 @@ public class Value<T> {
         this.name = name;
         this.valueType = (Class<T>) defaultValue.getClass();
         this.value = defaultValue;
-
-        GiocoPalla.getInstance().getValueManager().registerValue(this);
     }
 
     /**

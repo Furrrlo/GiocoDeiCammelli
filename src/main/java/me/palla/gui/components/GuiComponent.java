@@ -1,9 +1,9 @@
 package me.palla.gui.components;
 
-import processing.core.PConstants;
+import me.palla.renderer.RenderContext;
 
-public interface GuiComponent extends PConstants {
-    void onRender();
+public interface GuiComponent {
+    void onRender(RenderContext ctx);
 
     boolean intersects(float xPos, float yPos);
 

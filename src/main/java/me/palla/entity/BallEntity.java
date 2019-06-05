@@ -1,23 +1,12 @@
 package me.palla.entity;
 
-import me.palla.GiocoPalla;
-
 /**
  * @brief Classe per il disegno e il controllo della pallina
  * @author Mattia Broch
  * @version 1.0
  */
-public class BallEntity implements Entity {
-    /**
-     * @brief Attributo di classe PhysicsThread, farà startare nella pallina il thread che permetterà la
-     *         ripetizione di onTick() e onRender()
-     */
-    private PhysicsThread th;
+public class BallEntity extends BaseEntity<BallEntity> {
 
-    /** @brief Attributo che definisce la coordinata X della pallina, verrà aggiornato da onTick() */
-    private float xPos;
-    /** @brief Attributo che definisce la coordinata Y della pallina, verrà aggiornato da onTick() */
-    private float yPos;
     /** @brief Attributo che definisce il raggio della pallina */
     private float radius;
     /** @brief Attributo che definisce la velocità sull'asse X della pallina */
@@ -43,14 +32,12 @@ public class BallEntity implements Entity {
      * @param maxXPos la posizione più grande che puo' assumere la X della pallina
      * @param maxYPos la posizione più grande che puo' assumere la Y della pallina
      */
-    public BallEntity(float minXPos, float minYPos, float maxXPos, float maxYPos) {
-        xPos = GiocoPalla.getInstance().getScaledResolution().getScaledWidth() / 2f + 5;
-        yPos = GiocoPalla.getInstance().getScaledResolution().getScaledHeight() / 2f;
+    public BallEntity(float xPos, float yPos,
+                      float minXPos, float minYPos,
+                      float maxXPos, float maxYPos) {
+        super(xPos, yPos);
+
         radius = 50;
-
-        th = new PhysicsThread(this);
-        th.start();
-
         xSpeed = 0f;
         ySpeed = 0f;
 
@@ -69,26 +56,6 @@ public class BallEntity implements Entity {
         xPos += xSpeed;
         yPos += ySpeed;
         controllaBordo();
-    }
-
-    /** @brief Metodo ripetuto continuamente che ogni volta richiama il metodo per il disegno della pallina */
-    @Override
-    public void onRender() {
-        draw(xPos, yPos, radius);
-    }
-
-    /**
-     * @brief Metodo che disegna la pallina
-     *
-     * @param xPos   la coordinata X della pallina
-     * @param yPos   la coordinata Y della pallina
-     * @param radius il raggio della pallina
-     */
-    private void draw(float xPos, float yPos, float radius) {
-        GiocoPalla.getInstance().pushStyle();
-        GiocoPalla.getInstance().fill(255, 0, 0);
-        GiocoPalla.getInstance().ellipse(xPos, yPos, radius, radius);
-        GiocoPalla.getInstance().popStyle();
     }
 
     /**
@@ -124,5 +91,11 @@ public class BallEntity implements Entity {
             yPos = minYPos + radius / 2f;
         if (yPos > maxYPos - radius / 2f)
             yPos = maxYPos - radius / 2f;
+    }
+
+    // Getter
+
+    public float getRadius() {
+        return radius;
     }
 }

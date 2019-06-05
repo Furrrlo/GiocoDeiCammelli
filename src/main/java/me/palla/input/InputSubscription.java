@@ -40,6 +40,10 @@ public class InputSubscription {
         return data.poll();
     }
 
+    public void release() {
+        post(NoInput.instance());
+    }
+
     /**
      * @brief "Carica" un nuovo dato Metodo per registrare un nuovo dato ricevuto come parametro
      *

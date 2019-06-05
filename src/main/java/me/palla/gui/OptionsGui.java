@@ -1,33 +1,29 @@
 package me.palla.gui;
 
-import me.palla.GiocoPalla;
+import me.palla.Game;
 import me.palla.gui.components.ColorSlider;
 import me.palla.gui.components.PauseMenuButton;
 import me.palla.value.ColorValue;
-import me.palla.value.Value;
 
 import java.awt.*;
-import java.util.List;
 
 public class OptionsGui extends PauseGui {
 
     private static final int BUTTON_SIZE = 50;
-    private static final int NORMAL_COLOR = new Color(0xFFFFFFFF, true).getRGB();
-    private static final int FOCUSED_COLOR = new Color(0xFFf4c842, true).getRGB();
+    private static final Color NORMAL_COLOR = new Color(0xFFFFFFFF, true);
+    private static final Color FOCUSED_COLOR = new Color(0xFFf4c842, true);
 
-    private final List<Value<?>> temp;
     private PauseMenuButton button;
 
     public OptionsGui() {
-        temp = GiocoPalla.getInstance().getValueManager().getValues();
         button = new PauseMenuButton("Back", NORMAL_COLOR, FOCUSED_COLOR, BUTTON_SIZE, new OnClickListener());
-        components.add(button);
+        addComponent(button);
+    }
 
-        for (Integer i = 0; i < temp.size(); i++) {
-            final Value<?> value = temp.get(i);
-            if (temp.get(i).getValueType().equals(Color.class)) {
-                components.add(new ColorSlider((ColorValue) value));
-            }
+    private class OnClickListener implements Runnable {
+        @Override
+        public void run() {
+            game.displayGui(new PauseMenuGui());
         }
     }
 
@@ -53,15 +49,20 @@ public class OptionsGui extends PauseGui {
             }
         }
 
-        button.setHeight(50);
         button.setY(height - button.getHeight() - 10);
         button.setCenterX(width / 2);
     }
 
-    private class OnClickListener implements Runnable {
-        @Override
-        public void run() {
-            GiocoPalla.getInstance().displayGui(new PauseMenuGui());
-        }
+    @Override
+    public void setGame(Game game) {
+        super.setGame(game);
+
+        components.clear();
+        game.valueManager().getValues()
+                .forEach(value -> {
+                    if (value.getValueType().equals(Color.class))
+                        addComponent(new ColorSlider((ColorValue) value));
+                });
+        addComponent(button);
     }
 }

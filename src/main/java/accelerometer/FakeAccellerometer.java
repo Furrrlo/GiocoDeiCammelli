@@ -1,5 +1,6 @@
 package accelerometer;
 
+import me.palla.Game;
 import org.jdesktop.swingx.VerticalLayout;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 
 public class FakeAccellerometer extends JFrame {
 
-    public FakeAccellerometer() {
+    public FakeAccellerometer(Game...games) {
         initComponents();
         add(contentPanel);
 
@@ -15,7 +16,7 @@ public class FakeAccellerometer extends JFrame {
         setSize(700, getHeight());
         setLocationRelativeTo(null);
 
-        final Thread th1 = new Thread(new SensorRunnable(this));
+        final Thread th1 = new Thread(new SensorRunnable(this, games));
         final Thread th2 = new Thread(new AutoChangeRunnable(this));
 
         th1.setDaemon(true);
